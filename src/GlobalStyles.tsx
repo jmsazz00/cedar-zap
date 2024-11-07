@@ -4,6 +4,7 @@ const GlobalStyles = () => {
   return (
     <Global
       styles={css`
+        /* Scrollbar styling */
         ::-webkit-scrollbar {
           width: 7px;
           height: 7px;
@@ -19,6 +20,11 @@ const GlobalStyles = () => {
         }
         ::-webkit-scrollbar-thumb:hover {
           background-color: #666;
+        }
+
+        /* Remove white focus outline on buttons */
+        button:focus {
+          outline: none;
         }
       `}
     />
