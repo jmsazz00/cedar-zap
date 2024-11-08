@@ -10,7 +10,8 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   const { currentQuestion, setCurrentQuestion, highlightedQuestions, answers } =
     useQuizStore();
 
-  const { open, closeDialog, finishTest, score } = useFinishTest(questions);
+  const { open, closeDialog, finishTest, score, maxScore } =
+    useFinishTest(questions);
 
   return (
     <Box
@@ -87,7 +88,12 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
       </Box>
       <Box>
         <FinishTestButton onFinish={finishTest} />
-        <ScoreDialog onClose={closeDialog} open={open} score={score} />
+        <ScoreDialog
+          onClose={closeDialog}
+          open={open}
+          score={score}
+          maxScore={maxScore}
+        />
       </Box>
     </Box>
   );

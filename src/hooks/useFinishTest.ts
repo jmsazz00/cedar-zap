@@ -7,6 +7,8 @@ const useFinishTest = (questions: Question[]) => {
   const [score, setScore] = useState(0);
   const calculateScore = useQuizStore((st) => st.calculateScore);
 
+  const maxScore = questions.reduce((acc, q) => acc + q.point, 0);
+
   const finishTest = () => {
     calculateScore(questions); // Update totalScore in the store
     setScore(useQuizStore.getState().totalScore); // Retrieve the updated score
@@ -15,7 +17,7 @@ const useFinishTest = (questions: Question[]) => {
 
   const closeDialog = () => setOpen(false);
 
-  return { open, score, finishTest, closeDialog };
+  return { open, score, finishTest, closeDialog, maxScore };
 };
 
 export default useFinishTest;
