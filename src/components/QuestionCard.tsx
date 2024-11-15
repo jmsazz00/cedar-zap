@@ -21,7 +21,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
   const setAnswer = useQuizStore((store) => store.setAnswer);
 
   return (
-    <Box display="flex" pr={"150px"}>
+    <Box display="flex">
       <QuestionHeader index={index} point={point} />
       <Divider
         orientation="vertical"

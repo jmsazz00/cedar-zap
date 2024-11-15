@@ -1,5 +1,4 @@
 import { Box, Container } from "@mui/material";
-import React from "react";
 import QuestionCard from "../components/QuestionCard";
 import Sidebar from "../components/Sidebar";
 import questions from "../data/questions";
@@ -7,8 +6,16 @@ import { useQuizStore } from "../store/QuizStore";
 import QuizTimer from "../components/QuizTimer";
 import useFinishTest from "../hooks/useFinishTest";
 import ScoreDialog from "../components/ScoreDialog";
+import { Quiz } from "../entities/Quiz";
+import QuizHeader from "../components/QuizHeader";
 
-const QuizPage: React.FC = () => {
+interface Props {
+  quiz: Quiz;
+}
+
+const QuizPage = ({ quiz }: Props) => {
+  const { name, year, duration } = quiz;
+
   const { currentQuestion } = useQuizStore();
   const questionData = questions[currentQuestion];
 
@@ -25,9 +32,10 @@ const QuizPage: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex", height: "100vh", overflow: "hidden" }}>
-      <QuizTimer duration={3500} onTimeUp={finishTest} />
+      <QuizTimer duration={duration} onTimeUp={finishTest} />
       <Sidebar questionCount={questions.length} />
-      <Container sx={{ pt: 4 }}>
+      <Container>
+        <QuizHeader name={name} year={year} />
         <QuestionCard
           totalQuestions={questions.length}
           questionQuery={questionQuery}

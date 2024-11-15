@@ -8,7 +8,7 @@ const App: React.FC = () => (
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <GlobalStyles />
-    <QuizPage />
+    <QuizPage quiz={{ duration: 3500, name: "Urology", year: "24-25" }} />
   </ThemeProvider>
 );
 

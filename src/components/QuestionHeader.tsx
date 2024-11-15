@@ -25,7 +25,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ index, point }) => {
         flexDirection: "column",
         alignItems: "center",
         borderRadius: 1,
-        minWidth: "175px",
+        minWidth: "160px",
         height: "fit-content",
         border: "1px solid rgba(255, 255, 255, 0.15)",
       }}
