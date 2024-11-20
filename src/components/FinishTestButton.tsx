@@ -8,7 +8,7 @@ interface FinishTestButtonProps {
 
 const FinishTestButton = ({
   onFinish,
-  label = "Finish Test",
+  label = "Finish",
 }: FinishTestButtonProps) => {
   return (
     <Box display="flex" justifyContent="center">

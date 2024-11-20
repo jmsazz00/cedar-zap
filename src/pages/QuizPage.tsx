@@ -31,7 +31,7 @@ const QuizPage = ({ quiz }: Props) => {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+    <Box sx={{ display: "flex", pt: "64px" }}>
       <QuizTimer duration={duration} onTimeUp={finishTest} />
       <Sidebar questionCount={questions.length} />
       <Container>

@@ -16,19 +16,20 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   return (
     <Box
       sx={{
-        minWidth: { xs: "100%", md: "18vw" },
-        height: "fit-content",
-        maxHeight: "100vh",
+        position: "sticky",
+        top: "64px",
+        height: "calc(100vh - 64px)",
+        minWidth: "fit-content",
         bgcolor: "background.paper",
         padding: 2,
         overflowY: "auto",
+        borderRight: "1px solid #444",
       }}
     >
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: {
-            xs: "repeat(1, 1fr)",
             sm: "repeat(2, 1fr)",
             md: "repeat(3, 1fr)",
             lg: "repeat(4, 1fr)",
