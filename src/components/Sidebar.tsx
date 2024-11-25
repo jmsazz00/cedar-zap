@@ -7,8 +7,13 @@ import useFinishTest from "../hooks/useFinishTest";
 import questions from "../data/questions";
 
 const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
-  const { currentQuestion, setCurrentQuestion, highlightedQuestions, answers } =
-    useQuizStore();
+  const {
+    currentQuestion,
+    setCurrentQuestion,
+    highlightedQuestions,
+    answers,
+    showAnswers,
+  } = useQuizStore();
 
   const { open, closeDialog, finishTest, score, maxScore } =
     useFinishTest(questions);
@@ -44,7 +49,13 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
           return (
             <Box key={i} sx={{ position: "relative" }}>
               <Button
-                variant={currentQuestion === i ? "contained" : "outlined"}
+                variant={
+                  showAnswers
+                    ? "outlined"
+                    : currentQuestion === i
+                    ? "contained"
+                    : "outlined"
+                }
                 color="primary"
                 onClick={() => setCurrentQuestion(i)}
                 sx={{
@@ -57,18 +68,36 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
                   overflow: "hidden",
                   bgcolor:
                     currentQuestion === i
-                      ? "primary.main"
-                      : hasAnswer
+                      ? !showAnswers
+                        ? "primary.main"
+                        : "#1a1a1a"
+                      : hasAnswer && !showAnswers
                       ? "primary.light"
                       : "background.default",
-                  color: currentQuestion === i ? "white" : "text.secondary",
+                  color: showAnswers
+                    ? answers[i] === questions[i].correctAnswer
+                      ? "success.dark"
+                      : "error.dark"
+                    : currentQuestion === i
+                    ? "white"
+                    : "text.secondary",
+                  borderColor: showAnswers
+                    ? currentQuestion === i
+                      ? "var(--currentColor)"
+                      : "primary.light"
+                    : "default",
                   "&:hover": {
-                    color: "white",
+                    color: showAnswers ? "default" : "white",
+                    borderColor: showAnswers
+                      ? currentQuestion !== i
+                        ? "#5c5c5c"
+                        : "var(--currentColor)"
+                      : "default",
                   },
                 }}
               >
                 {i + 1}
-                {isHighlighted && (
+                {!showAnswers && isHighlighted && (
                   <Box
                     sx={{
                       position: "absolute",
@@ -87,15 +116,17 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
           );
         })}
       </Box>
-      <Box>
-        <FinishTestButton onFinish={finishTest} />
-        <ScoreDialog
-          onClose={closeDialog}
-          open={open}
-          score={score}
-          maxScore={maxScore}
-        />
-      </Box>
+      {!showAnswers && (
+        <Box>
+          <FinishTestButton onFinish={finishTest} />
+          <ScoreDialog
+            onClose={closeDialog}
+            open={open}
+            score={score}
+            maxScore={maxScore}
+          />
+        </Box>
+      )}
     </Box>
   );
 };

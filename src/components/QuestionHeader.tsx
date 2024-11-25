@@ -14,6 +14,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ index, point }) => {
     store.highlightedQuestions.includes(index)
   );
   const toggleHighlight = useQuizStore((store) => store.toggleHighlight);
+  const showAnswers = useQuizStore((store) => store.showAnswers);
 
   return (
     <Box
@@ -40,20 +41,22 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ index, point }) => {
       <Divider
         sx={{ width: "100%", mb: 1, borderColor: "rgba(255, 255, 255, 0.25)" }}
       />
-      <Box
-        onClick={() => toggleHighlight(index)}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          color: isHighlighted ? "secondary.light" : "secondary.main",
-          cursor: "pointer",
-          textDecoration: "none",
-          "&:hover": { textDecoration: "underline" },
-        }}
-      >
-        <EmojiFlagsIcon sx={{ fontSize: "1.2rem", mr: 0.5 }} />
-        {isHighlighted ? "Dehighlight" : "Highlight"}
-      </Box>
+      {!showAnswers && (
+        <Box
+          onClick={() => toggleHighlight(index)}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            color: isHighlighted ? "secondary.light" : "secondary.main",
+            cursor: "pointer",
+            textDecoration: "none",
+            "&:hover": { textDecoration: "underline" },
+          }}
+        >
+          <EmojiFlagsIcon sx={{ fontSize: "1.2rem", mr: 0.5 }} />
+          {isHighlighted ? "Dehighlight" : "Highlight"}
+        </Box>
+      )}
       <Box
         sx={{
           display: "flex",

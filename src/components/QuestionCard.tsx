@@ -19,6 +19,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
   const { index, question, options, point, correctAnswer } = questionQuery;
   const answers = useQuizStore((store) => store.answers);
   const setAnswer = useQuizStore((store) => store.setAnswer);
+  const showAnswers = useQuizStore((state) => state.showAnswers);
 
   return (
     <Box display="flex">
@@ -45,9 +46,14 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
             <Typography variant="body1" sx={{ mb: 2, color: "text.primary" }}>
               {question}
             </Typography>
-            <OptionsList options={options} questionIndex={index} />
+            <OptionsList
+              options={options}
+              questionIndex={index}
+              correctAnswer={correctAnswer}
+              showAnswers={showAnswers}
+            />
           </Box>
-          {answers[index] >= 0 && (
+          {!showAnswers && answers[index] >= 0 && (
             <Box display={"flex"} justifyContent={"center"}>
               <AnswerResetButton resetAnswer={() => setAnswer(index, -1)} />
             </Box>

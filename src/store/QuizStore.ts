@@ -6,6 +6,8 @@ interface QuizStore {
   currentQuestion: number;
   highlightedQuestions: number[];
   totalScore: number;
+  showAnswers: boolean,
+  setShowAnswers: (value: boolean) => void,
   setAnswer: (index: number, answerIndex: number) => void;
   setCurrentQuestion: (index: number) => void;
   toggleHighlight: (index: number) => void;
@@ -17,6 +19,8 @@ export const useQuizStore = create<QuizStore>((set) => ({
   currentQuestion: 0,
   highlightedQuestions: [],
   totalScore: 0,
+  showAnswers: false,
+  setShowAnswers: (value: boolean) => set({ showAnswers: value }),
   setAnswer: (index, answerIndex) =>
     set((state) => ({
       answers: { ...state.answers, [index]: answerIndex },

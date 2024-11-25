@@ -5,7 +5,7 @@ const theme = createTheme({
     mode: "dark",
     primary: {
       main: "#bb86fc", // primary mauve
-      light: "#4e4e4e", // light grey
+      light: "#3a3a3a", // light grey
     },
     secondary: {
       main: "#4db6e2", // muted blue

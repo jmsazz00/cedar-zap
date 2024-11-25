@@ -17,14 +17,14 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
       }}
     >
       <Button
-        variant="contained"
+        variant="outlined"
         disabled={currentQuestion === 0}
         onClick={() => setCurrentQuestion(currentQuestion - 1)}
       >
         Previous
       </Button>
       <Button
-        variant="contained"
+        variant="outlined"
         disabled={currentQuestion === totalQuestions - 1}
         onClick={() => setCurrentQuestion(currentQuestion + 1)}
       >

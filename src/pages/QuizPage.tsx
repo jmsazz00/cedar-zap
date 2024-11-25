@@ -16,7 +16,9 @@ interface Props {
 const QuizPage = ({ quiz }: Props) => {
   const { name, year, duration } = quiz;
 
-  const { currentQuestion } = useQuizStore();
+  const currentQuestion = useQuizStore((st) => st.currentQuestion);
+  const showAnswers = useQuizStore((st) => st.showAnswers);
+
   const questionData = questions[currentQuestion];
 
   const { finishTest, maxScore, open, score, closeDialog } =
@@ -32,7 +34,7 @@ const QuizPage = ({ quiz }: Props) => {
 
   return (
     <Box sx={{ display: "flex", pt: "64px" }}>
-      <QuizTimer duration={duration} onTimeUp={finishTest} />
+      {!showAnswers && <QuizTimer duration={duration} onTimeUp={finishTest} />}
       <Sidebar questionCount={questions.length} />
       <Container>
         <QuizHeader name={name} year={year} />

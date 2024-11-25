@@ -46,7 +46,7 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
     <Box
       sx={{
         position: "fixed",
-        top: "20px",
+        top: "84px",
         right: "20px",
         backgroundColor: bgColor,
         color: "#fff",
