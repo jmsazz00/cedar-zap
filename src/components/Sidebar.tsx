@@ -84,14 +84,14 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
                   borderColor: showAnswers
                     ? currentQuestion === i
                       ? "var(--currentColor)"
-                      : "primary.light"
+                      : answers[i] === questions[i].correctAnswer
+                      ? "#1b3d2d"
+                      : "#5c0f0f"
                     : "default",
                   "&:hover": {
                     color: showAnswers ? "default" : "white",
                     borderColor: showAnswers
-                      ? currentQuestion !== i
-                        ? "#5c5c5c"
-                        : "var(--currentColor)"
+                      ? "var(--currentColor)"
                       : "default",
                   },
                 }}
