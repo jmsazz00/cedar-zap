@@ -47,7 +47,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ index, point }) => {
           sx={{
             display: "flex",
             alignItems: "center",
-            color: isHighlighted ? "secondary.light" : "secondary.main",
+            color: isHighlighted ? "secondary.dark" : "secondary.main",
             cursor: "pointer",
             textDecoration: "none",
             "&:hover": { textDecoration: "underline" },

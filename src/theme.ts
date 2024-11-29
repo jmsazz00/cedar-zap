@@ -5,12 +5,11 @@ const theme = createTheme({
     mode: "dark",
     primary: {
       main: "#bb86fc", // primary mauve
-      light: "#3a3a3a", // light grey
     },
     secondary: {
       main: "#4db6e2", // muted blue
-      light: "#8e9aaf", // slate gray
-      dark: "#ff6f61", // soft red
+      light: "#3a3a3a", // slate gray
+      dark: "#8e9aaf", // dark gray
     },
     background: {
       default: "#121212",

@@ -72,7 +72,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
                         ? "primary.main"
                         : "#1a1a1a"
                       : hasAnswer && !showAnswers
-                      ? "primary.light"
+                      ? "secondary.light"
                       : "background.default",
                   color: showAnswers
                     ? answers[i] === questions[i].correctAnswer
