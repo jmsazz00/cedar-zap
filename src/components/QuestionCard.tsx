@@ -1,25 +1,25 @@
-import React from "react";
 import { Box, Divider, Paper, Typography } from "@mui/material";
-import QuestionHeader from "./QuestionHeader";
-import OptionsList from "./OptionsList";
-import AnswerResetButton from "./AnswerResetButton";
-import Pagination from "./Pagination";
-import { useQuizStore } from "../store/QuizStore";
+import React from "react";
 import Question from "../entities/Question";
+import { useQuizStore } from "../store/QuizStore";
+import AnswerResetButton from "./AnswerResetButton";
+import OptionsList from "./OptionsList";
+import Pagination from "./Pagination";
+import QuestionHeader from "./QuestionHeader";
 
 interface QuestionCardProps {
-  totalQuestions: number;
-  questionQuery: Question;
+  questions: Question[];
 }
 
-const QuestionCard: React.FC<QuestionCardProps> = ({
-  totalQuestions,
-  questionQuery,
-}) => {
-  const { index, question, options, point, correctAnswer } = questionQuery;
+const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   const answers = useQuizStore((store) => store.answers);
   const setAnswer = useQuizStore((store) => store.setAnswer);
   const showAnswers = useQuizStore((state) => state.showAnswers);
+  const currentQuestion = useQuizStore((st) => st.currentQuestion);
+  const { question, options, point, correctAnswer } =
+    questions[currentQuestion];
+
+  const index = currentQuestion;
 
   return (
     <Box display="flex">
@@ -60,7 +60,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
           )}
         </Paper>
         <Box>
-          <Pagination totalQuestions={totalQuestions} />
+          <Pagination totalQuestions={questions.length} />
         </Box>
       </Box>
     </Box>

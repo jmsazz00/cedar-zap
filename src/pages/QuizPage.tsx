@@ -1,13 +1,12 @@
 import { Box, Container } from "@mui/material";
 import QuestionCard from "../components/QuestionCard";
+import QuizHeader from "../components/QuizHeader";
+import QuizTimer from "../components/QuizTimer";
+import ScoreDialog from "../components/ScoreDialog";
 import Sidebar from "../components/Sidebar";
 import questions from "../data/questions";
-import { useQuizStore } from "../store/QuizStore";
-import QuizTimer from "../components/QuizTimer";
-import useFinishTest from "../hooks/useFinishTest";
-import ScoreDialog from "../components/ScoreDialog";
 import { Quiz } from "../entities/Quiz";
-import QuizHeader from "../components/QuizHeader";
+import useFinishTest from "../hooks/useFinishTest";
 
 interface Props {
   quiz: Quiz;
@@ -16,32 +15,16 @@ interface Props {
 const QuizPage = ({ quiz }: Props) => {
   const { name, year, duration } = quiz;
 
-  const currentQuestion = useQuizStore((st) => st.currentQuestion);
-  const showAnswers = useQuizStore((st) => st.showAnswers);
-
-  const questionData = questions[currentQuestion];
-
   const { finishTest, maxScore, open, score, closeDialog } =
     useFinishTest(questions);
 
-  const questionQuery = {
-    index: currentQuestion,
-    question: questionData.question,
-    options: questionData.options,
-    point: questionData.point,
-    correctAnswer: questionData.correctAnswer,
-  };
-
   return (
     <Box sx={{ display: "flex", pt: "64px" }}>
-      {!showAnswers && <QuizTimer duration={duration} onTimeUp={finishTest} />}
+      <QuizTimer duration={duration} onTimeUp={finishTest} />
       <Sidebar questionCount={questions.length} />
       <Container>
         <QuizHeader name={name} year={year} />
-        <QuestionCard
-          totalQuestions={questions.length}
-          questionQuery={questionQuery}
-        />
+        <QuestionCard questions={questions} />
       </Container>
       <ScoreDialog
         open={open}
