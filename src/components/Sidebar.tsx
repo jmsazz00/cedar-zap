@@ -1,19 +1,20 @@
 import React from "react";
 import { useQuizStore } from "../store/QuizStore";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import FinishTestButton from "./FinishTestButton";
 import ScoreDialog from "./ScoreDialog";
 import useFinishTest from "../hooks/useFinishTest";
 import questions from "../data/questions";
+import SidebarButton from "./SidebarButton";
 
 const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
-  const {
-    currentQuestion,
-    setCurrentQuestion,
-    highlightedQuestions,
-    answers,
-    showAnswers,
-  } = useQuizStore();
+  const currentQuestion = useQuizStore((store) => store.currentQuestion);
+  const setCurrentQuestion = useQuizStore((store) => store.setCurrentQuestion);
+  const highlightedQuestions = useQuizStore(
+    (store) => store.highlightedQuestions
+  );
+  const answers = useQuizStore((st) => st.answers);
+  const showAnswers = useQuizStore((state) => state.showAnswers);
 
   const { open, closeDialog, finishTest, score, maxScore } =
     useFinishTest(questions);
@@ -42,79 +43,19 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
           gap: 1,
         }}
       >
-        {Array.from({ length: questionCount }, (_, i) => {
-          const isHighlighted = highlightedQuestions.includes(i);
-          const hasAnswer = answers[i] >= 0;
-
-          return (
-            <Box key={i} sx={{ position: "relative" }}>
-              <Button
-                variant={
-                  showAnswers
-                    ? "outlined"
-                    : currentQuestion === i
-                    ? "contained"
-                    : "outlined"
-                }
-                color="primary"
-                onClick={() => setCurrentQuestion(i)}
-                sx={{
-                  height: 48,
-                  minWidth: 48,
-                  borderRadius: 2,
-                  fontSize: "0.875rem",
-                  fontWeight: "bold",
-                  zIndex: 2,
-                  overflow: "hidden",
-                  bgcolor:
-                    currentQuestion === i
-                      ? !showAnswers
-                        ? "primary.main"
-                        : "#1a1a1a"
-                      : hasAnswer && !showAnswers
-                      ? "secondary.light"
-                      : "background.default",
-                  color: showAnswers
-                    ? answers[i] === questions[i].correctAnswer
-                      ? "success.dark"
-                      : "error.dark"
-                    : currentQuestion === i
-                    ? "white"
-                    : "text.secondary",
-                  borderColor: showAnswers
-                    ? currentQuestion === i
-                      ? "var(--currentColor)"
-                      : answers[i] === questions[i].correctAnswer
-                      ? "#1b3d2d"
-                      : "#5c0f0f"
-                    : "default",
-                  "&:hover": {
-                    color: showAnswers ? "default" : "white",
-                    borderColor: showAnswers
-                      ? "var(--currentColor)"
-                      : "default",
-                  },
-                }}
-              >
-                {i + 1}
-                {!showAnswers && isHighlighted && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 4,
-                      right: -6,
-                      width: "55%",
-                      height: "5px",
-                      bgcolor: "secondary.main",
-                      transform: "rotate(45deg)",
-                      zIndex: 1,
-                    }}
-                  />
-                )}
-              </Button>
-            </Box>
-          );
-        })}
+        {Array.from({ length: questionCount }, (_, i) => (
+          <SidebarButton
+            key={i}
+            index={i}
+            currentQuestion={currentQuestion}
+            setCurrentQuestion={setCurrentQuestion}
+            isHighlighted={highlightedQuestions.includes(i)}
+            hasAnswer={answers[i] >= 0}
+            showAnswers={showAnswers}
+            correctAnswer={questions[i].correctAnswer}
+            userAnswer={answers[i]}
+          />
+        ))}
       </Box>
       {!showAnswers && (
         <Box>
