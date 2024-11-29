@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useQuizStore } from "../store/QuizStore";
 
 interface QuizTimerProps {
   duration: number; // in seconds
@@ -7,30 +8,33 @@ interface QuizTimerProps {
 }
 
 const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
+  const mainColor = "#5C6BC0";
   const [timeLeft, setTimeLeft] = useState(duration);
-  const [bgColor, setBgColor] = useState("#5C6BC0");
+  const [bgColor, setBgColor] = useState(mainColor);
+
+  const showAnswers = useQuizStore((st) => st.showAnswers);
+  const finishTest = useQuizStore((st) => st.finishTest);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (finishTest) clearInterval(interval);
       setTimeLeft((prevTime) => {
-        if (prevTime <= 1) {
+        if (prevTime <= 1 && !finishTest) {
           clearInterval(interval);
           onTimeUp();
           return 0;
         }
-        return prevTime - 1;
+        return finishTest ? prevTime : prevTime - 1;
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [onTimeUp]);
+  }, [onTimeUp, finishTest]);
 
   useEffect(() => {
     // Change background color in the last 30 seconds
-    if (timeLeft <= 30) {
-      if (timeLeft <= 10) setBgColor("#DC143C"); // Main red
-      else setBgColor("secondary.dark"); // Medium red
-    } else setBgColor("#5C6BC0"); // Original bg color
+    if (timeLeft <= 30) setBgColor("error.dark");
+    else setBgColor(mainColor);
   }, [timeLeft]);
 
   const formatTime = (seconds: number) => {
@@ -43,21 +47,23 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
   };
 
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        top: "84px",
-        right: "20px",
-        backgroundColor: bgColor,
-        color: "#fff",
-        padding: "4px 12px",
-        borderRadius: 1,
-        boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-        transition: "background-color 0.3s ease",
-      }}
-    >
-      <Typography variant="h6">{formatTime(timeLeft)}</Typography>
-    </Box>
+    !showAnswers && (
+      <Box
+        sx={{
+          position: "fixed",
+          top: "84px",
+          right: "20px",
+          backgroundColor: bgColor,
+          color: "#fff",
+          padding: "4px 12px",
+          borderRadius: 1,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+          transition: "background-color 0.3s ease",
+        }}
+      >
+        <Typography variant="h6">{formatTime(timeLeft)}</Typography>
+      </Box>
+    )
   );
 };
 

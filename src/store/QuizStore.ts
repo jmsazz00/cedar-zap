@@ -6,12 +6,14 @@ interface QuizStore {
   currentQuestion: number;
   highlightedQuestions: number[];
   totalScore: number;
-  showAnswers: boolean,
-  setShowAnswers: (value: boolean) => void,
+  showAnswers: boolean;
+  finishTest: boolean;
+  setShowAnswers: (value: boolean) => void;
   setAnswer: (index: number, answerIndex: number) => void;
   setCurrentQuestion: (index: number) => void;
   toggleHighlight: (index: number) => void;
   calculateScore: (questions: Question[]) => void;
+  setFinishTest: (value: boolean) => void;
 }
 
 export const useQuizStore = create<QuizStore>((set) => ({
@@ -20,6 +22,7 @@ export const useQuizStore = create<QuizStore>((set) => ({
   highlightedQuestions: [],
   totalScore: 0,
   showAnswers: false,
+  finishTest: false,
   setShowAnswers: (value: boolean) => set({ showAnswers: value }),
   setAnswer: (index, answerIndex) =>
     set((state) => ({
@@ -34,10 +37,16 @@ export const useQuizStore = create<QuizStore>((set) => ({
     })),
   calculateScore: (questions) =>
     set((state) => {
-      const score = Object.entries(state.answers).reduce((total, [qIndex, answerIndex]) => {
-        const question = questions[parseInt(qIndex)];
-        return question.correctAnswer === answerIndex ? total + question.point : total;
-      }, 0);
+      const score = Object.entries(state.answers).reduce(
+        (total, [qIndex, answerIndex]) => {
+          const question = questions[parseInt(qIndex)];
+          return question.correctAnswer === answerIndex
+            ? total + question.point
+            : total;
+        },
+        0
+      );
       return { totalScore: score };
     }),
+  setFinishTest: (value: boolean) => set({ finishTest: value }),
 }));

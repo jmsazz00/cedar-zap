@@ -39,7 +39,7 @@ const ScoreDialog = ({ open, score, maxScore, onClose }: ScoreDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
+    <Dialog open={open} maxWidth="xs" fullWidth disableEscapeKeyDown>
       <DialogTitle>Quiz Complete:</DialogTitle>
       <DialogContent
         sx={{

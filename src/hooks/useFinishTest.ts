@@ -6,13 +6,15 @@ const useFinishTest = (questions: Question[]) => {
   const [open, setOpen] = useState(false);
   const [score, setScore] = useState(0);
   const calculateScore = useQuizStore((st) => st.calculateScore);
+  const setFinishTest = useQuizStore((st) => st.setFinishTest);
 
   const maxScore = questions.reduce((acc, q) => acc + q.point, 0);
 
   const finishTest = () => {
     calculateScore(questions); // Update totalScore in the store
+    setFinishTest(true);
     setScore(useQuizStore.getState().totalScore); // Retrieve the updated score
-    setOpen(true); // Show the score pop-up dialog
+    setOpen(true); 
   };
 
   const closeDialog = () => setOpen(false);
