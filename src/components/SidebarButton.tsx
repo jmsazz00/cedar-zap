@@ -43,7 +43,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
           overflow: "hidden",
           bgcolor: isCurrent
             ? !showAnswers
-              ? "primary.main"
+              ? "primary.dark"
               : "#1a1a1a"
             : hasAnswer && !showAnswers
             ? "secondary.light"

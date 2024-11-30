@@ -10,7 +10,7 @@ const App: React.FC = () => (
     <CssBaseline />
     <GlobalStyles />
     <Navbar />
-    <QuizPage quiz={{ duration: 3500, name: "Urology", year: "24-25" }} />
+    <QuizPage quiz={{ duration: 3600, name: "Gynecology", year: "24-25" }} />
   </ThemeProvider>
 );
 
