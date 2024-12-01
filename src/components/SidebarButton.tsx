@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Box, Button } from "@mui/material";
 
 interface SidebarButtonProps {
@@ -25,9 +25,20 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   const isCurrent = currentQuestion === index;
   const isCorrect = userAnswer === correctAnswer;
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Focus the button if it becomes the current question
+  useEffect(() => {
+    if (isCurrent && buttonRef.current) {
+      buttonRef.current.focus();
+    }
+  }, [isCurrent]);
+
   return (
     <Box sx={{ position: "relative" }}>
       <Button
+        ref={buttonRef}
+        disableFocusRipple
         variant={
           showAnswers ? "outlined" : isCurrent ? "contained" : "outlined"
         }
