@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuizStore } from "../store/QuizStore";
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import FinishTestButton from "./FinishTestButton";
 import ScoreDialog from "./ScoreDialog";
 import useFinishTest from "../hooks/useFinishTest";
@@ -57,6 +57,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
           />
         ))}
       </Box>
+      <Divider sx={{ my: 2 }} />
       {!showAnswers && (
         <Box>
           <FinishTestButton onFinish={finishTest} />

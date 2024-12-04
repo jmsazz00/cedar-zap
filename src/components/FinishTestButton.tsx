@@ -16,12 +16,14 @@ const FinishTestButton = ({
         variant="outlined"
         onClick={onFinish}
         sx={{
-          mt: 2,
+          width: { md: "66.67%" },
           fontWeight: "bold",
           color: "primary",
         }}
       >
-        <DoneOutlineIcon sx={{ mr: 0.75, fontSize: "1rem" }} />
+        <DoneOutlineIcon
+          sx={{ mr: { xs: 0.75, lg: 1.25 }, fontSize: "1rem" }}
+        />
         {label}
       </Button>
     </Box>
