@@ -22,14 +22,14 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   const index = currentQuestion;
 
   return (
-    <Box display="flex">
+    <Box display="flex" minWidth={{ lg: "850px" }} maxWidth={{ lg: "1050px" }}>
       <QuestionHeader index={index} point={point} />
       <Divider
         orientation="vertical"
         flexItem
         sx={{ borderColor: "divider", mx: 2 }}
       />
-      <Box>
+      <Box width={"100%"}>
         <Paper
           elevation={3}
           sx={{
@@ -37,7 +37,6 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
             flexDirection: "column",
             p: 2,
             bgcolor: "background.paper",
-            mb: 3,
             borderRadius: 2,
             width: "100%",
           }}
@@ -59,7 +58,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
             </Box>
           )}
         </Paper>
-        <Box>
+        <Box my={3}>
           <Pagination totalQuestions={questions.length} />
         </Box>
       </Box>
