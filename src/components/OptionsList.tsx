@@ -40,12 +40,12 @@ const OptionsList: React.FC<OptionsListProps> = ({
           ? "success.dark"
           : isSelected
           ? "error.dark"
-          : "background.paper",
+          : "#222",
         color: isCorrect || isSelected ? "common.white" : "text.primary",
       };
 
     return {
-      bgcolor: "background.paper",
+      bgcolor: "#222",
       color: "text.primary",
     };
   };

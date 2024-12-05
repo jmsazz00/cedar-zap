@@ -57,17 +57,19 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
           />
         ))}
       </Box>
-      <Divider sx={{ my: 2 }} />
       {!showAnswers && (
-        <Box>
-          <FinishTestButton onFinish={finishTest} />
-          <ScoreDialog
-            onClose={closeDialog}
-            open={open}
-            score={score}
-            maxScore={maxScore}
-          />
-        </Box>
+        <>
+          <Divider sx={{ my: 2 }} />
+          <Box>
+            <FinishTestButton onFinish={finishTest} />
+            <ScoreDialog
+              onClose={closeDialog}
+              open={open}
+              score={score}
+              maxScore={maxScore}
+            />
+          </Box>
+        </>
       )}
     </Box>
   );
