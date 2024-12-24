@@ -8,6 +8,8 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useQuizStore } from "../store/QuizStore";
 
 interface OptionsListProps {
@@ -50,6 +52,33 @@ const OptionsList: React.FC<OptionsListProps> = ({
     };
   };
 
+  const renderIcon = (index: number) => {
+    const isCorrect = index === correctAnswer;
+    const isSelected = index === selectedAnswer;
+
+    if (showAnswers) {
+      if (isCorrect)
+        return (
+          <CheckCircleIcon
+            fontSize="small"
+            sx={{ color: "success.light", ml: 1.5, mr: 1.2 }}
+          />
+        );
+
+      if (isSelected && !isCorrect)
+        return (
+          <CancelIcon
+            fontSize="small"
+            sx={{ color: "error.light", ml: 1.5, mr: 1.2 }}
+          />
+        );
+    }
+
+    return (
+      <Radio checked={index === selectedAnswer} value={index} color="primary" />
+    );
+  };
+
   return (
     <Box>
       {/* Warning for Unanswered Questions */}
@@ -64,39 +93,29 @@ const OptionsList: React.FC<OptionsListProps> = ({
       )}
 
       <List>
-        {options.map((option, index) => {
-          const isCorrect = index === correctAnswer;
-          const isSelected = index === selectedAnswer;
+        {options.map((option, index) => (
+          <ListItem key={index} disablePadding>
+            <ListItemButton
+              onClick={() => handleSelectAnswer(index)}
+              selected={index === selectedAnswer && !showAnswers}
+              disabled={showAnswers}
+              sx={{
+                ...getOptionStyles(index),
+                my: 0.7,
+                borderRadius: 1,
+                pl: 0,
+                "&.Mui-disabled": {
+                  opacity: 0.85,
+                },
+              }}
+            >
+              {/* Render Icon (Radio or True/False Icon) */}
+              {renderIcon(index)}
 
-          return (
-            <ListItem key={index} disablePadding>
-              <ListItemButton
-                onClick={() => handleSelectAnswer(index)}
-                selected={isSelected && !showAnswers}
-                disabled={showAnswers}
-                sx={{
-                  ...getOptionStyles(index),
-                  my: 0.7,
-                  borderRadius: 1,
-                  pl: 0,
-                  "&.Mui-disabled": {
-                    opacity: 0.85,
-                  },
-                }}
-              >
-                <Radio
-                  checked={isSelected || (showAnswers && isCorrect)}
-                  value={index}
-                  color={
-                    showAnswers ? (isCorrect ? "success" : "error") : "primary"
-                  }
-                  disabled={showAnswers}
-                />
-                <ListItemText primary={option} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+              <ListItemText primary={option} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
