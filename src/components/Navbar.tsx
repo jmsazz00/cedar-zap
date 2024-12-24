@@ -1,13 +1,14 @@
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
+import logo from "../assets/logo.png";
+import logo_name from "../assets/logo-name.png";
 
 const Navbar = () => {
   return (
     <AppBar
       sx={{
-        backgroundColor: "#2e1f3e",
-        boxShadow: "0px 2px 12px rgba(0, 0, 0, 0.4)",
-        borderBottom: "1px solid rgba(187, 134, 252, 0.3)",
+        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.5)",
+        borderBottom: "1px solid rgba(187, 134, 252, 0.2)",
       }}
     >
       <Toolbar
@@ -17,27 +18,31 @@ const Navbar = () => {
           alignItems: "center",
         }}
       >
-        {/* Left Section: Logo */}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              background: "linear-gradient(to right, #bb86fc, #8e24aa)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              cursor: "pointer",
-              mr: 2,
-            }}
-          >
-            CEDAR-ZAP
-          </Typography>
+        {/* Left Section: Logo Name */}
+        <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
+          <Box display={"flex"} alignItems={"center"} mr={1}>
+            <img src={logo_name} height={40} alt="Logo Name" />
+          </Box>
+        </Box>
+
+        {/* Center Section: Logo */}
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center", // Ensures vertical centering
+          }}
+        >
+          <img src={logo} height={50} alt="Logo" />
         </Box>
 
         {/* Right Section: Home Icon */}
-        <IconButton color="inherit" edge="end" aria-label="menu">
-          <HomeIcon />
-        </IconButton>
+        <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+          <IconButton color="inherit" edge="end" aria-label="menu">
+            <HomeIcon />
+          </IconButton>
+        </Box>
       </Toolbar>
     </AppBar>
   );
