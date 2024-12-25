@@ -79,6 +79,32 @@ const OptionsList: React.FC<OptionsListProps> = ({
     );
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    // Prevent navigation keys from affecting radio button focus
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      return;
+    }
+
+    // Handle throttling for ArrowUp and ArrowDown
+    if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+      // Handle the ArrowUp and ArrowDown logic
+      if (event.key === "ArrowUp") {
+        const nextIndex = Math.max(0, (selectedAnswer ?? 0) - 1);
+        handleSelectAnswer(nextIndex);
+      } else if (event.key === "ArrowDown") {
+        const nextIndex = Math.min(
+          options.length - 1,
+          (selectedAnswer ?? -1) + 1
+        );
+        handleSelectAnswer(nextIndex);
+      }
+
+      // Prevent the default behavior to avoid native scrolling
+      event.preventDefault();
+    }
+  };
+
   return (
     <Box>
       {/* Warning for Unanswered Questions */}
@@ -92,7 +118,7 @@ const OptionsList: React.FC<OptionsListProps> = ({
         </Typography>
       )}
 
-      <List>
+      <List onKeyDown={handleKeyPress}>
         {options.map((option, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton
