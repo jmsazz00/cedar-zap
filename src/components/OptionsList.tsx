@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   List,
   ListItem,
@@ -28,6 +28,16 @@ const OptionsList: React.FC<OptionsListProps> = ({
   const selectedAnswer = useQuizStore((state) => state.answers[questionIndex]);
   const setAnswer = useQuizStore((state) => state.setAnswer);
 
+  const [hoveredOption, setHoveredOption] = useState<number | null>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.focus();
+    }
+    setHoveredOption(null);
+  }, [questionIndex]);
+
   const handleSelectAnswer = (optionIndex: number) => {
     setAnswer(questionIndex, optionIndex);
   };
@@ -47,7 +57,7 @@ const OptionsList: React.FC<OptionsListProps> = ({
       };
 
     return {
-      bgcolor: "#222",
+      bgcolor: hoveredOption === index ? "#3f3f3f" : "#222",
       color: "text.primary",
     };
   };
@@ -86,22 +96,22 @@ const OptionsList: React.FC<OptionsListProps> = ({
       return;
     }
 
-    // Handle throttling for ArrowUp and ArrowDown
     if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-      // Handle the ArrowUp and ArrowDown logic
-      if (event.key === "ArrowUp") {
-        const nextIndex = Math.max(0, (selectedAnswer ?? 0) - 1);
-        handleSelectAnswer(nextIndex);
-      } else if (event.key === "ArrowDown") {
-        const nextIndex = Math.min(
-          options.length - 1,
-          (selectedAnswer ?? -1) + 1
-        );
-        handleSelectAnswer(nextIndex);
-      }
+      const nextIndex =
+        event.key === "ArrowUp"
+          ? Math.max(0, (hoveredOption ?? selectedAnswer ?? 0) - 1)
+          : Math.min(
+              options.length - 1,
+              (hoveredOption ?? selectedAnswer ?? -1) + 1
+            );
+      setHoveredOption(nextIndex);
 
-      // Prevent the default behavior to avoid native scrolling
       event.preventDefault();
+    }
+
+    if (event.key === "Enter" && hoveredOption !== null) {
+      handleSelectAnswer(hoveredOption);
+      setHoveredOption(null);
     }
   };
 
@@ -118,7 +128,12 @@ const OptionsList: React.FC<OptionsListProps> = ({
         </Typography>
       )}
 
-      <List onKeyDown={handleKeyPress}>
+      <List
+        ref={listRef}
+        onKeyDown={handleKeyPress}
+        tabIndex={0} // Make the list focusable
+        sx={{ outline: "none" }}
+      >
         {options.map((option, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton
@@ -134,6 +149,8 @@ const OptionsList: React.FC<OptionsListProps> = ({
                   opacity: 0.85,
                 },
               }}
+              onMouseEnter={() => setHoveredOption(index)}
+              onMouseLeave={() => setHoveredOption(null)}
             >
               {/* Render Icon (Radio or True/False Icon) */}
               {renderIcon(index)}
