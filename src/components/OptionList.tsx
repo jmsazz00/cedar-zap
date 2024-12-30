@@ -36,10 +36,17 @@ const OptionList: React.FC<OptionListProps> = ({
     if (event.key === "ArrowUp" || event.key === "ArrowDown") {
       const nextIndex =
         event.key === "ArrowUp"
-          ? Math.max(0, (hoveredOption ?? selectedAnswers[0] ?? 0) - 1)
+          ? Math.max(
+              0,
+              (hoveredOption ??
+                selectedAnswers[selectedAnswers.length - 1] ??
+                0) - 1
+            )
           : Math.min(
               options.length - 1,
-              (hoveredOption ?? selectedAnswers[0] ?? -1) + 1
+              (hoveredOption ??
+                selectedAnswers[selectedAnswers.length - 1] ??
+                -1) + 1
             );
       setHoveredOption(nextIndex);
 

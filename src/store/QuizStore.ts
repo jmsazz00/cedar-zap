@@ -58,19 +58,38 @@ export const useQuizStore = create<QuizStore>((set) => ({
       const score = Object.entries(state.answers).reduce(
         (total, [qIndex, selectedAnswers]) => {
           const question = questions[parseInt(qIndex)];
-          const isCorrect = question.isMultipleChoice
-            ? question.correctAnswers.every((ans) =>
-                selectedAnswers.includes(ans)
-              ) && selectedAnswers.length === question.correctAnswers.length
-            : question.correctAnswers.includes(selectedAnswers[0]);
+          const correctAnswers = question.correctAnswers;
+          const points = question.point;
 
-          if (!isCorrect) falseQuestions.push(parseInt(qIndex));
+          // Count correct and incorrect selections
+          const correctSelections = selectedAnswers.filter((ans) =>
+            correctAnswers.includes(ans)
+          ).length;
+          const incorrectSelections = selectedAnswers.filter(
+            (ans) => !correctAnswers.includes(ans)
+          ).length;
 
-          return isCorrect ? total + question.point : total;
+          // Calculate effective correct answers after negations
+          const effectiveCorrectAnswers = Math.max(
+            0,
+            correctSelections - incorrectSelections
+          );
+
+          // Calculate the score for this question
+          const questionScore =
+            (effectiveCorrectAnswers / correctAnswers.length) * points;
+
+          // Mark as false if no points were earned
+          if (questionScore === 0) falseQuestions.push(parseInt(qIndex));
+
+          return total + questionScore;
         },
         0
       );
-      return { totalScore: score, falseQuestions };
+
+      const totalScore = parseFloat(score.toFixed(2));
+
+      return { totalScore, falseQuestions };
     }),
   setFinishTest: (value: boolean) => set({ finishTest: value }),
 }));
