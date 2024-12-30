@@ -13,8 +13,8 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   const highlightedQuestions = useQuizStore(
     (store) => store.highlightedQuestions
   );
-  const answers = useQuizStore((st) => st.answers);
-  const showAnswers = useQuizStore((state) => state.showAnswers);
+  const answers = useQuizStore((store) => store.answers);
+  const showAnswers = useQuizStore((store) => store.showAnswers);
 
   const { open, closeDialog, finishTest, score, maxScore } =
     useFinishTest(questions);
@@ -50,10 +50,10 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
             currentQuestion={currentQuestion}
             setCurrentQuestion={setCurrentQuestion}
             isHighlighted={highlightedQuestions.includes(i)}
-            hasAnswer={answers[i] >= 0}
+            hasAnswer={answers[i]?.length > 0}
             showAnswers={showAnswers}
-            correctAnswer={questions[i].correctAnswer}
-            userAnswer={answers[i]}
+            correctAnswers={questions[i].correctAnswers} // Adjusted for multiple correct answers
+            userAnswers={answers[i]}
           />
         ))}
       </Box>

@@ -8,8 +8,8 @@ interface SidebarButtonProps {
   isHighlighted: boolean;
   hasAnswer: boolean;
   showAnswers: boolean;
-  correctAnswer: number;
-  userAnswer: number;
+  correctAnswers: number[]; // Supports multiple correct answers
+  userAnswers: number[]; // Can be an array for multiple-choice or a single number for single-choice
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({
@@ -19,11 +19,14 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   isHighlighted,
   hasAnswer,
   showAnswers,
-  correctAnswer,
-  userAnswer,
+  correctAnswers,
+  userAnswers,
 }) => {
   const isCurrent = currentQuestion === index;
-  const isCorrect = userAnswer === correctAnswer;
+
+  const isCorrect =
+    correctAnswers.every((ans) => userAnswers?.includes(ans)) &&
+    userAnswers.every((ans) => correctAnswers.includes(ans));
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 

@@ -2,7 +2,7 @@ import { create } from "zustand";
 import Question from "../entities/Question";
 
 interface QuizStore {
-  answers: Record<number, number>; // store the answer as the index of selected option
+  answers: Record<number, number[]>; // Updated to support multiple answers
   currentQuestion: number;
   highlightedQuestions: number[];
   totalScore: number;
@@ -10,6 +10,7 @@ interface QuizStore {
   finishTest: boolean;
   setShowAnswers: (value: boolean) => void;
   setAnswer: (index: number, answerIndex: number) => void;
+  toggleAnswer: (index: number, answerIndex: number) => void; // New method for toggling answers
   setCurrentQuestion: (index: number) => void;
   toggleHighlight: (index: number) => void;
   calculateScore: (questions: Question[]) => void;
@@ -26,8 +27,21 @@ export const useQuizStore = create<QuizStore>((set) => ({
   setShowAnswers: (value: boolean) => set({ showAnswers: value }),
   setAnswer: (index, answerIndex) =>
     set((state) => ({
-      answers: { ...state.answers, [index]: answerIndex },
+      answers: {
+        ...state.answers,
+        [index]: answerIndex < 0 ? [] : [answerIndex],
+      },
     })),
+  toggleAnswer: (index, answerIndex) =>
+    set((state) => {
+      const currentAnswers = state.answers[index] || [];
+      const updatedAnswers = currentAnswers.includes(answerIndex)
+        ? currentAnswers.filter((a) => a !== answerIndex)
+        : [...currentAnswers, answerIndex];
+      return {
+        answers: { ...state.answers, [index]: updatedAnswers },
+      };
+    }),
   setCurrentQuestion: (index) => set({ currentQuestion: index }),
   toggleHighlight: (index) =>
     set((state) => ({
@@ -38,11 +52,14 @@ export const useQuizStore = create<QuizStore>((set) => ({
   calculateScore: (questions) =>
     set((state) => {
       const score = Object.entries(state.answers).reduce(
-        (total, [qIndex, answerIndex]) => {
+        (total, [qIndex, selectedAnswers]) => {
           const question = questions[parseInt(qIndex)];
-          return question.correctAnswer === answerIndex
-            ? total + question.point
-            : total;
+          const isCorrect = question.isMultipleChoice
+            ? question.correctAnswers.every((ans) =>
+                selectedAnswers.includes(ans)
+              ) && selectedAnswers.length === question.correctAnswers.length
+            : question.correctAnswers.includes(selectedAnswers[0]);
+          return isCorrect ? total + question.point : total;
         },
         0
       );

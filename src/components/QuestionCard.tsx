@@ -16,7 +16,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   const setAnswer = useQuizStore((store) => store.setAnswer);
   const showAnswers = useQuizStore((state) => state.showAnswers);
   const currentQuestion = useQuizStore((st) => st.currentQuestion);
-  const { question, options, point, correctAnswer } =
+  const { question, options, point, correctAnswers, isMultipleChoice } =
     questions[currentQuestion];
 
   const index = currentQuestion;
@@ -48,11 +48,12 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
             <OptionsList
               options={options}
               questionIndex={index}
-              correctAnswer={correctAnswer}
+              correctAnswers={correctAnswers}
               showAnswers={showAnswers}
+              isMultipleChoice={isMultipleChoice}
             />
           </Box>
-          {!showAnswers && answers[index] >= 0 && (
+          {!showAnswers && answers[index]?.length > 0 && (
             <Box display={"flex"} justifyContent={"center"}>
               <AnswerResetButton resetAnswer={() => setAnswer(index, -1)} />
             </Box>
