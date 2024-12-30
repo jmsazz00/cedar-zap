@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Box, Button } from "@mui/material";
 
 interface SidebarButtonProps {
@@ -8,8 +8,7 @@ interface SidebarButtonProps {
   isHighlighted: boolean;
   hasAnswer: boolean;
   showAnswers: boolean;
-  correctAnswers: number[]; // Supports multiple correct answers
-  userAnswers: number[]; // Can be an array for multiple-choice or a single number for single-choice
+  isCorrect: boolean;
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({
@@ -19,28 +18,13 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   isHighlighted,
   hasAnswer,
   showAnswers,
-  correctAnswers,
-  userAnswers,
+  isCorrect,
 }) => {
   const isCurrent = currentQuestion === index;
-
-  const isCorrect =
-    correctAnswers.every((ans) => userAnswers?.includes(ans)) &&
-    userAnswers.every((ans) => correctAnswers.includes(ans));
-
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  // Focus the button if it becomes the current question
-  useEffect(() => {
-    if (isCurrent && buttonRef.current) {
-      buttonRef.current.focus();
-    }
-  }, [isCurrent]);
 
   return (
     <Box sx={{ position: "relative" }}>
       <Button
-        ref={buttonRef}
         disableFocusRipple
         variant={
           showAnswers ? "outlined" : isCurrent ? "contained" : "outlined"
@@ -58,7 +42,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
           bgcolor: isCurrent
             ? !showAnswers
               ? "primary.dark"
-              : "#1a1a1a"
+              : "background.default"
             : hasAnswer && !showAnswers
             ? "secondary.light"
             : "background.default",

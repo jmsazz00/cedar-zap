@@ -15,6 +15,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   );
   const answers = useQuizStore((store) => store.answers);
   const showAnswers = useQuizStore((store) => store.showAnswers);
+  const falseQuestions = useQuizStore((store) => store.falseQuestions);
 
   const { open, closeDialog, finishTest, score, maxScore } =
     useFinishTest(questions);
@@ -43,19 +44,23 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
           gap: 1,
         }}
       >
-        {Array.from({ length: questionCount }, (_, i) => (
-          <SidebarButton
-            key={i}
-            index={i}
-            currentQuestion={currentQuestion}
-            setCurrentQuestion={setCurrentQuestion}
-            isHighlighted={highlightedQuestions.includes(i)}
-            hasAnswer={answers[i]?.length > 0}
-            showAnswers={showAnswers}
-            correctAnswers={questions[i].correctAnswers} // Adjusted for multiple correct answers
-            userAnswers={answers[i]}
-          />
-        ))}
+        {Array.from({ length: questionCount }, (_, i) => {
+          const hasAnswer = answers[i]?.length > 0;
+          const isCorrect = hasAnswer && !falseQuestions.includes(i);
+
+          return (
+            <SidebarButton
+              key={i}
+              index={i}
+              currentQuestion={currentQuestion}
+              setCurrentQuestion={setCurrentQuestion}
+              isHighlighted={highlightedQuestions.includes(i)}
+              hasAnswer={hasAnswer}
+              showAnswers={showAnswers}
+              isCorrect={isCorrect}
+            />
+          );
+        })}
       </Box>
       {!showAnswers && (
         <>

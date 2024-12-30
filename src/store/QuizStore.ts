@@ -2,15 +2,16 @@ import { create } from "zustand";
 import Question from "../entities/Question";
 
 interface QuizStore {
-  answers: Record<number, number[]>; // Updated to support multiple answers
+  answers: Record<number, number[]>;
   currentQuestion: number;
   highlightedQuestions: number[];
+  falseQuestions: number[];
   totalScore: number;
   showAnswers: boolean;
   finishTest: boolean;
   setShowAnswers: (value: boolean) => void;
   setAnswer: (index: number, answerIndex: number) => void;
-  toggleAnswer: (index: number, answerIndex: number) => void; // New method for toggling answers
+  toggleAnswer: (index: number, answerIndex: number) => void;
   setCurrentQuestion: (index: number) => void;
   toggleHighlight: (index: number) => void;
   calculateScore: (questions: Question[]) => void;
@@ -21,6 +22,7 @@ export const useQuizStore = create<QuizStore>((set) => ({
   answers: {},
   currentQuestion: 0,
   highlightedQuestions: [],
+  falseQuestions: [],
   totalScore: 0,
   showAnswers: false,
   finishTest: false,
@@ -51,6 +53,8 @@ export const useQuizStore = create<QuizStore>((set) => ({
     })),
   calculateScore: (questions) =>
     set((state) => {
+      const falseQuestions: number[] = [];
+
       const score = Object.entries(state.answers).reduce(
         (total, [qIndex, selectedAnswers]) => {
           const question = questions[parseInt(qIndex)];
@@ -59,11 +63,14 @@ export const useQuizStore = create<QuizStore>((set) => ({
                 selectedAnswers.includes(ans)
               ) && selectedAnswers.length === question.correctAnswers.length
             : question.correctAnswers.includes(selectedAnswers[0]);
+
+          if (!isCorrect) falseQuestions.push(parseInt(qIndex));
+
           return isCorrect ? total + question.point : total;
         },
         0
       );
-      return { totalScore: score };
+      return { totalScore: score, falseQuestions };
     }),
   setFinishTest: (value: boolean) => set({ finishTest: value }),
 }));
