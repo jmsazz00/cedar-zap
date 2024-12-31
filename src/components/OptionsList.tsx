@@ -30,7 +30,7 @@ const OptionsList: React.FC<OptionsListProps> = ({
   return (
     <Box>
       {/* Warning for Unanswered Questions */}
-      {showAnswers && !selectedAnswers && (
+      {showAnswers && (!selectedAnswers || selectedAnswers.length === 0) && (
         <Typography
           variant="body2"
           color="warning.main"

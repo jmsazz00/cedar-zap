@@ -1,5 +1,5 @@
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
+import CloseIcon from "@mui/icons-material/Close";
+import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 import Radio from "@mui/material/Radio";
 import Checkbox from "@mui/material/Checkbox";
 
@@ -12,27 +12,48 @@ export const getOptionStyles = (
 ) => {
   const isCorrect = correctAnswers.includes(index);
   const isSelected = selectedAnswers.includes(index);
+  const isUnselectedCorrect = isCorrect && !isSelected;
+  const isHovered = hoveredOption === index;
 
-  const commonStyles = {
-    my: 0.7,
+  const baseStyles = {
+    my: 0.75,
     borderRadius: 1,
     pl: 0,
+    transition: "border 0.2s ease, box-shadow 0.2s ease",
     "&.Mui-disabled": {
       opacity: 0.85,
+    },
+    "&:hover": {
+      bgcolor: "#222", // Prevent default hover effect
     },
   };
 
   if (showAnswers) {
-    return {
-      ...commonStyles,
-      bgcolor: isCorrect ? "success.dark" : isSelected ? "error.dark" : "#222",
-      color: isCorrect || isSelected ? "common.white" : "inherit",
+    const answerStyles = {
+      bgcolor: isSelected
+        ? isCorrect
+          ? "success.dark"
+          : "error.dark"
+        : isUnselectedCorrect
+        ? "info.dark"
+        : "#222",
     };
+    return { ...baseStyles, ...answerStyles };
   }
 
+  const hoverStyles = isHovered
+    ? {
+        border: "1.5px solid rgba(255, 255, 255, 0.2)",
+        boxShadow: "0 0 4px 2px rgba(255, 255, 255, 0.15)",
+      }
+    : {
+        border: "1.5px solid transparent", // No border for idle state
+      };
+
   return {
-    ...commonStyles,
-    bgcolor: hoveredOption === index ? "#3f3f3f" : "#222",
+    ...baseStyles,
+    bgcolor: "#222",
+    ...hoverStyles,
   };
 };
 
@@ -45,19 +66,24 @@ export const renderIcon = (
 ) => {
   const isCorrect = correctAnswers.includes(index);
   const isSelected = selectedAnswers.includes(index);
+  const isUnselectedCorrect = isCorrect && !isSelected;
 
   if (showAnswers) {
-    if (isCorrect)
+    if ((isSelected && isCorrect) || isUnselectedCorrect)
       return (
-        <CheckCircleIcon
+        <DoneOutlineSharpIcon
           fontSize="small"
-          sx={{ color: "success.light", ml: 1.5, mr: 1.2 }}
+          sx={{
+            color: isUnselectedCorrect ? "info.light" : "success.light",
+            ml: 1.5,
+            mr: 1.2,
+          }}
         />
       );
 
     if (isSelected && !isCorrect)
       return (
-        <CancelIcon
+        <CloseIcon
           fontSize="small"
           sx={{ color: "error.light", ml: 1.5, mr: 1.2 }}
         />
