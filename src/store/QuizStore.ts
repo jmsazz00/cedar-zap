@@ -3,7 +3,7 @@ import Question from "../entities/Question";
 
 interface QuizStore {
   answers: Record<number, number[]>;
-  currentQuestion: number;
+  currentQuestionIndex: number;
   highlightedQuestions: number[];
   falseQuestions: number[];
   totalScore: number;
@@ -12,7 +12,7 @@ interface QuizStore {
   setShowAnswers: (value: boolean) => void;
   setAnswer: (index: number, answerIndex: number) => void;
   toggleAnswer: (index: number, answerIndex: number) => void;
-  setCurrentQuestion: (index: number) => void;
+  setCurrentQuestionIndex: (index: number) => void;
   toggleHighlight: (index: number) => void;
   calculateScore: (questions: Question[]) => void;
   setFinishTest: (value: boolean) => void;
@@ -20,7 +20,7 @@ interface QuizStore {
 
 export const useQuizStore = create<QuizStore>((set) => ({
   answers: {},
-  currentQuestion: 0,
+  currentQuestionIndex: 0,
   highlightedQuestions: [],
   falseQuestions: [],
   totalScore: 0,
@@ -44,7 +44,7 @@ export const useQuizStore = create<QuizStore>((set) => ({
         answers: { ...state.answers, [index]: updatedAnswers },
       };
     }),
-  setCurrentQuestion: (index) => set({ currentQuestion: index }),
+  setCurrentQuestionIndex: (index) => set({ currentQuestionIndex: index }),
   toggleHighlight: (index) =>
     set((state) => ({
       highlightedQuestions: state.highlightedQuestions.includes(index)

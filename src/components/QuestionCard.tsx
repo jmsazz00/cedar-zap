@@ -15,24 +15,24 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   const answers = useQuizStore((store) => store.answers);
   const setAnswer = useQuizStore((store) => store.setAnswer);
   const showAnswers = useQuizStore((state) => state.showAnswers);
-  const currentQuestion = useQuizStore((st) => st.currentQuestion);
+  const currentQuestionIndex = useQuizStore((st) => st.currentQuestionIndex);
 
   const currentQuestionData = useMemo(
-    () => questions[currentQuestion],
-    [currentQuestion]
+    () => questions[currentQuestionIndex],
+    [currentQuestionIndex]
   );
 
   const { question, options, point, correctAnswers, isMultipleChoice } =
     currentQuestionData;
 
   const resetAnswer = useCallback(
-    () => setAnswer(currentQuestion, -1),
-    [currentQuestion, setAnswer]
+    () => setAnswer(currentQuestionIndex, -1),
+    [currentQuestionIndex, setAnswer]
   );
 
   return (
     <Box display="flex" minWidth={{ lg: "850px" }} maxWidth={{ lg: "1050px" }}>
-      <QuestionHeader index={currentQuestion} point={point} />
+      <QuestionHeader index={currentQuestionIndex} point={point} />
       <Divider
         orientation="vertical"
         flexItem
@@ -56,13 +56,13 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
             </Typography>
             <OptionsList
               options={options}
-              questionIndex={currentQuestion}
+              questionIndex={currentQuestionIndex}
               correctAnswers={correctAnswers}
               showAnswers={showAnswers}
               isMultipleChoice={isMultipleChoice}
             />
           </Box>
-          {!showAnswers && answers[currentQuestion]?.length > 0 && (
+          {!showAnswers && answers[currentQuestionIndex]?.length > 0 && (
             <Box display={"flex"} justifyContent={"center"}>
               <AnswerResetButton resetAnswer={resetAnswer} />
             </Box>

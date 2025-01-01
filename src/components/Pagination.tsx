@@ -8,7 +8,7 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
-  const { currentQuestion, setCurrentQuestion } = useQuizStore();
+  const { currentQuestionIndex, setCurrentQuestionIndex } = useQuizStore();
 
   // Ref to store the time of the last key press
   const lastPressTime = useRef(0);
@@ -25,10 +25,10 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
       currentTime - lastPressTime.current >= throttleDelay
     ) {
       if (event.key === "ArrowRight") {
-        if (currentQuestion < totalQuestions - 1)
-          setCurrentQuestion(currentQuestion + 1);
+        if (currentQuestionIndex < totalQuestions - 1)
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
       } else if (event.key === "ArrowLeft")
-        if (currentQuestion > 0) setCurrentQuestion(currentQuestion - 1);
+        if (currentQuestionIndex > 0) setCurrentQuestionIndex(currentQuestionIndex - 1);
 
       lastPressTime.current = currentTime;
     }
@@ -40,7 +40,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [currentQuestion]);
+  }, [currentQuestionIndex]);
 
   return (
     <Box
@@ -51,16 +51,16 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
     >
       <Button
         variant="outlined"
-        disabled={currentQuestion === 0}
-        onClick={() => setCurrentQuestion(currentQuestion - 1)}
+        disabled={currentQuestionIndex === 0}
+        onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
         startIcon={<ArrowLeft />}
       >
         Previous
       </Button>
       <Button
         variant="outlined"
-        disabled={currentQuestion === totalQuestions - 1}
-        onClick={() => setCurrentQuestion(currentQuestion + 1)}
+        disabled={currentQuestionIndex === totalQuestions - 1}
+        onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
         endIcon={<ArrowRight />}
       >
         Next

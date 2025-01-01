@@ -8,7 +8,9 @@ import questions from "../data/questions";
 import SidebarButton from "./SidebarButton";
 
 const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
-  const setCurrentQuestion = useQuizStore((store) => store.setCurrentQuestion);
+  const setCurrentQuestionIndex = useQuizStore(
+    (store) => store.setCurrentQuestionIndex
+  );
   const showAnswers = useQuizStore((store) => store.showAnswers);
   const falseQuestions = useQuizStore((store) => store.falseQuestions);
 
@@ -44,7 +46,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
             <SidebarButton
               key={i}
               index={i}
-              setCurrentQuestion={setCurrentQuestion}
+              setCurrentQuestionIndex={setCurrentQuestionIndex}
               falseQuestions={falseQuestions}
               showAnswers={showAnswers}
             />

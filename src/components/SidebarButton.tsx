@@ -4,18 +4,18 @@ import { Box, Button } from "@mui/material";
 
 interface SidebarButtonProps {
   index: number;
-  setCurrentQuestion: (index: number) => void;
+  setCurrentQuestionIndex: (index: number) => void;
   showAnswers: boolean;
   falseQuestions: number[];
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({
   index,
-  setCurrentQuestion,
+  setCurrentQuestionIndex,
   showAnswers,
   falseQuestions,
 }) => {
-  const isCurrent = useQuizStore((store) => store.currentQuestion === index);
+  const isCurrent = useQuizStore((store) => store.currentQuestionIndex === index);
   const hasAnswer = useQuizStore((store) => store.answers[index]?.length > 0);
   const isHighlighted = useQuizStore((store) =>
     store.highlightedQuestions.includes(index)
@@ -51,7 +51,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
           showAnswers ? "outlined" : isCurrent ? "contained" : "outlined"
         }
         color="primary"
-        onClick={() => setCurrentQuestion(index)}
+        onClick={() => setCurrentQuestionIndex(index)}
         sx={{
           height: 48,
           minWidth: 48,
