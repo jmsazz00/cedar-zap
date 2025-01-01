@@ -8,12 +8,7 @@ import questions from "../data/questions";
 import SidebarButton from "./SidebarButton";
 
 const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
-  const currentQuestion = useQuizStore((store) => store.currentQuestion);
   const setCurrentQuestion = useQuizStore((store) => store.setCurrentQuestion);
-  const highlightedQuestions = useQuizStore(
-    (store) => store.highlightedQuestions
-  );
-  const answers = useQuizStore((store) => store.answers);
   const showAnswers = useQuizStore((store) => store.showAnswers);
   const falseQuestions = useQuizStore((store) => store.falseQuestions);
 
@@ -45,19 +40,13 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
         }}
       >
         {Array.from({ length: questionCount }, (_, i) => {
-          const hasAnswer = answers[i]?.length > 0;
-          const isCorrect = hasAnswer && !falseQuestions.includes(i);
-
           return (
             <SidebarButton
               key={i}
               index={i}
-              currentQuestion={currentQuestion}
               setCurrentQuestion={setCurrentQuestion}
-              isHighlighted={highlightedQuestions.includes(i)}
-              hasAnswer={hasAnswer}
+              falseQuestions={falseQuestions}
               showAnswers={showAnswers}
-              isCorrect={isCorrect}
             />
           );
         })}

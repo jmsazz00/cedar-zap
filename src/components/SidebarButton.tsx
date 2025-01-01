@@ -1,26 +1,47 @@
 import React from "react";
+import { useQuizStore } from "../store/QuizStore";
 import { Box, Button } from "@mui/material";
 
 interface SidebarButtonProps {
   index: number;
-  currentQuestion: number;
   setCurrentQuestion: (index: number) => void;
-  isHighlighted: boolean;
-  hasAnswer: boolean;
   showAnswers: boolean;
-  isCorrect: boolean;
+  falseQuestions: number[];
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({
   index,
-  currentQuestion,
   setCurrentQuestion,
-  isHighlighted,
-  hasAnswer,
   showAnswers,
-  isCorrect,
+  falseQuestions,
 }) => {
-  const isCurrent = currentQuestion === index;
+  const isCurrent = useQuizStore((store) => store.currentQuestion === index);
+  const hasAnswer = useQuizStore((store) => store.answers[index]?.length > 0);
+  const isHighlighted = useQuizStore((store) =>
+    store.highlightedQuestions.includes(index)
+  );
+
+  const isCorrect = hasAnswer && !falseQuestions.includes(index);
+
+  const getBgColor = () => {
+    if (isCurrent) return !showAnswers ? "primary.dark" : "background.default";
+    if (hasAnswer && !showAnswers) return "secondary.light";
+    return "background.default";
+  };
+
+  const getColor = () => {
+    if (showAnswers) return isCorrect ? "success.dark" : "error.dark";
+    return isCurrent ? "white" : "text.secondary";
+  };
+
+  const getBorderColor = () => {
+    if (!showAnswers) return "default";
+    return isCurrent
+      ? "var(--currentColor)"
+      : isCorrect
+      ? "#1b3d2d"
+      : "#5c0f0f";
+  };
 
   return (
     <Box sx={{ position: "relative" }}>
@@ -39,27 +60,9 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
           fontWeight: "bold",
           zIndex: 2,
           overflow: "hidden",
-          bgcolor: isCurrent
-            ? !showAnswers
-              ? "primary.dark"
-              : "background.default"
-            : hasAnswer && !showAnswers
-            ? "secondary.light"
-            : "background.default",
-          color: showAnswers
-            ? isCorrect
-              ? "success.dark"
-              : "error.dark"
-            : isCurrent
-            ? "white"
-            : "text.secondary",
-          borderColor: showAnswers
-            ? isCurrent
-              ? "var(--currentColor)"
-              : isCorrect
-              ? "#1b3d2d"
-              : "#5c0f0f"
-            : "default",
+          bgcolor: getBgColor(),
+          color: getColor(),
+          borderColor: getBorderColor(),
           "&:hover": {
             color: showAnswers ? "default" : "white",
             borderColor: showAnswers ? "var(--currentColor)" : "default",
