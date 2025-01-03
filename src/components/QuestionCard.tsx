@@ -1,11 +1,12 @@
 import React, { useMemo, useCallback } from "react";
-import { Box, Divider, Paper, Typography } from "@mui/material";
+import { Box, Divider, Paper } from "@mui/material";
 import Question from "../entities/Question";
 import { useQuizStore } from "../store/QuizStore";
 import AnswerResetButton from "./AnswerResetButton";
 import OptionsList from "./OptionsList";
 import Pagination from "./Pagination";
 import QuestionHeader from "./QuestionHeader";
+import QuestionQuery from "./QuestionQuery";
 
 interface QuestionCardProps {
   questions: Question[];
@@ -51,9 +52,11 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
           }}
         >
           <Box sx={{ flex: 1, px: 2 }}>
-            <Typography variant="body1" sx={{ mb: 2, color: "text.primary" }}>
-              {question}
-            </Typography>
+            <QuestionQuery
+              question={question}
+              isMultipleChoice={isMultipleChoice}
+              showAnswers={showAnswers}
+            />
             <OptionsList
               options={options}
               questionIndex={currentQuestionIndex}

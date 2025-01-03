@@ -16,8 +16,6 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ index, point }) => {
   const toggleHighlight = useQuizStore((store) => store.toggleHighlight);
   const showAnswers = useQuizStore((store) => store.showAnswers);
 
-  console.log("QuestionHeader rendered");
-
   return (
     <Box
       sx={{
