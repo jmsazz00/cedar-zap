@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from "react";
-import { Box, Divider, Paper } from "@mui/material";
+import { Box, Divider, Paper, useMediaQuery, useTheme } from "@mui/material";
 import Question from "../entities/Question";
 import { useQuizStore } from "../store/QuizStore";
 import AnswerResetButton from "./AnswerResetButton";
@@ -13,6 +13,8 @@ interface QuestionCardProps {
 }
 
 const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const answers = useQuizStore((store) => store.answers);
   const setAnswer = useQuizStore((store) => store.setAnswer);
   const showAnswers = useQuizStore((state) => state.showAnswers);
@@ -20,7 +22,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
 
   const currentQuestionData = useMemo(
     () => questions[currentQuestionIndex],
-    [currentQuestionIndex]
+    [currentQuestionIndex, questions]
   );
 
   const { question, options, point, correctAnswers, isMultipleChoice } =
@@ -32,13 +34,21 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   );
 
   return (
-    <Box display="flex" minWidth={{ lg: "850px" }} maxWidth={{ lg: "1050px" }}>
-      <QuestionHeader index={currentQuestionIndex} point={point} />
-      <Divider
-        orientation="vertical"
-        flexItem
-        sx={{ borderColor: "divider", mx: 2 }}
-      />
+    <Box
+      display="flex"
+      flexDirection={isMobile ? "column" : "row"}
+      minWidth={{ lg: "850px" }}
+      maxWidth={{ lg: "1050px" }}
+      gap={isMobile ? 2 : 0}
+    >
+      <QuestionHeader point={point} />
+      {!isMobile && (
+        <Divider
+          orientation="vertical"
+          flexItem
+          sx={{ borderColor: "divider", mx: 2 }}
+        />
+      )}
       <Box width={"100%"}>
         <Paper
           elevation={3}
@@ -51,27 +61,24 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
             width: "100%",
           }}
         >
-          <Box sx={{ flex: 1, px: 2 }}>
+          <Box sx={{ flex: 1, px: isMobile ? 0 : 1.5 }}>
             <QuestionQuery
               question={question}
               isMultipleChoice={isMultipleChoice}
-              showAnswers={showAnswers}
             />
             <OptionsList
               options={options}
-              questionIndex={currentQuestionIndex}
               correctAnswers={correctAnswers}
-              showAnswers={showAnswers}
               isMultipleChoice={isMultipleChoice}
             />
           </Box>
           {!showAnswers && answers[currentQuestionIndex]?.length > 0 && (
-            <Box display={"flex"} justifyContent={"center"}>
+            <Box display={"flex"} justifyContent={"center"} mt={1}>
               <AnswerResetButton resetAnswer={resetAnswer} />
             </Box>
           )}
         </Paper>
-        <Box my={3}>
+        <Box my={isMobile ? 2 : 3}>
           <Pagination totalQuestions={questions.length} />
         </Box>
       </Box>

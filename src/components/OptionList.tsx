@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { getOptionStyles, renderIcon } from "./OptionsUtils";
+import { useQuizStore } from "../store/QuizStore";
 
 interface OptionListProps {
   options: string[];
   selectedAnswers: number[];
   correctAnswers: number[];
-  showAnswers: boolean;
   isMultipleChoice: boolean;
   onSelect: (index: number) => void;
 }
@@ -15,12 +15,13 @@ const OptionList: React.FC<OptionListProps> = ({
   options,
   selectedAnswers,
   correctAnswers,
-  showAnswers,
   isMultipleChoice,
   onSelect,
 }) => {
   const [hoveredOption, setHoveredOption] = useState<number | null>(null);
   const listRef = React.useRef<HTMLUListElement | null>(null);
+
+  const showAnswers = useQuizStore((state) => state.showAnswers);
 
   useEffect(() => {
     if (listRef.current) listRef.current.focus();
@@ -64,7 +65,7 @@ const OptionList: React.FC<OptionListProps> = ({
       ref={listRef}
       onKeyDown={(e) => handleKeyPress(e)}
       tabIndex={0}
-      sx={{ outline: "none" }}
+      sx={{ outline: "none", py: 0 }}
     >
       {options.map((option, index) => (
         <ListItem key={index} disablePadding>

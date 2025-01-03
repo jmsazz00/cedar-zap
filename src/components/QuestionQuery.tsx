@@ -1,14 +1,15 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import { useQuizStore } from "../store/QuizStore";
 
 interface Props {
   question: string;
   isMultipleChoice: boolean;
-  showAnswers: boolean;
 }
 
-const QuestionQuery = ({ question, isMultipleChoice, showAnswers }: Props) => {
-  console.log("QuestionQuery rendered");
+const QuestionQuery = ({ question, isMultipleChoice }: Props) => {
+  const showAnswers = useQuizStore((state) => state.showAnswers);
+
   return (
     <Box>
       <Typography variant="body1" mb={2}>
