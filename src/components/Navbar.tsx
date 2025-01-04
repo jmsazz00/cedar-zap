@@ -11,13 +11,7 @@ const Navbar = () => {
         borderBottom: "1px solid rgba(187, 134, 252, 0.2)",
       }}
     >
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <Toolbar sx={{ position: "relative" }}>
         {/* Left Section: Logo Name */}
         <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
           <Box display={"flex"} alignItems={"center"} mr={1}>
@@ -28,18 +22,19 @@ const Navbar = () => {
         {/* Center Section: Logo */}
         <Box
           sx={{
-            flex: 1,
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%)",
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center", // Ensures vertical centering
+            alignItems: "center",
           }}
         >
           <img src={logo} height={50} alt="Logo" />
         </Box>
 
         {/* Right Section: Home Icon */}
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
-          <IconButton color="inherit" edge="end" aria-label="menu">
+        <Box>
+          <IconButton color="inherit" aria-label="menu">
             <HomeIcon />
           </IconButton>
         </Box>

@@ -12,11 +12,11 @@ const QuestionQuery = ({ question, isMultipleChoice }: Props) => {
 
   return (
     <Box>
-      <Typography variant="body1" mb={2}>
+      <Typography variant="body1" mb={1.5}>
         {question}
       </Typography>
       {!showAnswers && (
-        <Typography variant="body1" mb={1} sx={{ color: "secondary.main" }}>
+        <Typography variant="body1" mb={1.5} sx={{ color: "secondary.main" }}>
           Veuillez choisir {isMultipleChoice ? "au moins" : ""} une réponse
         </Typography>
       )}
