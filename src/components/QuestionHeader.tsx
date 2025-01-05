@@ -1,15 +1,40 @@
 import EmojiFlagsIcon from "@mui/icons-material/EmojiFlags";
 import GradeIcon from "@mui/icons-material/Grade";
-import { Box, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import { useQuizStore } from "../store/QuizStore";
 
 interface QuestionHeaderProps {
-  index: number;
   point: number;
 }
 
-const QuestionHeader: React.FC<QuestionHeaderProps> = ({ index, point }) => {
+const CustomDivider = (
+  primary: boolean,
+  orientation: "horizontal" | "vertical" = "horizontal"
+) => (
+  <Divider
+    orientation={orientation}
+    flexItem={orientation === "vertical"}
+    sx={{
+      width: orientation === "horizontal" ? "100%" : "1px",
+      bgcolor: primary ? "rgba(255, 255, 255, 0.2)" : "initial",
+      my: orientation === "horizontal" ? 1 : 0,
+    }}
+  />
+);
+
+const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const index = useQuizStore((store) => store.currentQuestionIndex);
+
   const isHighlighted = useQuizStore((store) =>
     store.highlightedQuestions.includes(index)
   );
@@ -21,52 +46,78 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ index, point }) => {
       sx={{
         bgcolor: "#1b1b1b",
         px: 2,
-        py: 3,
+        py: isMobile ? 1.75 : 3,
         display: "flex",
-        flexDirection: "column",
+        justifyContent: "space-between",
+        flexDirection: isMobile ? "row" : "column",
         alignItems: "center",
         borderRadius: 1,
-        minWidth: "160px",
-        height: "fit-content",
+        minWidth: isMobile ? "100%" : "160px",
+        height: isMobile ? "auto" : "fit-content",
         border: "1px solid rgba(255, 255, 255, 0.15)",
+        gap: isMobile ? 2 : 0,
+        mb: 0.5,
       }}
     >
-      <Typography
-        variant="h6"
-        component="h2"
-        sx={{ fontWeight: "bold", color: "primary.main", mb: 1 }}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          flexGrow: 1,
+        }}
       >
-        {`Question ${index + 1}`}
-      </Typography>
-      <Divider
-        sx={{ width: "100%", mb: 1, borderColor: "rgba(255, 255, 255, 0.25)" }}
-      />
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            color: "primary.main",
+          }}
+        >
+          {`Question ${index + 1}`}
+        </Typography>
+      </Box>
+
+      {!isMobile && CustomDivider(true)}
+      {isMobile && CustomDivider(true, "vertical")}
+
       {!showAnswers && (
         <Box
           onClick={() => toggleHighlight(index)}
           sx={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
             color: isHighlighted ? "secondary.dark" : "secondary.main",
             cursor: "pointer",
             textDecoration: "none",
             "&:hover": { textDecoration: "underline" },
+            gap: 0.5,
+            flexGrow: 1,
           }}
         >
-          <EmojiFlagsIcon sx={{ fontSize: "1.2rem", mr: 0.5 }} />
-          {isHighlighted ? "Dehighlight" : "Highlight"}
+          <EmojiFlagsIcon sx={{ fontSize: "1.2rem" }} />
+          <Typography variant="body2">
+            {isHighlighted ? "Dehighlight" : "Highlight"}
+          </Typography>
         </Box>
       )}
+
+      {!showAnswers && isMobile && CustomDivider(false, "vertical")}
+
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
-          my: 0.25,
+          justifyContent: "center",
+          mt: isMobile ? 0 : 0.25,
           color: "rgb(255,255,255,0.7)",
+          gap: 0.5,
+          flexGrow: 1,
         }}
       >
-        <GradeIcon sx={{ fontSize: "1.2rem", mr: 0.5, color: "#ffc107" }} />
-        Grade: {point}pt
+        <GradeIcon sx={{ fontSize: "1.2rem", color: "#ffc107" }} />
+        <Typography variant="body2">Grade: {point}pt</Typography>
       </Box>
     </Box>
   );
