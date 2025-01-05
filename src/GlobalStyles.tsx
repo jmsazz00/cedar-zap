@@ -21,11 +21,6 @@ const GlobalStyles = () => {
         ::-webkit-scrollbar-thumb:hover {
           background-color: #666;
         }
-
-        /* Remove white focus outline on buttons */
-        button:focus {
-          outline: none;
-        }
       `}
     />
   );

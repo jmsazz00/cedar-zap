@@ -37,7 +37,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
     <Box
       display="flex"
       flexDirection={isMobile ? "column" : "row"}
-      minWidth={{ lg: "850px" }}
+      width={"fit-content"}
+      minWidth={{ lg: "900px" }}
       maxWidth={{ lg: "1050px" }}
       gap={isMobile ? 2 : 0}
     >

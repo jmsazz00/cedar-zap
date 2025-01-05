@@ -15,7 +15,9 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   showAnswers,
   falseQuestions,
 }) => {
-  const isCurrent = useQuizStore((store) => store.currentQuestionIndex === index);
+  const isCurrent = useQuizStore(
+    (store) => store.currentQuestionIndex === index
+  );
   const hasAnswer = useQuizStore((store) => store.answers[index]?.length > 0);
   const isHighlighted = useQuizStore((store) =>
     store.highlightedQuestions.includes(index)
