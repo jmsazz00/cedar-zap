@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo } from "react";
 import { Box, Divider, Paper, useMediaQuery, useTheme } from "@mui/material";
 import Question from "../entities/Question";
 import { useQuizStore } from "../store/QuizStore";
@@ -28,19 +28,17 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   const { question, options, point, correctAnswers, isMultipleChoice } =
     currentQuestionData;
 
-  const resetAnswer = useCallback(
-    () => setAnswer(currentQuestionIndex, -1),
-    [currentQuestionIndex, setAnswer]
-  );
-
   return (
     <Box
       display="flex"
       flexDirection={isMobile ? "column" : "row"}
-      width={"fit-content"}
       minWidth={{ lg: "900px" }}
       maxWidth={{ lg: "1050px" }}
       gap={isMobile ? 2 : 0}
+      sx={{
+        m: { sm: "0 auto", lg: "0" },
+        width: { xs: "100%", md: "fit-content" },
+      }}
     >
       <QuestionHeader point={point} />
       {!isMobile && (
@@ -75,7 +73,9 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
           </Box>
           {!showAnswers && answers[currentQuestionIndex]?.length > 0 && (
             <Box display={"flex"} justifyContent={"center"} mt={1}>
-              <AnswerResetButton resetAnswer={resetAnswer} />
+              <AnswerResetButton
+                resetAnswer={() => setAnswer(currentQuestionIndex, -1)}
+              />
             </Box>
           )}
         </Paper>

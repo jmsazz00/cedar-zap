@@ -31,7 +31,7 @@ const CustomDivider = (
 
 const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const index = useQuizStore((store) => store.currentQuestionIndex);
 
@@ -71,6 +71,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
           variant="h6"
           sx={{
             fontWeight: "bold",
+            fontSize: { xs: "1.15rem", md: "1.25rem" },
             color: "primary.main",
           }}
         >
@@ -78,7 +79,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
         </Typography>
       </Box>
 
-      {!isMobile && CustomDivider(true)}
+      {!isMobile && CustomDivider(false)}
       {isMobile && CustomDivider(true, "vertical")}
 
       {!showAnswers && (

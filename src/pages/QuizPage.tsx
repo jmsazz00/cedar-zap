@@ -19,7 +19,7 @@ const QuizPage = ({ quiz }: Props) => {
     useFinishTest(questions);
 
   return (
-    <Box sx={{ display: { sm: "block", md: "flex" }, pt: "64px" }}>
+    <Box sx={{ display: { md: "flex" }, pt: "64px" }}>
       <QuizTimer duration={duration} onTimeUp={finishTest} />
       <Sidebar questionCount={questions.length} />
       <Container sx={{ mx: 0 }}>

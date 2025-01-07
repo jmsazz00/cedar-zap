@@ -9,10 +9,10 @@ const QuizHeader = ({ name, year }: Props) => {
   return (
     <Box
       sx={{
-        mt: 2.5,
-        mb: 3,
+        mt: { xs: 2, md: 2.5 },
+        mb: { xs: 2, md: 2.5 },
         py: 1,
-        px: 3,
+        px: { xs: 2, md: 3 },
         borderRadius: 1,
         display: "flex",
         alignItems: "center",
@@ -30,6 +30,7 @@ const QuizHeader = ({ name, year }: Props) => {
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           fontWeight: "bold",
+          fontSize: { xs: "1.3rem", sm: "1.4rem", md: "1.5rem" },
           borderRight: "2px solid #6a1b9a",
           pr: 2.5,
         }}
@@ -40,7 +41,7 @@ const QuizHeader = ({ name, year }: Props) => {
         variant="subtitle2"
         sx={{
           color: "#bb86fc",
-          fontSize: "0.75rem",
+          fontSize: { xs: "0.66rem", md: "0.75rem" },
           fontWeight: "500",
           backgroundColor: "#4a306b",
           borderRadius: 1,

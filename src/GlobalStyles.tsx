@@ -21,6 +21,31 @@ const GlobalStyles = () => {
         ::-webkit-scrollbar-thumb:hover {
           background-color: #666;
         }
+        @keyframes vibrateWithPause {
+          0%,
+          88% {
+            /* Pause for 88% of the time */
+            transform: rotate(0deg);
+          }
+          90% {
+            /* Start the vibration */
+            transform: rotate(-10deg);
+          }
+          92% {
+            transform: rotate(10deg);
+          }
+          94% {
+            transform: rotate(-10deg);
+          }
+          96% {
+            transform: rotate(10deg);
+          }
+          98%,
+          100% {
+            /* Reset */
+            transform: rotate(0deg);
+          }
+        }
       `}
     />
   );
