@@ -45,8 +45,8 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
     <Box
       sx={{
         bgcolor: "#1b1b1b",
-        px: 2,
-        py: isMobile ? 1.75 : 3,
+        px: isMobile ? 0 : 2,
+        py: isMobile ? 1.5 : 3,
         display: "flex",
         justifyContent: "space-between",
         flexDirection: isMobile ? "row" : "column",

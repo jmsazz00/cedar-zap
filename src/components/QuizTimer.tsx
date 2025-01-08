@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { useEffect, useState, useRef } from "react";
 import { useQuizStore } from "../store/QuizStore";
 
 interface QuizTimerProps {
@@ -10,11 +11,18 @@ interface QuizTimerProps {
 const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
   const mainColor = "#5C6BC0";
   const [timeLeft, setTimeLeft] = useState(duration);
-  const [bgColor, setBgColor] = useState(mainColor);
+  const [showText, setShowText] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
 
   const showAnswers = useQuizStore((st) => st.showAnswers);
   const finishTest = useQuizStore((st) => st.finishTest);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const initialRender = useRef(true);
+
+  // Timer logic
   useEffect(() => {
     const interval = setInterval(() => {
       if (finishTest) clearInterval(interval);
@@ -31,11 +39,25 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
     return () => clearInterval(interval);
   }, [onTimeUp, finishTest]);
 
+  // Scroll logic for mobile
+  const handleScroll = () => {
+    if (initialRender.current) {
+      initialRender.current = false; // Skip the first scroll check
+      return;
+    }
+
+    if (window.scrollY > 0 && !scrolled) {
+      setShowText(false);
+      setScrolled(true);
+    }
+  };
+
   useEffect(() => {
-    // Change background color in the last 30 seconds
-    if (timeLeft <= 30) setBgColor("error.dark");
-    else setBgColor(mainColor);
-  }, [timeLeft]);
+    if (!isMobile) return;
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [scrolled, isMobile]);
 
   const formatTime = (seconds: number) => {
     const hrs = Math.floor(seconds / 3600);
@@ -51,17 +73,44 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
       <Box
         sx={{
           position: "fixed",
-          top: "87px",
-          right: "20px",
-          backgroundColor: bgColor,
+          top: { xs: "152px", md: "87px" },
+          right: { xs: "16px", sm: "23px" },
+          backgroundColor: timeLeft <= 30 ? "error.dark" : mainColor,
           color: "#fff",
-          padding: "4px 12px",
+          p: { xs: "3px 4.5px", lg: "4px 8px" },
           borderRadius: 1,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-          transition: "background-color 0.3s ease",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
+          border: "1px solid rgba(0, 0, 0, 0.3)",
+          display: "flex",
+          alignItems: "center",
+          cursor: "pointer",
+          transition: "all 0.3s ease",
+          zIndex: 999,
+          animation: !showText
+            ? "vibrateWithPause 5s ease-in-out infinite"
+            : "none",
         }}
+        onClick={() => setShowText((prev) => !prev)}
       >
-        <Typography variant="h6">{formatTime(timeLeft)}</Typography>
+        <AccessTimeIcon
+          sx={{
+            marginRight: showText ? (isMobile ? "4px" : "6px") : "0",
+            transition: "margin-right 0.3s ease",
+            fontSize: { xs: "1.35rem", md: "1.5rem", lg: "1.6rem" },
+          }}
+        />
+        <Typography
+          variant="h6"
+          sx={{
+            fontSize: { xs: ".95rem", md: "1.1rem", lg: "1.25rem" },
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            transition: "max-width 0.3s ease",
+            maxWidth: showText ? "100px" : "0px",
+          }}
+        >
+          {formatTime(timeLeft)}
+        </Typography>
       </Box>
     )
   );

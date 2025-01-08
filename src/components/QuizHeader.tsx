@@ -30,7 +30,7 @@ const QuizHeader = ({ name, year }: Props) => {
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           fontWeight: "bold",
-          fontSize: { xs: "1.3rem", sm: "1.4rem", md: "1.5rem" },
+          fontSize: { xs: "1.3rem", sm: "1.4rem", md: "1.5rem", lg: "1.6rem" },
           borderRight: "2px solid #6a1b9a",
           pr: 2.5,
         }}
