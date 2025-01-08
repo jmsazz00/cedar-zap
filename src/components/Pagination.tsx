@@ -10,10 +10,8 @@ interface PaginationProps {
 const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
   const { currentQuestionIndex, setCurrentQuestionIndex } = useQuizStore();
 
-  // Ref to store the time of the last key press
   const lastPressTime = useRef(0);
 
-  // Throttle delay in milliseconds
   const throttleDelay = 300;
 
   const handleKeyPress = (event: KeyboardEvent) => {
@@ -28,7 +26,8 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
         if (currentQuestionIndex < totalQuestions - 1)
           setCurrentQuestionIndex(currentQuestionIndex + 1);
       } else if (event.key === "ArrowLeft")
-        if (currentQuestionIndex > 0) setCurrentQuestionIndex(currentQuestionIndex - 1);
+        if (currentQuestionIndex > 0)
+          setCurrentQuestionIndex(currentQuestionIndex - 1);
 
       lastPressTime.current = currentTime;
     }
@@ -42,6 +41,11 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
     };
   }, [currentQuestionIndex]);
 
+  const commonStyles = {
+    fontSize: { xs: "0.825rem", md: ".9rem" },
+    px: { xs: 1, md: 2 },
+  };
+
   return (
     <Box
       sx={{
@@ -54,6 +58,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
         disabled={currentQuestionIndex === 0}
         onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
         startIcon={<ArrowLeft />}
+        sx={commonStyles}
       >
         Previous
       </Button>
@@ -62,6 +67,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
         disabled={currentQuestionIndex === totalQuestions - 1}
         onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
         endIcon={<ArrowRight />}
+        sx={commonStyles}
       >
         Next
       </Button>
