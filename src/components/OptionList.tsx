@@ -92,7 +92,14 @@ const OptionList: React.FC<OptionListProps> = ({
               selectedAnswers,
               isMultipleChoice
             )}
-            <ListItemText primary={option} />
+            <ListItemText
+              primary={option}
+              primaryTypographyProps={{
+                sx: {
+                  fontSize: { xs: "0.9rem", sm: "0.95rem", md: "1rem" },
+                },
+              }}
+            />
           </ListItemButton>
         </ListItem>
       ))}

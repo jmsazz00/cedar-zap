@@ -42,7 +42,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
   }, [currentQuestionIndex]);
 
   const commonStyles = {
-    fontSize: { xs: "0.825rem", md: ".9rem" },
+    fontSize: { xs: "0.8rem", md: ".9rem" },
     px: { xs: 1, md: 2 },
   };
 

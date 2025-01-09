@@ -90,16 +90,20 @@ export const renderIcon = (
       );
   }
 
+  const commonStyles = { py: { xs: 0.75, md: 1.15 } };
+
   return isMultipleChoice ? (
     <Checkbox
       checked={selectedAnswers.includes(index)}
       disabled={showAnswers}
+      sx={commonStyles}
     />
   ) : (
     <Radio
       checked={selectedAnswers.includes(index)}
       disabled={showAnswers}
       value={index}
+      sx={commonStyles}
     />
   );
 };
