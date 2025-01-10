@@ -2,13 +2,21 @@ import React, { useEffect, useRef } from "react";
 import { Button, Box, useMediaQuery, useTheme } from "@mui/material";
 import { useQuizStore } from "../store/QuizStore";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
+import FinishTestButton from "./FinishTestButton";
+import { useQuizContext } from "../context/QuizContext";
 
 interface PaginationProps {
   totalQuestions: number;
 }
 
 const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
-  const { currentQuestionIndex, setCurrentQuestionIndex } = useQuizStore();
+  const currentQuestionIndex = useQuizStore(
+    (state) => state.currentQuestionIndex
+  );
+  const setCurrentQuestionIndex = useQuizStore(
+    (state) => state.setCurrentQuestionIndex
+  );
+  const showAnswers = useQuizStore((state) => state.showAnswers);
 
   const lastPressTime = useRef(0);
 
@@ -44,6 +52,8 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
+  const { finishTest } = useQuizContext();
+
   return (
     <Box
       sx={{
@@ -58,8 +68,15 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
         startIcon={<ArrowLeft />}
         size={isMobile ? "small" : "medium"}
       >
-        Previous
+        Prev
       </Button>
+      {!showAnswers && (
+        <FinishTestButton
+          onFinish={finishTest}
+          disabled={!isMobile && currentQuestionIndex !== totalQuestions - 1}
+          contained={true}
+        />
+      )}
       <Button
         variant="outlined"
         disabled={currentQuestionIndex === totalQuestions - 1}
