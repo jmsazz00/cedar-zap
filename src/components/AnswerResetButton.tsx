@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 
 interface AnswerResetButtonProps {
@@ -7,10 +7,19 @@ interface AnswerResetButtonProps {
 
 const AnswerResetButton: React.FC<AnswerResetButtonProps> = ({
   resetAnswer,
-}) => (
-  <Button onClick={resetAnswer} variant="outlined">
-    Remove my answer
-  </Button>
-);
+}) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  return (
+    <Button
+      onClick={resetAnswer}
+      variant="outlined"
+      size={isMobile ? "small" : "medium"}
+    >
+      Remove my answer
+    </Button>
+  );
+};
 
 export default AnswerResetButton;

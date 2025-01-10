@@ -54,7 +54,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            p: 2,
+            p: isMobile ? 1.75 : 2,
             bgcolor: "background.paper",
             borderRadius: 2,
             width: "100%",

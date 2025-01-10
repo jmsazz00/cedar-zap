@@ -32,7 +32,11 @@ const OptionsList: React.FC<OptionsListProps> = ({
         <Typography
           variant="body2"
           color="warning.main"
-          sx={{ my: 0.5, fontWeight: 600 }}
+          sx={{
+            mb: 0.8,
+            fontWeight: 600,
+            fontSize: { xs: "0.8rem", md: "0.9rem" },
+          }}
         >
           &#9888;&nbsp; Not Answered
         </Typography>

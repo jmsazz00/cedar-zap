@@ -11,7 +11,7 @@ const QuestionQuery = ({ question, isMultipleChoice }: Props) => {
   const showAnswers = useQuizStore((state) => state.showAnswers);
 
   const commonStyles = {
-    fontSize: { xs: ".9rem", sm: ".95rem", md: "1rem" },
+    fontSize: { xs: ".875rem", sm: ".9375rem", md: "1rem" },
   };
 
   return (

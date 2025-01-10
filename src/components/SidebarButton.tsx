@@ -55,10 +55,10 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
         color="primary"
         onClick={() => setCurrentQuestionIndex(index)}
         sx={{
-          height: 48,
-          minWidth: 48,
-          borderRadius: 2,
-          fontSize: "0.875rem",
+          height: { xs: 42, sm: 45, md: 48 },
+          minWidth: { xs: 42, sm: 45, md: 48 },
+          borderRadius: { xs: 1.5, md: 2 },
+          fontSize: { xs: "0.75rem", sm: "0.8rem", md: "0.875rem" },
           fontWeight: "bold",
           zIndex: 2,
           overflow: "hidden",

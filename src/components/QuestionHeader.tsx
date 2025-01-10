@@ -32,6 +32,7 @@ const CustomDivider = (
 const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallMobile = useMediaQuery("(max-width: 390px)");
 
   const index = useQuizStore((store) => store.currentQuestionIndex);
 
@@ -41,12 +42,14 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
   const toggleHighlight = useQuizStore((store) => store.toggleHighlight);
   const showAnswers = useQuizStore((store) => store.showAnswers);
 
+  const commonStyles = { fontSize: { xs: "0.8rem", md: "0.95rem" } };
+
   return (
     <Box
       sx={{
         bgcolor: "#1b1b1b",
-        px: isMobile ? 0 : 2,
-        py: isMobile ? 1.5 : 3,
+        px: isSmallMobile ? 0.5 : isMobile ? 1 : 2,
+        py: isMobile ? 1.25 : 3,
         display: "flex",
         justifyContent: "space-between",
         flexDirection: isMobile ? "row" : "column",
@@ -55,8 +58,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
         minWidth: isMobile ? "100%" : "160px",
         height: isMobile ? "auto" : "fit-content",
         border: "1px solid rgba(255, 255, 255, 0.15)",
-        gap: isMobile ? 2 : 0,
-        mb: 0.5,
+        gap: isSmallMobile ? 0.5 : isMobile ? 1.5 : 0,
       }}
     >
       <Box
@@ -71,7 +73,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
           variant="h6"
           sx={{
             fontWeight: "bold",
-            fontSize: { xs: "1.15rem", md: "1.25rem" },
+            fontSize: { xs: "1.125rem", md: "1.25rem" },
             color: "primary.main",
           }}
         >
@@ -98,7 +100,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
           }}
         >
           <EmojiFlagsIcon sx={{ fontSize: "1.2rem" }} />
-          <Typography variant="body2">
+          <Typography variant="body2" sx={commonStyles}>
             {isHighlighted ? "Dehighlight" : "Highlight"}
           </Typography>
         </Box>
@@ -118,7 +120,9 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
         }}
       >
         <GradeIcon sx={{ fontSize: "1.2rem", color: "#ffc107" }} />
-        <Typography variant="body2">Grade: {point}pt</Typography>
+        <Typography variant="body2" sx={commonStyles}>
+          Grade: {point}pt
+        </Typography>
       </Box>
     </Box>
   );

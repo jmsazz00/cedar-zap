@@ -68,6 +68,12 @@ export const renderIcon = (
   const isSelected = selectedAnswers.includes(index);
   const isUnselectedCorrect = isCorrect && !isSelected;
 
+  const sharedStyles = {
+    ml: { xs: 1, md: 1.5 },
+    mr: 1.2,
+    my: { xs: 0.75, md: 1.1 },
+  };
+
   if (showAnswers) {
     if ((isSelected && isCorrect) || isUnselectedCorrect)
       return (
@@ -75,8 +81,7 @@ export const renderIcon = (
           fontSize="small"
           sx={{
             color: isUnselectedCorrect ? "info.light" : "success.light",
-            ml: 1.5,
-            mr: 1.2,
+            ...sharedStyles,
           }}
         />
       );
@@ -85,12 +90,17 @@ export const renderIcon = (
       return (
         <CloseIcon
           fontSize="small"
-          sx={{ color: "error.light", ml: 1.5, mr: 1.2 }}
+          sx={{ color: "error.light", ...sharedStyles }}
         />
       );
   }
 
-  const commonStyles = { py: { xs: 0.75, md: 1.15 } };
+  const commonStyles = {
+    py: { md: 1.1 },
+    "& .MuiSvgIcon-root": {
+      fontSize: { xs: "1.25rem", md: "1.5rem" }, // Adjust radio/checkbox size
+    },
+  };
 
   return isMultipleChoice ? (
     <Checkbox

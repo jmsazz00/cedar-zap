@@ -73,7 +73,7 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
       <Box
         sx={{
           position: "fixed",
-          top: { xs: "152px", md: "87px" },
+          top: { xs: "145px", sm: "150px", md: "87px" },
           right: { xs: "16px", sm: "23px" },
           backgroundColor: timeLeft <= 30 ? "error.dark" : mainColor,
           color: "#fff",
@@ -96,13 +96,13 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
           sx={{
             marginRight: showText ? (isMobile ? "4px" : "6px") : "0",
             transition: "margin-right 0.3s ease",
-            fontSize: { xs: "1.35rem", md: "1.5rem", lg: "1.6rem" },
+            fontSize: { xs: "1.25rem", md: "1.5rem", lg: "1.6rem" },
           }}
         />
         <Typography
           variant="h6"
           sx={{
-            fontSize: { xs: ".95rem", md: "1.1rem", lg: "1.25rem" },
+            fontSize: { xs: ".88rem", md: "1.1rem", lg: "1.25rem" },
             overflow: "hidden",
             whiteSpace: "nowrap",
             transition: "max-width 0.3s ease",

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Button, Box } from "@mui/material";
+import { Button, Box, useMediaQuery, useTheme } from "@mui/material";
 import { useQuizStore } from "../store/QuizStore";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 
@@ -41,10 +41,8 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
     };
   }, [currentQuestionIndex]);
 
-  const commonStyles = {
-    fontSize: { xs: "0.8rem", md: ".9rem" },
-    px: { xs: 1, md: 2 },
-  };
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <Box
@@ -58,7 +56,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
         disabled={currentQuestionIndex === 0}
         onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
         startIcon={<ArrowLeft />}
-        sx={commonStyles}
+        size={isMobile ? "small" : "medium"}
       >
         Previous
       </Button>
@@ -67,7 +65,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
         disabled={currentQuestionIndex === totalQuestions - 1}
         onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
         endIcon={<ArrowRight />}
-        sx={commonStyles}
+        size={isMobile ? "small" : "medium"}
       >
         Next
       </Button>

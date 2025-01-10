@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { getOptionStyles, renderIcon } from "./OptionsUtils";
 import { useQuizStore } from "../store/QuizStore";
 
@@ -21,9 +28,13 @@ const OptionList: React.FC<OptionListProps> = ({
   const [hoveredOption, setHoveredOption] = useState<number | null>(null);
   const listRef = React.useRef<HTMLUListElement | null>(null);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const showAnswers = useQuizStore((state) => state.showAnswers);
 
   useEffect(() => {
+    if (isMobile) return;
     if (listRef.current) listRef.current.focus();
     setHoveredOption(null);
   }, [onSelect]);
@@ -96,7 +107,7 @@ const OptionList: React.FC<OptionListProps> = ({
               primary={option}
               primaryTypographyProps={{
                 sx: {
-                  fontSize: { xs: "0.9rem", sm: "0.95rem", md: "1rem" },
+                  fontSize: { xs: "0.85rem", sm: "0.925rem", md: "1rem" },
                 },
               }}
             />
