@@ -12,7 +12,7 @@ createRoot(document.getElementById("root")!).render(
       <CssBaseline />
       <GlobalStyles />
       <Navbar />
-      <QuizPage quiz={{ duration: 3600, name: "Gynecology", year: "24-25" }} />
+      <QuizPage />
     </ThemeProvider>
   </StrictMode>
 );

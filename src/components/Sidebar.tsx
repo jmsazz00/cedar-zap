@@ -2,10 +2,8 @@ import React, { useRef, useState } from "react";
 import { useQuizStore } from "../store/QuizStore";
 import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
 import FinishTestButton from "./FinishTestButton";
-import ScoreDialog from "./ScoreDialog";
-import useFinishTest from "../hooks/useFinishTest";
-import questions from "../data/questions";
 import SidebarButton from "./SidebarButton";
+import { useQuizContext } from "../context/QuizContext";
 
 const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   const theme = useTheme();
@@ -19,8 +17,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   const showAnswers = useQuizStore((store) => store.showAnswers);
   const falseQuestions = useQuizStore((store) => store.falseQuestions);
 
-  const { open, closeDialog, finishTest, score, maxScore } =
-    useFinishTest(questions);
+  const { finishTest } = useQuizContext();
 
   const handleScroll = () => {
     if (!scrollRef.current) return;
@@ -35,7 +32,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
         background:
           "linear-gradient(to left, rgba(29, 29, 29, 0.8), transparent)",
         height: "100%",
-        pointerEvents: "none", // Ensure it doesn't block interactions
+        pointerEvents: "none",
         position: "absolute",
         right: 0,
         top: 0,
@@ -50,12 +47,12 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
       sx={{
         bgcolor: "background.paper",
         borderRight: isMobile ? "none" : "1px solid #444",
-        height: isMobile ? "auto" : "calc(100vh - 64px)",
+        height: isMobile ? "auto" : "calc(100vh - 68px)",
         minWidth: isMobile ? "auto" : "fit-content",
         overflowY: "auto",
         p: isMobile ? 0 : 2,
         position: isMobile ? "relative" : "sticky",
-        top: isMobile ? "initial" : "64px",
+        top: isMobile ? "initial" : "68px",
       }}
     >
       {isMobile && shadowOverlay}
@@ -94,12 +91,6 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
           <Divider sx={{ my: 2 }} />
           <Box>
             <FinishTestButton onFinish={finishTest} />
-            <ScoreDialog
-              onClose={closeDialog}
-              open={open}
-              score={score}
-              maxScore={maxScore}
-            />
           </Box>
         </>
       )}
