@@ -1,6 +1,7 @@
-import React, { useMemo } from "react";
 import { Box, Divider, Paper, useMediaQuery, useTheme } from "@mui/material";
+import React, { useMemo } from "react";
 import Question from "../entities/Question";
+import useScrollToTop from "../hooks/useScrollToTop";
 import { useQuizStore } from "../store/QuizStore";
 import AnswerResetButton from "./AnswerResetButton";
 import OptionsList from "./OptionsList";
@@ -27,6 +28,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
 
   const { question, options, point, correctAnswers, isMultipleChoice } =
     currentQuestionData;
+
+  useScrollToTop(currentQuestionIndex);
 
   return (
     <Box
