@@ -1,21 +1,32 @@
-import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  IconButton,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import logo from "../assets/logo.png";
-import logo_name from "../assets/logo-name.png";
+import logo_name from "../assets/cedar-logo-1.png";
 
 const Navbar = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <AppBar
       sx={{
+        bgcolor: "#252525",
         boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.5)",
-        borderBottom: "1px solid rgba(187, 134, 252, 0.2)",
+        borderBottom: "1px solid rgba(92, 107, 192, 0.3)",
       }}
     >
       <Toolbar sx={{ position: "relative" }}>
         {/* Left Section: Logo Name */}
         <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
           <Box display={"flex"} alignItems={"center"} mr={1}>
-            <img src={logo_name} height={40} alt="Logo Name" />
+            <img src={logo_name} height={isMobile ? 33 : 40} alt="Logo Name" />
           </Box>
         </Box>
 
@@ -29,7 +40,7 @@ const Navbar = () => {
             alignItems: "center",
           }}
         >
-          <img src={logo} height={50} alt="Logo" />
+          <img src={logo} height={isMobile ? 45 : 50} alt="Logo" />
         </Box>
 
         {/* Right Section: Home Icon */}
