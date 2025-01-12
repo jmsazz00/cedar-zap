@@ -27,7 +27,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
 
   const getBgColor = () => {
     if (isCurrent) return !showAnswers ? "primary.dark" : "background.default";
-    if (hasAnswer && !showAnswers) return "secondary.light";
+    if (hasAnswer && !showAnswers) return "grey.A100";
     return "background.default";
   };
 

@@ -3,13 +3,13 @@ import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 
 interface FinishTestButtonProps {
   onFinish: () => void;
-  disabled: boolean;
+  disabled?: boolean;
   contained?: boolean;
 }
 
 const FinishTestButton = ({
   onFinish,
-  disabled,
+  disabled = false,
   contained = false,
 }: FinishTestButtonProps) => {
   const theme = useTheme();
@@ -25,6 +25,7 @@ const FinishTestButton = ({
         sx={{
           fontWeight: "bold",
           color: "primary",
+          bgcolor: contained ? "primary.dark" : "none",
         }}
       >
         <DoneOutlineIcon

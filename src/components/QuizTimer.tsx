@@ -9,7 +9,6 @@ interface QuizTimerProps {
 }
 
 const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
-  const mainColor = "#5C6BC0";
   const [timeLeft, setTimeLeft] = useState(duration);
   const [showText, setShowText] = useState(true);
   const [scrolled, setScrolled] = useState(false);
@@ -75,7 +74,7 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
           position: "fixed",
           top: { xs: "142px", sm: "150px", md: "87px" },
           right: { xs: "16px", sm: "23px" },
-          backgroundColor: timeLeft <= 30 ? "error.dark" : mainColor,
+          backgroundColor: timeLeft <= 30 ? "error.dark" : "primary.main",
           color: "#fff",
           p: { xs: "3px 4.5px", lg: "4px 8px" },
           borderRadius: 1,

@@ -35,7 +35,7 @@ export const getOptionStyles = (
           ? "success.dark"
           : "error.dark"
         : isUnselectedCorrect
-        ? "info.dark"
+        ? "primary.dark"
         : "#222",
     };
     return { ...baseStyles, ...answerStyles };
@@ -80,7 +80,7 @@ export const renderIcon = (
         <DoneOutlineSharpIcon
           fontSize="small"
           sx={{
-            color: isUnselectedCorrect ? "info.light" : "success.light",
+            color: isUnselectedCorrect ? "primary.light" : "success.light",
             ...sharedStyles,
           }}
         />

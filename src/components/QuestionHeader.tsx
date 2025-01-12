@@ -15,7 +15,6 @@ interface QuestionHeaderProps {
 }
 
 const CustomDivider = (
-  primary: boolean,
   orientation: "horizontal" | "vertical" = "horizontal"
 ) => (
   <Divider
@@ -23,7 +22,6 @@ const CustomDivider = (
     flexItem={orientation === "vertical"}
     sx={{
       width: orientation === "horizontal" ? "100%" : "1px",
-      bgcolor: primary ? "rgba(255, 255, 255, 0.2)" : "initial",
       my: orientation === "horizontal" ? 1 : 0,
     }}
   />
@@ -74,15 +72,15 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
           sx={{
             fontWeight: "bold",
             fontSize: { xs: "1.125rem", md: "1.25rem" },
-            color: "primary.main",
+            color: "primary.light",
           }}
         >
           {`Question ${index + 1}`}
         </Typography>
       </Box>
 
-      {!isMobile && CustomDivider(false)}
-      {isMobile && CustomDivider(true, "vertical")}
+      {!isMobile && CustomDivider()}
+      {isMobile && CustomDivider("vertical")}
 
       {!showAnswers && (
         <Box
@@ -91,7 +89,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: isHighlighted ? "secondary.dark" : "secondary.main",
+            color: isHighlighted ? "grey.A700" : "secondary.main",
             cursor: "pointer",
             textDecoration: "none",
             "&:hover": { textDecoration: "underline" },
@@ -106,7 +104,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
         </Box>
       )}
 
-      {!showAnswers && isMobile && CustomDivider(false, "vertical")}
+      {!showAnswers && isMobile && CustomDivider("vertical")}
 
       <Box
         sx={{
@@ -119,7 +117,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
           flexGrow: 1,
         }}
       >
-        <GradeIcon sx={{ fontSize: "1.2rem", color: "#ffc107" }} />
+        <GradeIcon sx={{ fontSize: "1.2rem", color: "secondary.main" }} />
         <Typography variant="body2" sx={commonStyles}>
           Grade: {point}pt
         </Typography>
