@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Button,
@@ -17,7 +18,12 @@ interface ScoreDialogProps {
   onClose: () => void;
 }
 
-const ScoreDialog = ({ open, score, maxScore, onClose }: ScoreDialogProps) => {
+const ScoreDialog: React.FC<ScoreDialogProps> = ({
+  open,
+  score,
+  maxScore,
+  onClose,
+}) => {
   const scorePercentage = Math.round((score / maxScore) * 100);
 
   const data = [
@@ -39,8 +45,15 @@ const ScoreDialog = ({ open, score, maxScore, onClose }: ScoreDialogProps) => {
   };
 
   return (
-    <Dialog open={open} maxWidth="xs" fullWidth disableEscapeKeyDown>
-      <DialogTitle>Quiz Complete:</DialogTitle>
+    <Dialog
+      open={open}
+      maxWidth="xs"
+      fullWidth
+      disableEscapeKeyDown
+      TransitionComponent={Zoom}
+      TransitionProps={{ in: open, timeout: 300, unmountOnExit: true }}
+    >
+      <DialogTitle>Quiz Complete</DialogTitle>
       <DialogContent
         sx={{
           display: "flex",
@@ -49,44 +62,42 @@ const ScoreDialog = ({ open, score, maxScore, onClose }: ScoreDialogProps) => {
           mt: 1,
         }}
       >
-        <Zoom in={open} timeout={500} unmountOnExit>
-          <Box sx={{ height: "250px", width: "250px", position: "relative" }}>
-            <ResponsiveRadialBar
-              data={data}
-              maxValue={100}
-              valueFormat={(value) => `${value}%`}
-              startAngle={-180}
-              endAngle={180}
-              cornerRadius={5}
-              padding={0.6}
-              innerRadius={0.5}
-              enableRadialGrid={false}
-              enableTracks={false}
-              radialAxisStart={null}
-              circularAxisOuter={null}
-              isInteractive={false}
-              colors={[getColor(scorePercentage)]}
-              animate={true}
-              motionConfig="wobbly"
-            />
-
-            {/* Centered Percentage Label */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                textAlign: "center",
-                color: getColor(scorePercentage),
-                fontSize: "2rem",
-                fontWeight: "bold",
-              }}
-            >
-              {scorePercentage}%
-            </Box>
+        {/* Radial Bar Chart */}
+        <Box sx={{ height: "250px", width: "250px", position: "relative" }}>
+          <ResponsiveRadialBar
+            data={data}
+            maxValue={100}
+            valueFormat={(value) => `${value}%`}
+            startAngle={-180}
+            endAngle={180}
+            cornerRadius={5}
+            padding={0.6}
+            innerRadius={0.5}
+            enableRadialGrid={false}
+            enableTracks={false}
+            radialAxisStart={null}
+            circularAxisOuter={null}
+            isInteractive={false}
+            colors={[getColor(scorePercentage)]}
+            animate={true}
+            motionConfig="wobbly"
+          />
+          {/* Centered Percentage Label */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              textAlign: "center",
+              color: getColor(scorePercentage),
+              fontSize: "2rem",
+              fontWeight: "bold",
+            }}
+          >
+            {scorePercentage}%
           </Box>
-        </Zoom>
+        </Box>
 
         {/* Score Details */}
         <Typography variant="h6" align="center" color="textPrimary" mt={2}>
