@@ -16,6 +16,7 @@ interface QuestionCardProps {
 const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const answers = useQuizStore((store) => store.answers);
   const setAnswer = useQuizStore((store) => store.setAnswer);
   const showAnswers = useQuizStore((state) => state.showAnswers);

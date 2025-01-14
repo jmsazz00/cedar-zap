@@ -90,4 +90,4 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
   );
 };
 
-export default Pagination;
+export default React.memo(Pagination);
