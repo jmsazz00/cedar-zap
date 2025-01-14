@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useQuizStore } from "../store/QuizStore";
-import { Box, Button } from "@mui/material";
+import { Box, Button, useMediaQuery, useTheme } from "@mui/material";
+import { useSidebarBtnStyles } from "../hooks/useSidebarBtnStyles";
 
 interface SidebarButtonProps {
   index: number;
@@ -15,6 +16,10 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   showAnswers,
   falseQuestions,
 }) => {
+  const ref = useRef<HTMLButtonElement>(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const isCurrent = useQuizStore(
     (store) => store.currentQuestionIndex === index
   );
@@ -25,28 +30,16 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
 
   const isCorrect = hasAnswer && !falseQuestions.includes(index);
 
-  const getBgColor = () => {
-    if (isCurrent) return !showAnswers ? "primary.dark" : "background.default";
-    if (hasAnswer && !showAnswers) return "grey.A100";
-    return "background.default";
-  };
-
-  const getColor = () => {
-    if (showAnswers) return isCorrect ? "success.dark" : "error.dark";
-    return isCurrent ? "white" : "text.secondary";
-  };
-
-  const getBorderColor = () => {
-    if (!showAnswers) return "default";
-    return isCurrent
-      ? "var(--currentColor)"
-      : isCorrect
-      ? "#1b3d2d"
-      : "#5c0f0f";
-  };
+  if (isMobile && isCurrent) {
+    ref.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box sx={{ position: "relative" }} ref={ref}>
       <Button
         disableFocusRipple
         variant={
@@ -55,20 +48,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
         color="primary"
         onClick={() => setCurrentQuestionIndex(index)}
         sx={{
-          height: { xs: 42, sm: 45, md: 48 },
-          minWidth: { xs: 42, sm: 45, md: 48 },
-          borderRadius: { xs: 1.5, md: 2 },
-          fontSize: { xs: "0.75rem", sm: "0.8rem", md: "0.875rem" },
-          fontWeight: "bold",
-          zIndex: 2,
-          overflow: "hidden",
-          bgcolor: getBgColor(),
-          color: getColor(),
-          borderColor: getBorderColor(),
-          "&:hover": {
-            color: showAnswers ? "default" : "white",
-            borderColor: showAnswers ? "var(--currentColor)" : "default",
-          },
+          ...useSidebarBtnStyles(isCurrent, hasAnswer, showAnswers, isCorrect),
         }}
       >
         {index + 1}
