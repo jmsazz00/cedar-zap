@@ -96,7 +96,7 @@ export const renderIcon = (
   }
 
   const commonStyles = {
-    py: { md: 1.1 },
+    py: { xs: 0.75, md: 1.1 },
     "& .MuiSvgIcon-root": {
       fontSize: { xs: "1.25rem", md: "1.5rem" }, // Adjust radio/checkbox size
     },
