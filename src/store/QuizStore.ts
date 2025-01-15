@@ -8,14 +8,14 @@ interface QuizStore {
   falseQuestions: number[];
   totalScore: number;
   showAnswers: boolean;
-  finishTest: boolean;
+  pauseTimer: boolean;
   setShowAnswers: (value: boolean) => void;
   setAnswer: (index: number, answerIndex: number) => void;
   toggleAnswer: (index: number, answerIndex: number) => void;
   setCurrentQuestionIndex: (index: number) => void;
   toggleHighlight: (index: number) => void;
   calculateScore: (questions: Question[]) => void;
-  setFinishTest: (value: boolean) => void;
+  setPauseTimer: (value: boolean) => void;
 }
 
 export const useQuizStore = create<QuizStore>((set) => ({
@@ -25,7 +25,7 @@ export const useQuizStore = create<QuizStore>((set) => ({
   falseQuestions: [],
   totalScore: 0,
   showAnswers: false,
-  finishTest: false,
+  pauseTimer: false,
   setShowAnswers: (value: boolean) => set({ showAnswers: value }),
   setAnswer: (index, answerIndex) =>
     set((state) => ({
@@ -91,5 +91,5 @@ export const useQuizStore = create<QuizStore>((set) => ({
 
       return { totalScore, falseQuestions };
     }),
-  setFinishTest: (value: boolean) => set({ finishTest: value }),
+  setPauseTimer: (value: boolean) => set({ pauseTimer: value }),
 }));

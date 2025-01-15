@@ -1,12 +1,13 @@
 import { Box, Container } from "@mui/material";
-import questions from "../data/questions";
 import { useQuizContext } from "../context/QuizContext";
+import questions from "../data/questions";
+import { Quiz } from "../entities/Quiz";
 import QuestionCard from "./QuestionCard";
 import QuizHeader from "./QuizHeader";
 import QuizTimer from "./QuizTimer";
 import ScoreDialog from "./ScoreDialog";
 import Sidebar from "./Sidebar";
-import { Quiz } from "../entities/Quiz";
+import WarningDialog from "./WarningDialog";
 
 interface Props {
   quiz: Quiz;
@@ -14,21 +15,34 @@ interface Props {
 
 const QuizLayout = ({ quiz }: Props) => {
   const { name, year, duration } = quiz;
-  const { open, score, maxScore, closeDialog, finishTest } = useQuizContext();
+  const {
+    scoreDialogOpen,
+    warningDialogOpen,
+    score,
+    maxScore,
+    closeScoreDialog,
+    closeWarningDialog,
+    handleSubmit,
+  } = useQuizContext();
 
   return (
     <Box sx={{ display: { md: "flex" }, pt: { xs: "60px", sm: "68px" } }}>
-      <QuizTimer duration={duration} onTimeUp={finishTest} />
+      <QuizTimer duration={duration} onTimeUp={() => handleSubmit(true)} />
       <Sidebar questionCount={questions.length} />
       <Container sx={{ mx: 0 }}>
         <QuizHeader name={name} year={year} />
         <QuestionCard questions={questions} />
       </Container>
       <ScoreDialog
-        open={open}
+        open={scoreDialogOpen}
         score={score}
         maxScore={maxScore}
-        onClose={closeDialog}
+        onClose={closeScoreDialog}
+      />
+      <WarningDialog
+        open={warningDialogOpen}
+        onConfirm={handleSubmit}
+        onClose={closeWarningDialog}
       />
     </Box>
   );

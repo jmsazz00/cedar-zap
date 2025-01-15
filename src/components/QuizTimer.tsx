@@ -14,7 +14,7 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
   const [scrolled, setScrolled] = useState(false);
 
   const showAnswers = useQuizStore((st) => st.showAnswers);
-  const finishTest = useQuizStore((st) => st.finishTest);
+  const pauseTimer = useQuizStore((st) => st.pauseTimer);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -24,19 +24,19 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
   // Timer logic
   useEffect(() => {
     const interval = setInterval(() => {
-      if (finishTest) clearInterval(interval);
+      if (pauseTimer) clearInterval(interval);
       setTimeLeft((prevTime) => {
-        if (prevTime <= 1 && !finishTest) {
+        if (prevTime <= 1 && !pauseTimer) {
           clearInterval(interval);
           onTimeUp();
           return 0;
         }
-        return finishTest ? prevTime : prevTime - 1;
+        return pauseTimer ? prevTime : prevTime - 1;
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [onTimeUp, finishTest]);
+  }, [onTimeUp, pauseTimer]);
 
   // Scroll logic for mobile
   const handleScroll = () => {

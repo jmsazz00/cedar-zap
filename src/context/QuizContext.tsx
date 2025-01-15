@@ -1,13 +1,15 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { useQuizStore } from "../store/QuizStore";
+import { createContext, ReactNode, useContext, useState } from "react";
 import Question from "../entities/Question";
+import { useQuizStore } from "../store/QuizStore";
 
 interface QuizContextProps {
-  open: boolean;
+  scoreDialogOpen: boolean;
+  warningDialogOpen: boolean;
   score: number;
   maxScore: number;
-  finishTest: () => void;
-  closeDialog: () => void;
+  handleSubmit: (directSubmit?: boolean) => void;
+  closeScoreDialog: () => void;
+  closeWarningDialog: () => void;
 }
 
 export const QuizContext = createContext<QuizContextProps | undefined>(
@@ -18,25 +20,61 @@ export const QuizProvider: React.FC<{
   children: ReactNode;
   questions: Question[];
 }> = ({ children, questions }) => {
-  const [open, setOpen] = useState(false);
+  const [scoreDialogOpen, setScoreDialogOpen] = useState(false);
+  const [warningDialogOpen, setWarningDialogOpen] = useState(false);
   const [score, setScore] = useState(0);
+
   const calculateScore = useQuizStore((st) => st.calculateScore);
-  const setFinishTest = useQuizStore((st) => st.setFinishTest);
+  const setPauseTimer = useQuizStore((st) => st.setPauseTimer);
+  const answers = useQuizStore((st) => st.answers);
 
   const maxScore = questions.reduce((acc, q) => acc + q.point, 0);
 
-  const finishTest = () => {
-    calculateScore(questions); // Update totalScore in the store
-    setFinishTest(true);
-    setScore(useQuizStore.getState().totalScore); // Retrieve the updated score
-    setOpen(true);
+  const handleSubmit = (directSubmit?: boolean) => {
+    if (directSubmit) {
+      finishTest();
+      return;
+    }
+
+    const unansweredQuestions = questions.filter(
+      (_, index) => !answers[index] || answers[index].length === 0
+    );
+
+    if (!warningDialogOpen && unansweredQuestions.length > 0) {
+      setWarningDialogOpen(true);
+      setPauseTimer(true); // Show warning first
+    } else finishTest();
   };
 
-  const closeDialog = () => setOpen(false);
+  const finishTest = () => {
+    setWarningDialogOpen(false);
+    calculateScore(questions); // Update totalScore in the store
+    setPauseTimer(true);
+    setScore(useQuizStore.getState().totalScore); // Retrieve the updated score
+    setScoreDialogOpen(true); // Show score dialog
+  };
+
+  const closeWarningDialog = () => {
+    setWarningDialogOpen(false);
+    setPauseTimer(false);
+  };
+
+  const closeScoreDialog = () => {
+    setScoreDialogOpen(false);
+    useQuizStore.getState().setShowAnswers(true);
+  };
 
   return (
     <QuizContext.Provider
-      value={{ open, score, maxScore, finishTest, closeDialog }}
+      value={{
+        scoreDialogOpen,
+        warningDialogOpen,
+        score,
+        maxScore,
+        handleSubmit,
+        closeScoreDialog,
+        closeWarningDialog,
+      }}
     >
       {children}
     </QuizContext.Provider>

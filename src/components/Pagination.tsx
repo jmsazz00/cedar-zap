@@ -52,7 +52,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const { finishTest } = useQuizContext();
+  const { handleSubmit } = useQuizContext();
 
   return (
     <Box
@@ -72,7 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
       </Button>
       {!showAnswers && (
         <FinishTestButton
-          onFinish={finishTest}
+          onFinish={() => handleSubmit(false)}
           disabled={!isMobile && currentQuestionIndex !== totalQuestions - 1}
           contained={true}
         />

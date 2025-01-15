@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import { ResponsiveRadialBar } from "@nivo/radial-bar";
-import { useQuizStore } from "../store/QuizStore";
 
 interface ScoreDialogProps {
   open: boolean;
@@ -109,14 +108,7 @@ const ScoreDialog: React.FC<ScoreDialogProps> = ({
 
         {/* Close Button */}
         <Box display="flex" justifyContent="center" mt={2}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              onClose(); // Close the dialog
-              useQuizStore.getState().setShowAnswers(true); // Enable answer feedback
-            }}
-          >
+          <Button variant="contained" color="primary" onClick={onClose}>
             Check Answers
           </Button>
         </Box>

@@ -17,7 +17,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   const showAnswers = useQuizStore((store) => store.showAnswers);
   const falseQuestions = useQuizStore((store) => store.falseQuestions);
 
-  const { finishTest } = useQuizContext();
+  const { handleSubmit } = useQuizContext();
 
   const handleScroll = () => {
     if (!scrollRef.current) return;
@@ -90,7 +90,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
         <>
           <Divider sx={{ my: 2 }} />
           <Box>
-            <FinishTestButton onFinish={finishTest} />
+            <FinishTestButton onFinish={() => handleSubmit(false)} />
           </Box>
         </>
       )}
