@@ -15,9 +15,8 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
     (store) => store.setCurrentQuestionIndex
   );
   const showAnswers = useQuizStore((store) => store.showAnswers);
-  const falseQuestions = useQuizStore((store) => store.falseQuestions);
 
-  const { handleSubmit } = useQuizContext();
+  const { falseQuestions, handleSubmit } = useQuizContext();
 
   const handleScroll = () => {
     if (!scrollRef.current) return;
@@ -41,6 +40,8 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
       }}
     />
   );
+
+  console.log("Sidebar");
 
   return (
     <Box
