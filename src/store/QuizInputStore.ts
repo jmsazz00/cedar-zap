@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface QuizStore {
+interface QuizInput {
   answers: Record<number, number[]>;
   currentQuestionIndex: number;
   highlightedQuestions: number[];
@@ -12,7 +12,7 @@ interface QuizStore {
   toggleHighlight: (index: number) => void;
 }
 
-export const useQuizStore = create<QuizStore>((set) => ({
+export const useQuizInputStore = create<QuizInput>((set) => ({
   answers: {},
   currentQuestionIndex: 0,
   highlightedQuestions: [],

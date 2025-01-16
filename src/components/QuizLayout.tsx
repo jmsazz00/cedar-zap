@@ -1,7 +1,8 @@
 import { Box, Container } from "@mui/material";
-import { useQuizContext } from "../context/QuizContext";
+import { useEffect } from "react";
 import questions from "../data/questions";
 import { Quiz } from "../entities/Quiz";
+import { useQuizStateStore } from "../store/QuizStateStore";
 import QuestionCard from "./QuestionCard";
 import QuizHeader from "./QuizHeader";
 import QuizTimer from "./QuizTimer";
@@ -15,15 +16,23 @@ interface Props {
 
 const QuizLayout = ({ quiz }: Props) => {
   const { name, year, duration } = quiz;
-  const {
-    scoreDialogOpen,
-    warningDialogOpen,
-    score,
-    maxScore,
-    closeScoreDialog,
-    closeWarningDialog,
-    handleSubmit,
-  } = useQuizContext();
+
+  const scoreDialogOpen = useQuizStateStore((state) => state.scoreDialogOpen);
+  const warningDialogOpen = useQuizStateStore(
+    (state) => state.warningDialogOpen
+  );
+  const score = useQuizStateStore((state) => state.score);
+  const maxScore = useQuizStateStore((state) => state.maxScore);
+  const closeScoreDialog = useQuizStateStore((state) => state.closeScoreDialog);
+  const closeWarningDialog = useQuizStateStore(
+    (state) => state.closeWarningDialog
+  );
+  const handleSubmit = useQuizStateStore((state) => state.handleSubmit);
+  const setQuestions = useQuizStateStore((state) => state.setQuestions);
+
+  useEffect(() => {
+    setQuestions(questions);
+  }, []);
 
   return (
     <Box sx={{ display: { md: "flex" }, pt: { xs: "60px", sm: "68px" } }}>

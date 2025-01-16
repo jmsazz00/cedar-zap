@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuizStore } from "../store/QuizStore";
+import { useQuizInputStore } from "../store/QuizInputStore";
 import OptionList from "./OptionList";
 import { Box, Typography } from "@mui/material";
 
@@ -14,11 +14,11 @@ const OptionsList: React.FC<OptionsListProps> = ({
   correctAnswers,
   isMultipleChoice,
 }) => {
-  const questionIndex = useQuizStore((state) => state.currentQuestionIndex);
-  const selectedAnswers = useQuizStore((state) => state.answers[questionIndex]);
-  const setAnswer = useQuizStore((state) => state.setAnswer);
-  const toggleAnswer = useQuizStore((state) => state.toggleAnswer);
-  const showAnswers = useQuizStore((state) => state.showAnswers);
+  const questionIndex = useQuizInputStore((state) => state.currentQuestionIndex);
+  const selectedAnswers = useQuizInputStore((state) => state.answers[questionIndex]);
+  const setAnswer = useQuizInputStore((state) => state.setAnswer);
+  const toggleAnswer = useQuizInputStore((state) => state.toggleAnswer);
+  const showAnswers = useQuizInputStore((state) => state.showAnswers);
 
   const handleSelect = (index: number) => {
     if (isMultipleChoice) toggleAnswer(questionIndex, index);

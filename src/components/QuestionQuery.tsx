@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { useQuizStore } from "../store/QuizStore";
+import { useQuizInputStore } from "../store/QuizInputStore";
 
 interface Props {
   question: string;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const QuestionQuery = ({ question, isMultipleChoice }: Props) => {
-  const showAnswers = useQuizStore((state) => state.showAnswers);
+  const showAnswers = useQuizInputStore((state) => state.showAnswers);
 
   const commonStyles = {
     fontSize: { xs: ".875rem", sm: ".9375rem", md: "1.015rem" },

@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-import { useQuizStore } from "../store/QuizStore";
+import { useQuizInputStore } from "../store/QuizInputStore";
 
 interface QuestionHeaderProps {
   point: number;
@@ -32,13 +32,13 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallMobile = useMediaQuery("(max-width: 390px)");
 
-  const index = useQuizStore((store) => store.currentQuestionIndex);
+  const index = useQuizInputStore((store) => store.currentQuestionIndex);
 
-  const isHighlighted = useQuizStore((store) =>
+  const isHighlighted = useQuizInputStore((store) =>
     store.highlightedQuestions.includes(index)
   );
-  const toggleHighlight = useQuizStore((store) => store.toggleHighlight);
-  const showAnswers = useQuizStore((store) => store.showAnswers);
+  const toggleHighlight = useQuizInputStore((store) => store.toggleHighlight);
+  const showAnswers = useQuizInputStore((store) => store.showAnswers);
 
   const commonStyles = { fontSize: { xs: "0.8rem", md: "0.95rem" } };
 

@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { getOptionStyles, renderIcon } from "./OptionsUtils";
-import { useQuizStore } from "../store/QuizStore";
+import { useQuizInputStore } from "../store/QuizInputStore";
 
 interface OptionListProps {
   options: string[];
@@ -31,7 +31,7 @@ const OptionList: React.FC<OptionListProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const showAnswers = useQuizStore((state) => state.showAnswers);
+  const showAnswers = useQuizInputStore((state) => state.showAnswers);
 
   useEffect(() => {
     if (isMobile) return;

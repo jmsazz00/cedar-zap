@@ -1,25 +1,29 @@
 import React, { useEffect, useRef } from "react";
 import { Button, Box, useMediaQuery, useTheme } from "@mui/material";
-import { useQuizStore } from "../store/QuizStore";
+import { useQuizInputStore } from "../store/QuizInputStore";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import FinishTestButton from "./FinishTestButton";
-import { useQuizContext } from "../context/QuizContext";
+import { useQuizStateStore } from "../store/QuizStateStore";
 
 interface PaginationProps {
   totalQuestions: number;
 }
 
 const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
-  const currentQuestionIndex = useQuizStore(
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const currentQuestionIndex = useQuizInputStore(
     (state) => state.currentQuestionIndex
   );
-  const setCurrentQuestionIndex = useQuizStore(
+  const setCurrentQuestionIndex = useQuizInputStore(
     (state) => state.setCurrentQuestionIndex
   );
-  const showAnswers = useQuizStore((state) => state.showAnswers);
+  const showAnswers = useQuizInputStore((state) => state.showAnswers);
+
+  const handleSubmit = useQuizStateStore((store) => store.handleSubmit);
 
   const lastPressTime = useRef(0);
-
   const throttleDelay = 300;
 
   const handleKeyPress = (event: KeyboardEvent) => {
@@ -48,11 +52,6 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [currentQuestionIndex]);
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  const { handleSubmit } = useQuizContext();
 
   return (
     <Box

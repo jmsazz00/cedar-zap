@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useQuizStore } from "../store/QuizStore";
+import { useQuizInputStore } from "../store/QuizInputStore";
 import { Box, Button, useMediaQuery, useTheme } from "@mui/material";
 import { useSidebarBtnStyles } from "../hooks/useSidebarBtnStyles";
 
@@ -20,11 +20,11 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const isCurrent = useQuizStore(
+  const isCurrent = useQuizInputStore(
     (store) => store.currentQuestionIndex === index
   );
-  const hasAnswer = useQuizStore((store) => store.answers[index]?.length > 0);
-  const isHighlighted = useQuizStore((store) =>
+  const hasAnswer = useQuizInputStore((store) => store.answers[index]?.length > 0);
+  const isHighlighted = useQuizInputStore((store) =>
     store.highlightedQuestions.includes(index)
   );
 

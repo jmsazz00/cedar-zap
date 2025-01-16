@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
-import { useQuizStore } from "../store/QuizStore";
 import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
+import React, { useRef, useState } from "react";
+import { useQuizStateStore } from "../store/QuizStateStore";
+import { useQuizInputStore } from "../store/QuizInputStore";
 import FinishTestButton from "./FinishTestButton";
 import SidebarButton from "./SidebarButton";
-import { useQuizContext } from "../context/QuizContext";
 
 const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   const theme = useTheme();
@@ -11,12 +11,13 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [atEnd, setAtEnd] = useState(false);
 
-  const setCurrentQuestionIndex = useQuizStore(
+  const setCurrentQuestionIndex = useQuizInputStore(
     (store) => store.setCurrentQuestionIndex
   );
-  const showAnswers = useQuizStore((store) => store.showAnswers);
+  const showAnswers = useQuizInputStore((store) => store.showAnswers);
 
-  const { falseQuestions, handleSubmit } = useQuizContext();
+  const falseQuestions = useQuizStateStore((store) => store.falseQuestions);
+  const handleSubmit = useQuizStateStore((store) => store.handleSubmit);
 
   const handleScroll = () => {
     if (!scrollRef.current) return;
@@ -40,8 +41,6 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
       }}
     />
   );
-
-  console.log("Sidebar");
 
   return (
     <Box
@@ -99,4 +98,4 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

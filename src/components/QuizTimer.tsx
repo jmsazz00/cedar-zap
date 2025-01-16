@@ -1,8 +1,8 @@
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
-import { useQuizStore } from "../store/QuizStore";
-import { useQuizContext } from "../context/QuizContext";
+import { useQuizInputStore } from "../store/QuizInputStore";
+import { useQuizStateStore } from "../store/QuizStateStore";
 
 interface QuizTimerProps {
   duration: number; // in seconds
@@ -14,9 +14,9 @@ const QuizTimer = ({ duration, onTimeUp }: QuizTimerProps) => {
   const [showText, setShowText] = useState(true);
   const [scrolled, setScrolled] = useState(false);
 
-  const { pauseTimer } = useQuizContext();
+  const pauseTimer = useQuizStateStore((st) => st.pauseTimer);
 
-  const showAnswers = useQuizStore((st) => st.showAnswers);
+  const showAnswers = useQuizInputStore((st) => st.showAnswers);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));

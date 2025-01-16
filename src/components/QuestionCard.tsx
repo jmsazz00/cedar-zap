@@ -2,7 +2,7 @@ import { Box, Divider, Paper, useMediaQuery, useTheme } from "@mui/material";
 import React, { useMemo } from "react";
 import Question from "../entities/Question";
 import useScrollToTop from "../hooks/useScrollToTop";
-import { useQuizStore } from "../store/QuizStore";
+import { useQuizInputStore } from "../store/QuizInputStore";
 import AnswerResetButton from "./AnswerResetButton";
 import OptionsList from "./OptionsList";
 import Pagination from "./Pagination";
@@ -17,10 +17,10 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const answers = useQuizStore((store) => store.answers);
-  const setAnswer = useQuizStore((store) => store.setAnswer);
-  const showAnswers = useQuizStore((state) => state.showAnswers);
-  const currentQuestionIndex = useQuizStore((st) => st.currentQuestionIndex);
+  const answers = useQuizInputStore((store) => store.answers);
+  const setAnswer = useQuizInputStore((store) => store.setAnswer);
+  const showAnswers = useQuizInputStore((state) => state.showAnswers);
+  const currentQuestionIndex = useQuizInputStore((st) => st.currentQuestionIndex);
 
   const currentQuestionData = useMemo(
     () => questions[currentQuestionIndex],
@@ -91,4 +91,4 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   );
 };
 
-export default QuestionCard;
+export default React.memo(QuestionCard);
