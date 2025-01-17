@@ -1,22 +1,27 @@
 import { create } from "zustand";
-import { useQuizInputStore } from "./QuizInputStore";
-import { useCalculateScore } from "../hooks/useCalculateScore";
 import Question from "../entities/Question";
+import { useCalculateScore } from "../hooks/useCalculateScore";
+import { useQuizInputStore } from "./QuizInputStore";
 
 interface QuizState {
   maxScore: number;
   score: number;
   pauseTimer: boolean;
   falseQuestions: number[];
+  tempFalseQuestions: number[];
+  questionsAnswered: number;
   questions: Question[];
   scoreDialogOpen: boolean;
   warningDialogOpen: boolean;
+  elapsedTime: number;
+  showAnswers: boolean;
 
   setQuestions: (questions: Question[]) => void;
   handleSubmit: (directSubmit?: boolean) => void;
   closeScoreDialog: () => void;
   closeWarningDialog: () => void;
   finishTest: () => void;
+  setElapsedTime: (time: number) => void;
 }
 
 export const useQuizStateStore = create<QuizState>((set, get) => ({
@@ -25,8 +30,12 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
   pauseTimer: false,
   questions: [],
   falseQuestions: [],
+  tempFalseQuestions: [],
+  questionsAnswered: 0,
   scoreDialogOpen: false,
   warningDialogOpen: false,
+  elapsedTime: 0,
+  showAnswers: false,
 
   setQuestions: (questions) => {
     const maxScore = questions.reduce((acc, q) => acc + q.point, 0);
@@ -52,19 +61,23 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
   },
 
   finishTest: () => {
-    const { answers, setShowAnswers } = useQuizInputStore.getState();
+    const { answers } = useQuizInputStore.getState();
+    const { questions } = get();
 
     const { totalScore, falseQuestions } = useCalculateScore(
-      get().questions,
+      questions,
       answers
     );
 
-    setShowAnswers(true);
+    const questionsAnswered = questions.filter(
+      (_, index) => answers[index] && answers[index].length > 0
+    ).length;
 
     set({
       score: totalScore,
-      falseQuestions,
       pauseTimer: true,
+      tempFalseQuestions: falseQuestions,
+      questionsAnswered,
       scoreDialogOpen: true,
       warningDialogOpen: false,
     });
@@ -74,6 +87,16 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
     set({ warningDialogOpen: false, pauseTimer: false }),
 
   closeScoreDialog: () => {
-    set({ scoreDialogOpen: false });
+    const { tempFalseQuestions } = get();
+
+    set({
+      scoreDialogOpen: false,
+      showAnswers: true,
+      falseQuestions: tempFalseQuestions, // Use the stored false questions
+      tempFalseQuestions: [], // Clear temp storage
+    });
   },
+
+  setElapsedTime: (time: number) => set({ elapsedTime: time }),
+  setShowAnswers: (value: boolean) => set({ showAnswers: value }),
 }));

@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import Question from "../entities/Question";
 import useScrollToTop from "../hooks/useScrollToTop";
 import { useQuizInputStore } from "../store/QuizInputStore";
+import { useQuizStateStore } from "../store/QuizStateStore";
 import AnswerResetButton from "./AnswerResetButton";
 import OptionsList from "./OptionsList";
 import Pagination from "./Pagination";
@@ -19,8 +20,10 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
 
   const answers = useQuizInputStore((store) => store.answers);
   const setAnswer = useQuizInputStore((store) => store.setAnswer);
-  const showAnswers = useQuizInputStore((state) => state.showAnswers);
-  const currentQuestionIndex = useQuizInputStore((st) => st.currentQuestionIndex);
+  const showAnswers = useQuizStateStore((state) => state.showAnswers);
+  const currentQuestionIndex = useQuizInputStore(
+    (st) => st.currentQuestionIndex
+  );
 
   const currentQuestionData = useMemo(
     () => questions[currentQuestionIndex],
@@ -91,4 +94,4 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   );
 };
 
-export default React.memo(QuestionCard);
+export default QuestionCard;

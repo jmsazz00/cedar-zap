@@ -1,7 +1,7 @@
 import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
 import React, { useRef, useState } from "react";
-import { useQuizStateStore } from "../store/QuizStateStore";
 import { useQuizInputStore } from "../store/QuizInputStore";
+import { useQuizStateStore } from "../store/QuizStateStore";
 import FinishTestButton from "./FinishTestButton";
 import SidebarButton from "./SidebarButton";
 
@@ -14,8 +14,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   const setCurrentQuestionIndex = useQuizInputStore(
     (store) => store.setCurrentQuestionIndex
   );
-  const showAnswers = useQuizInputStore((store) => store.showAnswers);
-
+  const showAnswers = useQuizStateStore((store) => store.showAnswers);
   const falseQuestions = useQuizStateStore((store) => store.falseQuestions);
   const handleSubmit = useQuizStateStore((store) => store.handleSubmit);
 

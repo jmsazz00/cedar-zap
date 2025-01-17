@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
 
 interface Props {
   name: string;
@@ -58,4 +57,4 @@ const QuizHeader = ({ name, year }: Props) => {
   );
 };
 
-export default React.memo(QuizHeader);
+export default QuizHeader;

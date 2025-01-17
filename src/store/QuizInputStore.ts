@@ -4,8 +4,7 @@ interface QuizInput {
   answers: Record<number, number[]>;
   currentQuestionIndex: number;
   highlightedQuestions: number[];
-  showAnswers: boolean;
-  setShowAnswers: (value: boolean) => void;
+
   setAnswer: (index: number, answerIndex: number) => void;
   toggleAnswer: (index: number, answerIndex: number) => void;
   setCurrentQuestionIndex: (index: number) => void;
@@ -16,8 +15,6 @@ export const useQuizInputStore = create<QuizInput>((set) => ({
   answers: {},
   currentQuestionIndex: 0,
   highlightedQuestions: [],
-  showAnswers: false,
-  setShowAnswers: (value: boolean) => set({ showAnswers: value }),
   setAnswer: (index, answerIndex) =>
     set((state) => ({
       answers: {

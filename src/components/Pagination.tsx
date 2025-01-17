@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { Button, Box, useMediaQuery, useTheme } from "@mui/material";
-import { useQuizInputStore } from "../store/QuizInputStore";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import FinishTestButton from "./FinishTestButton";
+import { Box, Button, useMediaQuery, useTheme } from "@mui/material";
+import React, { useEffect, useRef } from "react";
+import { useQuizInputStore } from "../store/QuizInputStore";
 import { useQuizStateStore } from "../store/QuizStateStore";
+import FinishTestButton from "./FinishTestButton";
 
 interface PaginationProps {
   totalQuestions: number;
@@ -19,8 +19,8 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
   const setCurrentQuestionIndex = useQuizInputStore(
     (state) => state.setCurrentQuestionIndex
   );
-  const showAnswers = useQuizInputStore((state) => state.showAnswers);
 
+  const showAnswers = useQuizStateStore((state) => state.showAnswers);
   const handleSubmit = useQuizStateStore((store) => store.handleSubmit);
 
   const lastPressTime = useRef(0);

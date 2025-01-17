@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useQuizInputStore } from "../store/QuizInputStore";
+import { useQuizStateStore } from "../store/QuizStateStore";
 
 interface QuestionHeaderProps {
   point: number;
@@ -38,7 +39,8 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
     store.highlightedQuestions.includes(index)
   );
   const toggleHighlight = useQuizInputStore((store) => store.toggleHighlight);
-  const showAnswers = useQuizInputStore((store) => store.showAnswers);
+
+  const showAnswers = useQuizStateStore((store) => store.showAnswers);
 
   const commonStyles = { fontSize: { xs: "0.8rem", md: "0.95rem" } };
 

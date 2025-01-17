@@ -1,7 +1,8 @@
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useQuizInputStore } from "../store/QuizInputStore";
+import { useQuizStateStore } from "../store/QuizStateStore";
 import OptionList from "./OptionList";
-import { Box, Typography } from "@mui/material";
 
 interface OptionsListProps {
   options: string[];
@@ -18,7 +19,7 @@ const OptionsList: React.FC<OptionsListProps> = ({
   const selectedAnswers = useQuizInputStore((state) => state.answers[questionIndex]);
   const setAnswer = useQuizInputStore((state) => state.setAnswer);
   const toggleAnswer = useQuizInputStore((state) => state.toggleAnswer);
-  const showAnswers = useQuizInputStore((state) => state.showAnswers);
+  const showAnswers = useQuizStateStore((state) => state.showAnswers);
 
   const handleSelect = (index: number) => {
     if (isMultipleChoice) toggleAnswer(questionIndex, index);
