@@ -16,6 +16,16 @@ const StatsGrid: React.FC<StatsGridProps> = ({
 }) => {
   const formatTime = useFormatTime();
 
+  const StatTypography: React.FC<{ children: React.ReactNode }> = ({
+    children,
+  }) => {
+    return (
+      <Typography variant="body1" sx={{ fontWeight: "bold", mb: 0.5 }}>
+        {children}
+      </Typography>
+    );
+  };
+
   const commonStyles = {
     p: 2,
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
@@ -31,9 +41,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({
     >
       <Grid item xs={6} sm={4}>
         <Box sx={commonStyles}>
-          <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-            Questions Answered
-          </Typography>
+          <StatTypography>Questions Answered</StatTypography>
           <Typography variant="h6" color="secondary">
             {questionsAnswered}/{maxQuestions}
           </Typography>
@@ -41,9 +49,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({
       </Grid>
       <Grid item xs={6} sm={4}>
         <Box sx={commonStyles}>
-          <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-            Incorrect Answers
-          </Typography>
+          <StatTypography>Incorrect Answers</StatTypography>
           <Typography variant="h6" color="error">
             {falseQuestions}/{questionsAnswered}
           </Typography>
@@ -51,9 +57,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({
       </Grid>
       <Grid item xs={6} sm={4}>
         <Box sx={commonStyles}>
-          <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-            Time Taken
-          </Typography>
+          <StatTypography>Time Taken</StatTypography>
           <Typography variant="h6" color="success">
             {formatTime(elapsedTime)}
           </Typography>
