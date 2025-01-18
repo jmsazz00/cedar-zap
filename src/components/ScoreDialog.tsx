@@ -5,61 +5,40 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  Grid,
-  Slide,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import { ResponsiveRadialBar } from "@nivo/radial-bar";
-import React from "react";
-import { useFormatTime } from "../hooks/useFormatTime";
+import Slide from "@mui/material/Slide";
+import ScoreChart from "./ScoreChart";
+import StatsGrid from "./StatsGrid";
+import { useQuizStateStore } from "../store/QuizStateStore";
 
-interface ScoreDialogProps {
-  open: boolean;
-  score: number;
-  maxScore: number;
-  maxQuestions: number;
-  questionsAnswered: number;
-  elapsedTime: number;
-  onClose: () => void;
-}
+const ScoreDialog = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-const ScoreDialog: React.FC<ScoreDialogProps> = ({
-  open,
-  score,
-  maxScore,
-  maxQuestions,
-  questionsAnswered,
-  elapsedTime,
-  onClose,
-}) => {
-  const formatTime = useFormatTime();
+  const scoreDialogOpen = useQuizStateStore((state) => state.scoreDialogOpen);
+  const score = useQuizStateStore((state) => state.score);
+  const maxScore = useQuizStateStore((state) => state.maxScore);
+  const questionsAnswered = useQuizStateStore(
+    (state) => state.questionsAnswered
+  );
+  const incorrectCount = useQuizStateStore(
+    (state) => state.tempFalseQuestions.length
+  );
+  const elapsedTime = useQuizStateStore((state) => state.elapsedTime);
+  const questionCount = useQuizStateStore((state) => state.questions.length);
+  const closeScoreDialog = useQuizStateStore((state) => state.closeScoreDialog);
 
   const scorePercentage = Math.round((score / maxScore) * 100);
 
-  const data = [
-    {
-      id: "score",
-      data: [
-        {
-          x: "Score",
-          y: scorePercentage,
-        },
-      ],
-    },
-  ];
-
-  const getColor = (percentage: number) => {
-    if (percentage >= 80) return "#4caf50"; // green for high score
-    if (percentage >= 50) return "#ffa726"; // orange for medium score
-    return "#ef5350"; // red for low score
-  };
-
   return (
     <Dialog
-      open={open}
+      open={scoreDialogOpen}
       fullScreen
       TransitionComponent={Slide}
-      TransitionProps={{ in: open, timeout: 300 }}
+      TransitionProps={{ in: scoreDialogOpen, timeout: 300 }}
     >
       <DialogTitle
         sx={{
@@ -82,64 +61,20 @@ const ScoreDialog: React.FC<ScoreDialogProps> = ({
           p: 4,
         }}
       >
-        {/* Score Chart Section */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            mb: 4,
-          }}
+        <ScoreChart scorePercentage={scorePercentage} />
+        <Typography
+          variant="h5"
+          align="center"
+          color="textPrimary"
+          sx={{ mt: 2, fontWeight: "bold" }}
         >
-          <Box sx={{ height: "250px", width: "250px", position: "relative" }}>
-            <ResponsiveRadialBar
-              data={data}
-              maxValue={100}
-              valueFormat={(value) => `${value}%`}
-              startAngle={-180}
-              endAngle={180}
-              cornerRadius={5}
-              padding={0.6}
-              innerRadius={0.5}
-              enableRadialGrid={false}
-              enableTracks={false}
-              radialAxisStart={null}
-              circularAxisOuter={null}
-              isInteractive={false}
-              colors={[getColor(scorePercentage)]}
-              animate={true}
-              motionConfig="wobbly"
-            />
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                textAlign: "center",
-                color: getColor(scorePercentage),
-                fontSize: "2.5rem",
-                fontWeight: "bold",
-              }}
-            >
-              {scorePercentage}%
-            </Box>
-          </Box>
-          <Typography
-            variant="h5"
-            align="center"
-            color="textPrimary"
-            sx={{ mt: 2, fontWeight: "bold" }}
-          >
-            Your Total Score:{" "}
-            <strong>
-              {score}/{maxScore}
-            </strong>
-          </Typography>
-        </Box>
-
-        {/* Placeholder for Additional Stats */}
-        <Box sx={{ width: "100%" }}>
+          Your Total Score:{" "}
+          <strong>
+            {score}/{maxScore}
+          </strong>
+        </Typography>
+        <Divider sx={{ width: "90%", my: isMobile ? 4 : 0 }} />
+        <Box width={"100%"}>
           <Typography
             variant="h6"
             sx={{
@@ -150,57 +85,27 @@ const ScoreDialog: React.FC<ScoreDialogProps> = ({
           >
             Additional Stats
           </Typography>
-          <Grid
-            container
-            spacing={3}
-            justifyContent="center"
-            sx={{ textAlign: "center" }}
-          >
-            <Grid item xs={6} sm={4}>
-              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                Questions Answered
-              </Typography>
-              <Typography variant="h6" color="primary">
-                {questionsAnswered}/{maxQuestions}
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sm={4}>
-              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                Accuracy
-              </Typography>
-              <Typography variant="h6" color="secondary">
-                {scorePercentage}/100
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sm={4}>
-              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                Time Taken
-              </Typography>
-              <Typography variant="h6" color="success">
-                {formatTime(elapsedTime)}
-              </Typography>
-            </Grid>
-          </Grid>
+          <StatsGrid
+            maxQuestions={questionCount}
+            questionsAnswered={questionsAnswered}
+            falseQuestions={incorrectCount}
+            elapsedTime={elapsedTime}
+          />
         </Box>
-
-        <Divider sx={{ width: "100%", my: 4 }} />
-
-        {/* Call-to-Action Section */}
         <Box
           sx={{
             width: "100%",
             display: "flex",
             justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
+            mt: 4,
           }}
         >
           <Button
             variant="contained"
             color="primary"
             size="large"
-            sx={{ mb: 2, width: "60%" }}
-            onClick={onClose}
+            sx={{ width: isMobile ? "100%" : "50%" }}
+            onClick={closeScoreDialog}
           >
             Check Answers
           </Button>

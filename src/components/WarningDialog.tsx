@@ -5,29 +5,28 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import { useQuizStateStore } from "../store/QuizStateStore";
 
-interface WarningDialogProps {
-  open: boolean;
-  onConfirm: () => void;
-  onClose: () => void;
-}
+const WarningDialog = () => {
+  const warningDialogOpen = useQuizStateStore(
+    (state) => state.warningDialogOpen
+  );
+  const handleSubmit = useQuizStateStore((state) => state.handleSubmit);
+  const closeWarningDialog = useQuizStateStore(
+    (state) => state.closeWarningDialog
+  );
 
-const WarningDialog: React.FC<WarningDialogProps> = ({
-  open,
-  onConfirm,
-  onClose,
-}) => {
   return (
-    <Dialog open={open} fullWidth disableEscapeKeyDown>
+    <Dialog open={warningDialogOpen} fullWidth disableEscapeKeyDown>
       <DialogTitle>Unanswered Questions</DialogTitle>
       <DialogContent>
         Some questions are still unanswered... Submit anyway?
       </DialogContent>
       <DialogActions>
-        <Button color="secondary" onClick={onClose}>
+        <Button color="secondary" onClick={closeWarningDialog}>
           Go Back
         </Button>
-        <Button color="secondary" onClick={onConfirm}>
+        <Button color="secondary" onClick={() => handleSubmit(false)}>
           Submit Anyway
         </Button>
       </DialogActions>
