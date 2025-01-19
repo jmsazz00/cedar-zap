@@ -16,32 +16,41 @@ const Timer = ({ duration, onTimeUp, onTimeElapsed }: TimerProps) => {
   const [scrolled, setScrolled] = useState(false);
 
   const pauseTimer = useQuizStateStore((st) => st.pauseTimer);
-  const showAnswers = useQuizStateStore((st) => st.showAnswers);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const initialRender = useRef(true);
+  const onTimeUpCalled = useRef(false); // Prevent multiple `onTimeUp` calls
 
   const formatTime = useFormatTime();
 
   // Timer logic
   useEffect(() => {
+    if (pauseTimer || timeLeft <= 0) return;
+
     const interval = setInterval(() => {
-      if (pauseTimer) clearInterval(interval);
       setTimeLeft((prevTime) => {
-        if (prevTime <= 1 && !pauseTimer) {
+        if (prevTime <= 1) {
           clearInterval(interval);
-          onTimeUp();
           return 0;
         }
-        return pauseTimer ? prevTime : prevTime - 1;
+        return prevTime - 1;
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [onTimeUp, pauseTimer]);
+  }, [pauseTimer]);
 
+  // Handle `onTimeUp` when time reaches 0
+  useEffect(() => {
+    if (timeLeft === 0 && !onTimeUpCalled.current) {
+      onTimeUpCalled.current = true; // Mark as called to prevent loops
+      onTimeUp();
+    }
+  }, [timeLeft, onTimeUp]);
+
+  // Notify elapsed time
   useEffect(() => {
     onTimeElapsed(duration - timeLeft);
   }, [timeLeft, duration, onTimeElapsed]);
@@ -67,50 +76,48 @@ const Timer = ({ duration, onTimeUp, onTimeElapsed }: TimerProps) => {
   }, [scrolled, isMobile]);
 
   return (
-    !showAnswers && (
-      <Box
+    <Box
+      sx={{
+        position: "fixed",
+        top: { xs: "142px", sm: "150px", md: "87px" },
+        right: { xs: "16px", sm: "23px" },
+        backgroundColor: timeLeft <= 30 ? "error.dark" : "primary.main",
+        color: "#fff",
+        p: { xs: "3px 4.5px", lg: "4px 8px" },
+        borderRadius: 1,
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
+        border: "1px solid rgba(0, 0, 0, 0.3)",
+        display: "flex",
+        alignItems: "center",
+        cursor: "pointer",
+        transition: "all 0.3s ease",
+        zIndex: 999,
+        animation: !showText
+          ? "vibrateWithPause 5s ease-in-out infinite"
+          : "none",
+      }}
+      onClick={() => setShowText((prev) => !prev)}
+    >
+      <AccessTimeIcon
         sx={{
-          position: "fixed",
-          top: { xs: "142px", sm: "150px", md: "87px" },
-          right: { xs: "16px", sm: "23px" },
-          backgroundColor: timeLeft <= 30 ? "error.dark" : "primary.main",
-          color: "#fff",
-          p: { xs: "3px 4.5px", lg: "4px 8px" },
-          borderRadius: 1,
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
-          border: "1px solid rgba(0, 0, 0, 0.3)",
-          display: "flex",
-          alignItems: "center",
-          cursor: "pointer",
-          transition: "all 0.3s ease",
-          zIndex: 999,
-          animation: !showText
-            ? "vibrateWithPause 5s ease-in-out infinite"
-            : "none",
+          marginRight: showText ? (isMobile ? "4px" : "6px") : "0",
+          transition: "margin-right 0.3s ease",
+          fontSize: { xs: "1.25rem", md: "1.5rem", lg: "1.6rem" },
         }}
-        onClick={() => setShowText((prev) => !prev)}
+      />
+      <Typography
+        variant="h6"
+        sx={{
+          fontSize: { xs: ".88rem", md: "1.1rem", lg: "1.25rem" },
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          transition: "max-width 0.3s ease",
+          maxWidth: showText ? "100px" : "0px",
+        }}
       >
-        <AccessTimeIcon
-          sx={{
-            marginRight: showText ? (isMobile ? "4px" : "6px") : "0",
-            transition: "margin-right 0.3s ease",
-            fontSize: { xs: "1.25rem", md: "1.5rem", lg: "1.6rem" },
-          }}
-        />
-        <Typography
-          variant="h6"
-          sx={{
-            fontSize: { xs: ".88rem", md: "1.1rem", lg: "1.25rem" },
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            transition: "max-width 0.3s ease",
-            maxWidth: showText ? "100px" : "0px",
-          }}
-        >
-          {formatTime(timeLeft)}
-        </Typography>
-      </Box>
-    )
+        {formatTime(timeLeft)}
+      </Typography>
+    </Box>
   );
 };
 
