@@ -17,7 +17,7 @@ const WarningDialog = () => {
   );
 
   return (
-    <Dialog open={warningDialogOpen} fullWidth disableEscapeKeyDown>
+    <Dialog open={warningDialogOpen} fullWidth onClose={closeWarningDialog}>
       <DialogTitle>Unanswered Questions</DialogTitle>
       <DialogContent>
         Some questions are still unanswered... Submit anyway?
