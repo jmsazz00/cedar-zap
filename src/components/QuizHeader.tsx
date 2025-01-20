@@ -10,8 +10,8 @@ const QuizHeader = ({ name, year }: Props) => {
     <Box
       sx={{
         my: { xs: 2, md: 2.5 },
-        py: 1,
-        px: { xs: 0.75, sm: 2, md: 3 },
+        py: 1.25,
+        pl: { xs: 0.75, sm: 2, md: 3 },
         borderRadius: 1,
         display: "flex",
         alignItems: "center",
@@ -48,7 +48,7 @@ const QuizHeader = ({ name, year }: Props) => {
           backgroundColor: "primary.dark",
           borderRadius: 1,
           px: 0.75,
-          mx: { xs: 1.5, sm: 2, md: 2.5 },
+          mx: { xs: 1.25, sm: 2, md: 2.5 },
         }}
       >
         {year}

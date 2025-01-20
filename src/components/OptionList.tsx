@@ -34,9 +34,9 @@ const OptionList: React.FC<OptionListProps> = ({
   const showAnswers = useQuizStateStore((state) => state.showAnswers);
 
   useEffect(() => {
+    setHoveredOption(null);
     if (isMobile) return;
     if (listRef.current) listRef.current.focus();
-    setHoveredOption(null);
   }, [onSelect]);
 
   const handleKeyPress = (event: React.KeyboardEvent) => {

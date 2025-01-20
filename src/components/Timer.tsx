@@ -78,20 +78,16 @@ const Timer = ({ duration, onTimeUp, onTimeElapsed }: TimerProps) => {
   return (
     <Box
       sx={{
-        position: "fixed",
-        top: { xs: "142px", sm: "150px", md: "87px" },
-        right: { xs: "16px", sm: "23px" },
         backgroundColor: timeLeft <= 30 ? "error.dark" : "primary.main",
         color: "#fff",
-        p: { xs: "3px 4.5px", lg: "4px 8px" },
-        borderRadius: 1,
+        p: { xs: "1.5px 3px", lg: "4px 8px" },
+        borderRadius: 0.5,
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
         border: "1px solid rgba(0, 0, 0, 0.3)",
         display: "flex",
         alignItems: "center",
         cursor: "pointer",
         transition: "all 0.3s ease",
-        zIndex: 999,
         animation: !showText
           ? "vibrateWithPause 5s ease-in-out infinite"
           : "none",
