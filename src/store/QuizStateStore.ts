@@ -13,13 +13,16 @@ interface QuizState {
   questions: Question[];
   scoreDialogOpen: boolean;
   warningDialogOpen: boolean;
+  pauseDialogOpen: boolean;
   elapsedTime: number;
   showAnswers: boolean;
 
   setQuestions: (questions: Question[]) => void;
   handleSubmit: (directSubmit?: boolean) => void;
+  handlePause: () => void;
   closeScoreDialog: () => void;
   closeWarningDialog: () => void;
+  closePauseDialog: () => void;
   finishTest: () => void;
   setElapsedTime: (time: number) => void;
 }
@@ -34,6 +37,7 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
   questionsAnswered: 0,
   scoreDialogOpen: false,
   warningDialogOpen: false,
+  pauseDialogOpen: false,
   elapsedTime: 0,
   showAnswers: false,
 
@@ -83,6 +87,8 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
     });
   },
 
+  handlePause: () => set({ pauseDialogOpen: true, pauseTimer: true }),
+
   closeWarningDialog: () =>
     set({ warningDialogOpen: false, pauseTimer: false }),
 
@@ -96,6 +102,8 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
       tempFalseQuestions: [], // Clear temp storage
     });
   },
+
+  closePauseDialog: () => set({ pauseDialogOpen: false, pauseTimer: false }),
 
   setElapsedTime: (time: number) => set({ elapsedTime: time }),
   setShowAnswers: (value: boolean) => set({ showAnswers: value }),

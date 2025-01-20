@@ -8,6 +8,7 @@ import QuestionCard from "./QuestionCard";
 import QuizHeader from "./QuizHeader";
 import QuizTimer from "./QuizTimer";
 import Sidebar from "./Sidebar";
+import QuizPause from "./QuizPause";
 
 const QuizLayout: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
   const { name, year, duration } = quiz;
@@ -21,6 +22,7 @@ const QuizLayout: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
   return (
     <Box sx={{ display: { md: "flex" }, pt: { xs: "60px", sm: "68px" } }}>
       <QuizTimer duration={duration} />
+      <QuizPause />
       <Sidebar questionCount={questions.length} />
       <Container sx={{ mx: 0 }}>
         <QuizHeader name={name} year={year} />
