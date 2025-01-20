@@ -15,8 +15,12 @@ const OptionsList: React.FC<OptionsListProps> = ({
   correctAnswers,
   isMultipleChoice,
 }) => {
-  const questionIndex = useQuizInputStore((state) => state.currentQuestionIndex);
-  const selectedAnswers = useQuizInputStore((state) => state.answers[questionIndex]);
+  const questionIndex = useQuizInputStore(
+    (state) => state.currentQuestionIndex
+  );
+  const selectedAnswers = useQuizInputStore(
+    (state) => state.answers[questionIndex]
+  );
   const setAnswer = useQuizInputStore((state) => state.setAnswer);
   const toggleAnswer = useQuizInputStore((state) => state.toggleAnswer);
   const showAnswers = useQuizStateStore((state) => state.showAnswers);
