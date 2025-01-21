@@ -22,8 +22,8 @@ const ScoreDialog = () => {
   const questionsAnswered = useQuizStateStore(
     (state) => state.questionsAnswered
   );
-  const incorrectCount = useQuizStateStore(
-    (state) => state.tempFalseQuestions.length
+  const correctCount = useQuizStateStore(
+    (state) => state.tempCorrectQuestions.length
   );
   const elapsedTime = useQuizStateStore((state) => state.elapsedTime);
   const questionCount = useQuizStateStore((state) => state.questions.length);
@@ -86,7 +86,7 @@ const ScoreDialog = () => {
           <StatsGrid
             maxQuestions={questionCount}
             questionsAnswered={questionsAnswered}
-            falseQuestions={incorrectCount}
+            falseQuestions={questionsAnswered - correctCount}
             elapsedTime={elapsedTime}
           />
         </Box>

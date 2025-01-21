@@ -7,8 +7,8 @@ interface QuizState {
   maxScore: number;
   score: number;
   pauseTimer: boolean;
-  falseQuestions: number[];
-  tempFalseQuestions: number[];
+  correctQuestions: number[];
+  tempCorrectQuestions: number[];
   questionsAnswered: number;
   questions: Question[];
   scoreDialogOpen: boolean;
@@ -32,8 +32,8 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
   score: 0,
   pauseTimer: false,
   questions: [],
-  falseQuestions: [],
-  tempFalseQuestions: [],
+  correctQuestions: [],
+  tempCorrectQuestions: [],
   questionsAnswered: 0,
   scoreDialogOpen: false,
   warningDialogOpen: false,
@@ -68,7 +68,7 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
     const { answers } = useQuizInputStore.getState();
     const { questions } = get();
 
-    const { totalScore, falseQuestions } = useCalculateScore(
+    const { totalScore, correctQuestions } = useCalculateScore(
       questions,
       answers
     );
@@ -80,7 +80,7 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
     set({
       score: totalScore,
       pauseTimer: true,
-      tempFalseQuestions: falseQuestions,
+      tempCorrectQuestions: correctQuestions,
       questionsAnswered,
       scoreDialogOpen: true,
       warningDialogOpen: false,
@@ -93,13 +93,13 @@ export const useQuizStateStore = create<QuizState>((set, get) => ({
     set({ warningDialogOpen: false, pauseTimer: false }),
 
   closeScoreDialog: () => {
-    const { tempFalseQuestions } = get();
+    const { tempCorrectQuestions } = get();
 
     set({
       scoreDialogOpen: false,
       showAnswers: true,
-      falseQuestions: tempFalseQuestions, // Use the stored false questions
-      tempFalseQuestions: [], // Clear temp storage
+      correctQuestions: tempCorrectQuestions, // Use the stored false questions
+      tempCorrectQuestions: [], // Clear temp storage
     });
   },
 

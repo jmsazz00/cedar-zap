@@ -20,14 +20,14 @@ const WarningDialog = () => {
     <Dialog open={warningDialogOpen} fullWidth onClose={closeWarningDialog}>
       <DialogTitle>Unanswered Questions</DialogTitle>
       <DialogContent>
-        Some questions are still unanswered... Submit anyway?
+        Some questions are still unanswered.. Submit anyway?
       </DialogContent>
       <DialogActions>
         <Button color="secondary" onClick={closeWarningDialog}>
           Go Back
         </Button>
         <Button color="secondary" onClick={() => handleSubmit(false)}>
-          Submit Anyway
+          Submit Now
         </Button>
       </DialogActions>
     </Dialog>

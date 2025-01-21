@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import { useSidebarBtnStyles } from "../hooks/useSidebarBtnStyles";
 import { useQuizInputStore } from "../store/QuizInputStore";
@@ -8,14 +8,14 @@ interface SidebarButtonProps {
   index: number;
   setCurrentQuestionIndex: (index: number) => void;
   showAnswers: boolean;
-  falseQuestions: number[];
+  correctQuestions: number[];
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({
   index,
   setCurrentQuestionIndex,
   showAnswers,
-  falseQuestions,
+  correctQuestions,
 }) => {
   const ref = useRef<HTMLButtonElement>(null);
   const { isMobile } = useCheckMobileScreen();
@@ -30,15 +30,17 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
     store.highlightedQuestions.includes(index)
   );
 
-  const isCorrect = hasAnswer && !falseQuestions.includes(index);
+  const isCorrect = correctQuestions.includes(index);
 
-  if (isMobile && isCurrent) {
-    ref.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
-    });
-  }
+  useLayoutEffect(() => {
+    if (isMobile && isCurrent) {
+      ref.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  }, [isCurrent]);
 
   return (
     <Box sx={{ position: "relative" }} ref={ref}>

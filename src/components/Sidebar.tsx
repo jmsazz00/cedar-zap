@@ -15,7 +15,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
     (store) => store.setCurrentQuestionIndex
   );
   const showAnswers = useQuizStateStore((store) => store.showAnswers);
-  const falseQuestions = useQuizStateStore((store) => store.falseQuestions);
+  const correctQuestions = useQuizStateStore((store) => store.correctQuestions);
   const handleSubmit = useQuizStateStore((store) => store.handleSubmit);
 
   const handleScroll = () => {
@@ -79,7 +79,7 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
               key={i}
               index={i}
               setCurrentQuestionIndex={setCurrentQuestionIndex}
-              falseQuestions={falseQuestions}
+              correctQuestions={correctQuestions}
               showAnswers={showAnswers}
             />
           );
