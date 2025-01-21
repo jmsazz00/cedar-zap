@@ -1,18 +1,11 @@
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Toolbar,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import logo from "../assets/logo.png";
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import logo_name from "../assets/cedar-logo-1.png";
+import logo from "../assets/logo.png";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 
 const Navbar = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   return (
     <AppBar

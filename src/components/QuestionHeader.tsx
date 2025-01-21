@@ -1,13 +1,8 @@
 import EmojiFlagsIcon from "@mui/icons-material/EmojiFlags";
 import GradeIcon from "@mui/icons-material/Grade";
-import {
-  Box,
-  Divider,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Divider, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import { useQuizInputStore } from "../store/QuizInputStore";
 import { useQuizStateStore } from "../store/QuizStateStore";
 
@@ -29,8 +24,7 @@ const CustomDivider = (
 );
 
 const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
   const isSmallMobile = useMediaQuery("(max-width: 390px)");
 
   const index = useQuizInputStore((store) => store.currentQuestionIndex);

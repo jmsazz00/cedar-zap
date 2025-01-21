@@ -6,17 +6,15 @@ import {
   DialogTitle,
   Divider,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import Slide from "@mui/material/Slide";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
+import { useQuizStateStore } from "../store/QuizStateStore";
 import ScoreChart from "./ScoreChart";
 import StatsGrid from "./StatsGrid";
-import { useQuizStateStore } from "../store/QuizStateStore";
 
 const ScoreDialog = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   const scoreDialogOpen = useQuizStateStore((state) => state.scoreDialogOpen);
   const score = useQuizStateStore((state) => state.score);

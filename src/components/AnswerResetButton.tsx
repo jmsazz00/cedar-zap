@@ -1,5 +1,6 @@
-import { Button, useMediaQuery, useTheme } from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 
 interface AnswerResetButtonProps {
   resetAnswer: () => void;
@@ -8,8 +9,7 @@ interface AnswerResetButtonProps {
 const AnswerResetButton: React.FC<AnswerResetButtonProps> = ({
   resetAnswer,
 }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   return (
     <Button

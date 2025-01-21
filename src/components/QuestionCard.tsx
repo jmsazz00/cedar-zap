@@ -1,6 +1,7 @@
-import { Box, Divider, Paper, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Divider, Paper } from "@mui/material";
 import React, { useMemo } from "react";
 import Question from "../entities/Question";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import useScrollToTop from "../hooks/useScrollToTop";
 import { useQuizInputStore } from "../store/QuizInputStore";
 import { useQuizStateStore } from "../store/QuizStateStore";
@@ -15,8 +16,7 @@ interface QuestionCardProps {
 }
 
 const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   const answers = useQuizInputStore((store) => store.answers);
   const setAnswer = useQuizInputStore((store) => store.setAnswer);

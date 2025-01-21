@@ -1,6 +1,7 @@
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import { useFormatTime } from "../hooks/useFormatTime";
 import { useQuizStateStore } from "../store/QuizStateStore";
 
@@ -17,8 +18,7 @@ const Timer = ({ duration, onTimeUp, onTimeElapsed }: TimerProps) => {
 
   const pauseTimer = useQuizStateStore((st) => st.pauseTimer);
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   const initialRender = useRef(true);
   const onTimeUpCalled = useRef(false); // Prevent multiple `onTimeUp` calls

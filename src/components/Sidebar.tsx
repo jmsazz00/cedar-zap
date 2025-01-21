@@ -1,13 +1,13 @@
-import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import React, { useRef, useState } from "react";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import { useQuizInputStore } from "../store/QuizInputStore";
 import { useQuizStateStore } from "../store/QuizStateStore";
 import FinishTestButton from "./FinishTestButton";
 import SidebarButton from "./SidebarButton";
 
 const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [atEnd, setAtEnd] = useState(false);
 

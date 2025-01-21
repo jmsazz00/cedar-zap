@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import { Box, Button, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React, { useEffect, useRef } from "react";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import { useQuizInputStore } from "../store/QuizInputStore";
 import { useQuizStateStore } from "../store/QuizStateStore";
 import FinishTestButton from "./FinishTestButton";
@@ -10,8 +11,7 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   const currentQuestionIndex = useQuizInputStore(
     (state) => state.currentQuestionIndex

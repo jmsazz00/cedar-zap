@@ -1,12 +1,6 @@
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import { useQuizStateStore } from "../store/QuizStateStore";
 import { getOptionStyles, renderIcon } from "./OptionsUtils";
 
@@ -28,8 +22,7 @@ const OptionList: React.FC<OptionListProps> = ({
   const [hoveredOption, setHoveredOption] = useState<number | null>(null);
   const listRef = React.useRef<HTMLUListElement | null>(null);
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   const showAnswers = useQuizStateStore((state) => state.showAnswers);
 

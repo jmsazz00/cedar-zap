@@ -1,5 +1,6 @@
-import { Box, Button, useMediaQuery, useTheme } from "@mui/material";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import { Box, Button } from "@mui/material";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 
 interface FinishTestButtonProps {
   onFinish: () => void;
@@ -12,8 +13,7 @@ const FinishTestButton = ({
   disabled = false,
   contained = false,
 }: FinishTestButtonProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   return (
     <Box display="flex" justifyContent="center">

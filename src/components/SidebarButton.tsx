@@ -1,7 +1,8 @@
+import { Box, Button } from "@mui/material";
 import React, { useRef } from "react";
-import { useQuizInputStore } from "../store/QuizInputStore";
-import { Box, Button, useMediaQuery, useTheme } from "@mui/material";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import { useSidebarBtnStyles } from "../hooks/useSidebarBtnStyles";
+import { useQuizInputStore } from "../store/QuizInputStore";
 
 interface SidebarButtonProps {
   index: number;
@@ -17,13 +18,14 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
   falseQuestions,
 }) => {
   const ref = useRef<HTMLButtonElement>(null);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   const isCurrent = useQuizInputStore(
     (store) => store.currentQuestionIndex === index
   );
-  const hasAnswer = useQuizInputStore((store) => store.answers[index]?.length > 0);
+  const hasAnswer = useQuizInputStore(
+    (store) => store.answers[index]?.length > 0
+  );
   const isHighlighted = useQuizInputStore((store) =>
     store.highlightedQuestions.includes(index)
   );

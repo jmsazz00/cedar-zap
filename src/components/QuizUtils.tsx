@@ -1,10 +1,10 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
+import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import QuizPause from "./QuizPause";
 import QuizTimer from "./QuizTimer";
 
 const QuizUtils: React.FC<{ duration: number }> = ({ duration }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { isMobile } = useCheckMobileScreen();
 
   return (
     <Box
