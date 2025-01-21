@@ -71,7 +71,7 @@ const ScoreDialog = () => {
             {score}/{maxScore}
           </strong>
         </Typography>
-        <Divider sx={{ width: "90%", my: isMobile ? 4 : 0 }} />
+        <Divider sx={{ width: "90%", my: isMobile ? 2 : 0 }} />
         <Box width={"100%"}>
           <Typography
             variant="h6"
@@ -102,7 +102,7 @@ const ScoreDialog = () => {
             variant="contained"
             color="primary"
             size="large"
-            sx={{ width: isMobile ? "100%" : "50%" }}
+            sx={{ width: isMobile ? "75%" : "50%" }}
             onClick={closeScoreDialog}
           >
             Check Answers
