@@ -43,8 +43,8 @@ export const getOptionStyles = (
 
   const hoverStyles = isHovered
     ? {
-        border: "1.5px solid rgba(255, 255, 255, 0.2)",
-        boxShadow: "0 0 4px 2px rgba(255, 255, 255, 0.15)",
+        border: "1.5px solid rgba(211, 211, 211, 0.2)", // Soft light blue border
+        boxShadow: "0 0 4px 2px rgba(211, 211, 211, 0.1)", // Subtle glow
       }
     : {
         border: "1.5px solid transparent", // No border for idle state

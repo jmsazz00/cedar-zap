@@ -38,7 +38,6 @@ export const useSidebarBtnStyles = (
     color,
     borderColor,
     "&:hover": {
-      color: showAnswers ? "default" : "white",
       borderColor: showAnswers ? "var(--currentColor)" : "default",
     },
   };
