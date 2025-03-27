@@ -42,7 +42,7 @@ const ScoreDialog = () => {
         sx={{
           textAlign: "center",
           fontWeight: "bold",
-          fontSize: "1.8rem",
+          fontSize: isMobile ? "1.6rem" : "1.8rem",
           bgcolor: "primary.main",
           color: "#fff",
         }}
@@ -64,14 +64,14 @@ const ScoreDialog = () => {
           variant="h5"
           align="center"
           color="textPrimary"
-          sx={{ mt: 2, fontWeight: "bold" }}
+          sx={{ mt: isMobile ? 0 : 2, fontWeight: "bold" }}
         >
           Your Total Score:{" "}
           <strong>
             {score}/{maxScore}
           </strong>
         </Typography>
-        <Divider sx={{ width: "90%", my: isMobile ? 2 : 0 }} />
+        <Divider sx={{ width: "90%", my: isMobile ? 1 : 0 }} />
         <Box width={"100%"}>
           <Typography
             variant="h6"

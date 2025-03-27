@@ -13,6 +13,9 @@ const Navbar = () => {
         bgcolor: "#252525",
         boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.5)",
         borderBottom: "1px solid rgba(92, 107, 192, 0.3)",
+        display: "flex",
+        justifyContent: "center",
+        maxHeight: isMobile ? 50 : "initial",
       }}
     >
       <Toolbar sx={{ position: "relative" }}>
@@ -33,7 +36,7 @@ const Navbar = () => {
             alignItems: "center",
           }}
         >
-          <img src={logo} height={isMobile ? 45 : 50} alt="Logo" />
+          <img src={logo} height={isMobile ? 42 : 50} alt="Logo" />
         </Box>
 
         {/* Right Section: Home Icon */}

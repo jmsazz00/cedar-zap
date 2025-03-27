@@ -27,10 +27,10 @@ export const useSidebarBtnStyles = (
   }, [isCurrent, showAnswers, isCorrect]);
 
   return {
-    height: { xs: 42, sm: 45, md: 48 },
-    minWidth: { xs: 42, sm: 45, md: 48 },
+    height: { xs: 44, sm: 46, md: 48 },
+    minWidth: { xs: 44, sm: 46, md: 48 },
     borderRadius: { xs: 1.5, md: 2 },
-    fontSize: { xs: "0.75rem", sm: "0.8rem", md: "0.875rem" },
+    fontSize: { xs: "0.825rem", sm: "0.85rem", md: "0.875rem" },
     fontWeight: "bold",
     zIndex: 2,
     overflow: "hidden",

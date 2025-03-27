@@ -22,7 +22,7 @@ const QuizLayout: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
     <Box sx={{ display: { md: "flex" }, pt: { xs: "60px", sm: "68px" } }}>
       <QuizUtils duration={duration} />
       <Sidebar questionCount={questions.length} />
-      <Container sx={{ mx: 0 }}>
+      <Container sx={{ mx: 0, px: 1.5 }}>
         <QuizHeader name={name} year={year} />
         <QuestionCard questions={questions} />
       </Container>

@@ -65,7 +65,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
         disabled={currentQuestionIndex === 0}
         onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
         startIcon={<ArrowLeft />}
-        size={isMobile ? "small" : "medium"}
+        size={isMobile ? "medium" : "medium"}
       >
         Prev
       </Button>
@@ -81,7 +81,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalQuestions }) => {
         disabled={currentQuestionIndex === totalQuestions - 1}
         onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
         endIcon={<ArrowRight />}
-        size={isMobile ? "small" : "medium"}
+        size={isMobile ? "medium" : "medium"}
       >
         Next
       </Button>

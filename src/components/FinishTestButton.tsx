@@ -21,7 +21,7 @@ const FinishTestButton = ({
         variant={contained ? "contained" : "outlined"}
         disabled={disabled}
         onClick={onFinish}
-        size={isMobile ? "small" : "large"}
+        size={isMobile ? "medium" : "large"}
         sx={{
           fontWeight: "bold",
           color: "primary",
