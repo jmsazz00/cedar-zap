@@ -30,23 +30,32 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
     [currentQuestionIndex, questions]
   );
 
-  const { question, options, point, correctAnswers, isMultipleChoice } =
+  const { question, options, point, correctAnswers, type } =
     currentQuestionData;
 
   useScrollToTop(currentQuestionIndex);
 
+  const boxStyles = {
+    m: { sm: "0 auto", lg: "0" },
+    width: { xs: "100%", md: "fit-content" },
+    display: "flex",
+    flexDirection: isMobile ? "column" : "row",
+    minWidth: { lg: "900px" },
+    maxWidth: { lg: "1000px" },
+    gap: isMobile ? 2 : 0,
+  };
+
+  const paperStyles = {
+    display: "flex",
+    flexDirection: "column",
+    p: isMobile ? 1.75 : 2,
+    bgcolor: "background.paper",
+    borderRadius: 2,
+    width: "100%",
+  };
+
   return (
-    <Box
-      display="flex"
-      flexDirection={isMobile ? "column" : "row"}
-      minWidth={{ lg: "900px" }}
-      maxWidth={{ lg: "1050px" }}
-      gap={isMobile ? 2 : 0}
-      sx={{
-        m: { sm: "0 auto", lg: "0" },
-        width: { xs: "100%", md: "fit-content" },
-      }}
-    >
+    <Box sx={boxStyles}>
       <QuestionHeader point={point} />
       {!isMobile && (
         <Divider
@@ -56,26 +65,13 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
         />
       )}
       <Box width={"100%"}>
-        <Paper
-          elevation={3}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            p: isMobile ? 1.75 : 2,
-            bgcolor: "background.paper",
-            borderRadius: 2,
-            width: "100%",
-          }}
-        >
+        <Paper elevation={3} sx={paperStyles}>
           <Box sx={{ flex: 1, px: isMobile ? 0 : 1.5 }}>
-            <QuestionQuery
-              question={question}
-              isMultipleChoice={isMultipleChoice}
-            />
+            <QuestionQuery question={question} type={type} />
             <OptionsList
               options={options}
               correctAnswers={correctAnswers}
-              isMultipleChoice={isMultipleChoice}
+              type={type}
             />
           </Box>
           {!showAnswers && answers[currentQuestionIndex]?.length > 0 && (

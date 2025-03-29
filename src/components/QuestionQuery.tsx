@@ -1,13 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useQuizStateStore } from "../store/QuizStateStore";
+import { QuestionType } from "../entities/QuestionType";
 
 interface Props {
   question: string;
-  isMultipleChoice: boolean;
+  type: QuestionType;
 }
 
-const QuestionQuery = ({ question, isMultipleChoice }: Props) => {
+const QuestionQuery = ({ question, type }: Props) => {
   const showAnswers = useQuizStateStore((state) => state.showAnswers);
 
   const commonStyles = {
@@ -25,7 +26,8 @@ const QuestionQuery = ({ question, isMultipleChoice }: Props) => {
           mb={1.5}
           sx={{ ...commonStyles, color: "secondary.main" }}
         >
-          Veuillez choisir {isMultipleChoice ? "au moins" : ""} une réponse
+          Veuillez choisir {type === "multiple-choice" ? "au moins" : ""} une
+          réponse
         </Typography>
       )}
     </Box>

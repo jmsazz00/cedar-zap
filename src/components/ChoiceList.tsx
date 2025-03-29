@@ -4,7 +4,7 @@ import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import { useQuizStateStore } from "../store/QuizStateStore";
 import { getOptionStyles, renderIcon } from "./OptionsUtils";
 
-interface OptionListProps {
+interface ChoiceListProps {
   options: string[];
   selectedAnswers: number[];
   correctAnswers: number[];
@@ -12,7 +12,7 @@ interface OptionListProps {
   onSelect: (index: number) => void;
 }
 
-const OptionList: React.FC<OptionListProps> = ({
+const ChoiceList: React.FC<ChoiceListProps> = ({
   options,
   selectedAnswers,
   correctAnswers,
@@ -111,4 +111,4 @@ const OptionList: React.FC<OptionListProps> = ({
   );
 };
 
-export default OptionList;
+export default ChoiceList;
