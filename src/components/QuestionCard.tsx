@@ -31,7 +31,6 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
   );
 
   const { question, options, point, correctAnswers, type } =
-  const { question, options, point, correctAnswers, type } =
     currentQuestionData;
 
   useScrollToTop(currentQuestionIndex);
