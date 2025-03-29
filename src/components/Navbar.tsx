@@ -1,7 +1,7 @@
 import HomeIcon from "@mui/icons-material/Home";
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
-import logo_name from "../assets/cedar-logo-1.png";
-import logo from "../assets/logo.png";
+import main_logo from "../assets/main-logo.png";
+import cedar_logo from "../assets/cedar-logo.png";
 import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 
 const Navbar = () => {
@@ -22,7 +22,7 @@ const Navbar = () => {
         {/* Left Section: Logo Name */}
         <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
           <Box display={"flex"} alignItems={"center"} mr={1}>
-            <img src={logo_name} height={isMobile ? 33 : 40} alt="Logo Name" />
+            <img src={main_logo} height={isMobile ? 33 : 40} alt="Logo Name" />
           </Box>
         </Box>
 
@@ -36,7 +36,7 @@ const Navbar = () => {
             alignItems: "center",
           }}
         >
-          <img src={logo} height={isMobile ? 42 : 50} alt="Logo" />
+          <img src={cedar_logo} height={isMobile ? 42 : 50} alt="Logo" />
         </Box>
 
         {/* Right Section: Home Icon */}
