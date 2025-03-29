@@ -12,7 +12,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "Trompe, ligament rond, ligament utéro-ovarien" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 2,
@@ -27,7 +27,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2, 4], // "Artère utérine / circonflexe" is not a branch
-    isMultipleChoice: true,
+    type: "multiple-choice",
   },
   {
     index: 3,
@@ -42,7 +42,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [3], // "Le clitoris" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 4,
@@ -56,7 +56,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "Les épines sciatiques" is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 5,
@@ -71,7 +71,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2], // "Le muscle sphincter externe anal" is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 6,
@@ -85,7 +85,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2], // "Une de ses attaches est le ligament rond" is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 7,
@@ -99,7 +99,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [3], // "L’ampoule" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 8,
@@ -114,7 +114,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "Paroi antérieure : Le quart inférieur..." is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 9,
@@ -128,7 +128,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [0], // "Elles sont nombreuses..." is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 10,
@@ -143,7 +143,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [0], // "Le ligament rond tient..." is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 11,
@@ -158,7 +158,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "L'artère ovarique" is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 12,
@@ -172,7 +172,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2], // "L’ampoule de la trompe" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 13,
@@ -186,7 +186,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2], // "Le quart supérieur et antérieur..." is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 14,
@@ -200,7 +200,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [0], // "Le nerf pudendal" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 15,
@@ -215,7 +215,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2], // "Aorte" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 16,
@@ -230,7 +230,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [0], // "Le ligament infundibulo-ovarien" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 17,
@@ -245,7 +245,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "La partie interstitielle" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 18,
@@ -260,7 +260,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [3], // "Artère obturatrice" is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 19,
@@ -275,7 +275,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "L’isthme de l’utérus" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 20,
@@ -290,7 +290,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [0], // "Le détroit supérieur" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 21,
@@ -305,7 +305,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2], // "Les épines sciatiques" is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 22,
@@ -320,7 +320,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "L’artère épigastrique" is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 23,
@@ -335,7 +335,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "L’artère sacrale médiale" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 24,
@@ -349,7 +349,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "Sont aussi appelées glandes para-urétrales" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 25,
@@ -363,7 +363,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "Transverse profond" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 26,
@@ -377,7 +377,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [0], // "Veine cave inférieure" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 27,
@@ -392,7 +392,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2], // "Ombilicale" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 28,
@@ -407,7 +407,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "Leydig" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 29,
@@ -422,7 +422,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "Rénale" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 30,
@@ -437,7 +437,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "Leydig" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 31,
@@ -451,7 +451,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [0], // "Parfois asymétriques" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 32,
@@ -466,7 +466,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "Rénale" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 33,
@@ -481,7 +481,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [3], // "Trompe - Ligament rond - Ligament utéro ovarien" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 34,
@@ -495,7 +495,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [0], // "Le corps de l’utérus" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 35,
@@ -510,7 +510,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [0], // "Ischio-caverneux" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 36,
@@ -525,7 +525,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "Ischio-caverneux" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 37,
@@ -540,7 +540,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [3], // "Pubo-rectal" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 38,
@@ -554,7 +554,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2], // "La veine cave inférieure" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 39,
@@ -569,7 +569,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "Hypogastrique" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 40,
@@ -584,7 +584,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "Ombilicale" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 41,
@@ -599,7 +599,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "Elle naît de l’artère iliaque externe" is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 42,
@@ -614,7 +614,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [2], // "Il est complètement et uniquement suspendu au ligament large..." is incorrect
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 43,
@@ -628,7 +628,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [4], // "Le ligament rond" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
   {
     index: 44,
@@ -642,7 +642,7 @@ const questions = [
     ],
     point: 1,
     correctAnswers: [1], // "L’artère ovarienne est une branche de l’aorte abdominale" is correct
-    isMultipleChoice: false,
+    type: "single-choice",
   },
 ];
 

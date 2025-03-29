@@ -1,7 +1,8 @@
 import { Box, Container } from "@mui/material";
 import { useEffect } from "react";
 import questions from "../data/questions";
-import { Quiz } from "../entities/Quiz";
+import Question from "../entities/Question";
+import Quiz from "../entities/Quiz";
 import { useQuizStateStore } from "../store/QuizStateStore";
 import DialogsList from "./DialogsList";
 import QuestionCard from "./QuestionCard";
@@ -14,8 +15,10 @@ const QuizLayout: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
 
   const setQuestions = useQuizStateStore((state) => state.setQuestions);
 
+  const allQuestions = questions as Question[];
+
   useEffect(() => {
-    setQuestions(questions);
+    setQuestions(allQuestions);
   }, []);
 
   return (
@@ -24,7 +27,7 @@ const QuizLayout: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
       <Sidebar questionCount={questions.length} />
       <Container sx={{ mx: 0, px: 1.5 }}>
         <QuizHeader name={name} year={year} />
-        <QuestionCard questions={questions} />
+        <QuestionCard questions={allQuestions} />
       </Container>
       <DialogsList />
     </Box>

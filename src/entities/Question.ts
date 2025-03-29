@@ -3,6 +3,6 @@ export default interface Question {
   question: string;
   options: string[];
   point: number;
-  correctAnswers: number[]; // Updated to handle multiple correct answers
-  isMultipleChoice: boolean;
+  correctAnswers: number[]; 
+  type: "single-choice" | "multiple-choice" | "dropdown";
 }

@@ -30,7 +30,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
     [currentQuestionIndex, questions]
   );
 
-  const { question, options, point, correctAnswers, isMultipleChoice } =
+  const { question, options, point, correctAnswers, type } =
     currentQuestionData;
 
   useScrollToTop(currentQuestionIndex);
@@ -68,15 +68,14 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
           }}
         >
           <Box sx={{ flex: 1, px: isMobile ? 0 : 1.5 }}>
-            <QuestionQuery
-              question={question}
-              isMultipleChoice={isMultipleChoice}
-            />
-            <OptionsList
-              options={options}
-              correctAnswers={correctAnswers}
-              isMultipleChoice={isMultipleChoice}
-            />
+            <QuestionQuery question={question} type={type} />
+            {type === "single-choice" || type === "multiple-choice" ? (
+              <OptionsList
+                options={options}
+                correctAnswers={correctAnswers}
+                isMultipleChoice={type === "multiple-choice"}
+              />
+            ) : null}
           </Box>
           {!showAnswers && answers[currentQuestionIndex]?.length > 0 && (
             <Box display={"flex"} justifyContent={"center"} mt={1}>
