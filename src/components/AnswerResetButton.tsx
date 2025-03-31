@@ -14,7 +14,7 @@ const AnswerResetButton: React.FC<AnswerResetButtonProps> = ({
   return (
     <Button
       onClick={resetAnswer}
-      variant="outlined"
+      variant="text"
       size={isMobile ? "small" : "medium"}
     >
       Remove my answer
