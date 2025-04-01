@@ -2,7 +2,11 @@ import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
 import { useQuizStateStore } from "../store/QuizStateStore";
-import { getOptionStyles, renderIcon } from "./OptionsUtils";
+import {
+  getOptionStyles,
+  getResponsiveFontSize,
+  renderIcon,
+} from "./OptionsUtils";
 
 interface ChoiceListProps {
   options: string[];
@@ -99,9 +103,7 @@ const ChoiceList: React.FC<ChoiceListProps> = ({
             <ListItemText
               primary={option}
               primaryTypographyProps={{
-                sx: {
-                  fontSize: { xs: "0.85rem", sm: "0.925rem", md: "1rem" },
-                },
+                sx: getResponsiveFontSize(),
               }}
             />
           </ListItemButton>

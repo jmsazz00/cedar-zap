@@ -32,7 +32,7 @@ const questions = [
   {
     index: 3,
     question:
-      "L’artère iliaque interne irrigue une de ces structures laquelle :",
+      "Faire correspondre a chaque structure sa caracteristique: ",
     options: [
       "L’hymen",
       "Les petites lèvres",
@@ -41,8 +41,15 @@ const questions = [
       "Le mont du pubis",
     ],
     point: 1,
-    correctAnswers: [3], // "Le clitoris" is correct
-    type: "single-choice",
+    correctAnswers: [3, 2, 1, 0, 4], 
+    type: "dropdown",
+    dropdownItems: [
+      "Organe de plaisir",
+      "Externes",
+      "Internes",
+      "Se dechire",
+      "Est en haut",
+    ],
   },
   {
     index: 4,

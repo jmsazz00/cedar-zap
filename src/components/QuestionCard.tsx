@@ -30,7 +30,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
     [currentQuestionIndex, questions]
   );
 
-  const { question, options, point, correctAnswers, type } =
+  const { question, options, point, correctAnswers, type, dropdownItems } =
     currentQuestionData;
 
   useScrollToTop(currentQuestionIndex);
@@ -72,6 +72,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ questions }) => {
               options={options}
               correctAnswers={correctAnswers}
               type={type}
+              dropdownItems={dropdownItems}
             />
           </Box>
           {!showAnswers && answers[currentQuestionIndex]?.length > 0 && (

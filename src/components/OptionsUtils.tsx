@@ -3,6 +3,12 @@ import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 import Radio from "@mui/material/Radio";
 import Checkbox from "@mui/material/Checkbox";
 
+export const getResponsiveFontSize = () => {
+  return {
+    fontSize: { xs: "0.85rem", sm: "0.925rem", md: "1rem" },
+  };
+};
+
 export const getOptionStyles = (
   index: number,
   hoveredOption: number | null,

@@ -3,6 +3,7 @@ export default interface Question {
   question: string;
   options: string[];
   point: number;
-  correctAnswers: number[]; 
+  correctAnswers: number[];
   type: "single-choice" | "multiple-choice" | "dropdown";
+  dropdownItems?: string[];
 }

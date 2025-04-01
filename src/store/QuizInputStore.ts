@@ -6,6 +6,11 @@ interface QuizInput {
   highlightedQuestions: number[];
 
   setAnswer: (index: number, answerIndex: number) => void;
+  selectAnswer: (
+    index: number,
+    answerIndex: number,
+    dropdownIndex: number
+  ) => void;
   toggleAnswer: (index: number, answerIndex: number) => void;
   setCurrentQuestionIndex: (index: number) => void;
   toggleHighlight: (index: number) => void;
@@ -22,6 +27,17 @@ export const useQuizInputStore = create<QuizInput>((set) => ({
         [index]: answerIndex < 0 ? [] : [answerIndex],
       },
     })),
+  selectAnswer: (index, answerIndex, dropdownIndex) =>
+    set((state) => {
+      const currentAnswers = state.answers[index] || [];
+      const updatedAnswers = [...currentAnswers];
+
+      updatedAnswers[answerIndex] = dropdownIndex;
+
+      return {
+        answers: { ...state.answers, [index]: updatedAnswers },
+      };
+    }),
   toggleAnswer: (index, answerIndex) =>
     set((state) => {
       const currentAnswers = state.answers[index] || [];

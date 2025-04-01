@@ -14,25 +14,40 @@ export const useCalculateScore = (
 
     if (!selectedAnswers || selectedAnswers.length === 0) return;
 
-    const correctSelections = selectedAnswers.filter((ans) =>
-      correctAnswers.includes(ans)
-    ).length;
+    if (question.type === "dropdown") {
+      // Dropdown question logic
+      const numOptions = correctAnswers.length;
+      const pointsPerOption = points / numOptions;
+      let dropdownScore = 0;
 
-    const incorrectSelections = selectedAnswers.filter(
-      (ans) => !correctAnswers.includes(ans)
-    ).length;
+      selectedAnswers.forEach((selected, index) => {
+        if (selected === correctAnswers[index])
+          dropdownScore += pointsPerOption;
+      });
 
-    const effectiveCorrectAnswers = Math.max(
-      0,
-      correctSelections - incorrectSelections
-    );
+      if (dropdownScore > 0) correctQuestions.push(parseInt(qIndex));
+      totalScore += dropdownScore;
+    } else {
+      // Single/Multi-choice questions logic
+      const correctSelections = selectedAnswers.filter((ans) =>
+        correctAnswers.includes(ans)
+      ).length;
 
-    const questionScore =
-      (effectiveCorrectAnswers / correctAnswers.length) * points;
+      const incorrectSelections = selectedAnswers.filter(
+        (ans) => !correctAnswers.includes(ans)
+      ).length;
 
-    if (questionScore > 0) correctQuestions.push(parseInt(qIndex));
+      const effectiveCorrectAnswers = Math.max(
+        0,
+        correctSelections - incorrectSelections
+      );
 
-    totalScore += questionScore;
+      const questionScore =
+        (effectiveCorrectAnswers / correctAnswers.length) * points;
+
+      if (questionScore > 0) correctQuestions.push(parseInt(qIndex));
+      totalScore += questionScore;
+    }
   });
 
   return {
