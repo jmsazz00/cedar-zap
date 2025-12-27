@@ -1,18 +1,29 @@
 import HomeIcon from "@mui/icons-material/Home";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import main_logo from "../assets/main-logo.png";
 import cedar_logo from "../assets/cedar-logo.png";
 import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
+import { useThemeStore } from "../store/ThemeStore";
 
 const Navbar = () => {
   const { isMobile } = useCheckMobileScreen();
+  const mode = useThemeStore((state) => state.mode);
+  const toggleTheme = useThemeStore((state) => state.toggleTheme);
 
   return (
     <AppBar
       sx={{
-        bgcolor: "#252525",
-        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.5)",
-        borderBottom: "1px solid rgba(92, 107, 192, 0.3)",
+        bgcolor: mode === "dark" ? "#252525" : "#ffffff",
+        boxShadow:
+          mode === "dark"
+            ? "0px 2px 8px rgba(0, 0, 0, 0.5)"
+            : "0px 2px 8px rgba(0, 0, 0, 0.1)",
+        borderBottom:
+          mode === "dark"
+            ? "1px solid rgba(92, 107, 192, 0.3)"
+            : "1px solid rgba(92, 107, 192, 0.2)",
         display: "flex",
         justifyContent: "center",
         maxHeight: isMobile ? 50 : "initial",
@@ -39,8 +50,15 @@ const Navbar = () => {
           <img src={cedar_logo} height={isMobile ? 42 : 50} alt="Logo" />
         </Box>
 
-        {/* Right Section: Home Icon */}
-        <Box>
+        {/* Right Section: Theme Toggle & Home Icon */}
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <IconButton
+            color="inherit"
+            onClick={toggleTheme}
+            aria-label="toggle theme"
+          >
+            {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
           <IconButton color="inherit" aria-label="menu">
             <HomeIcon />
           </IconButton>

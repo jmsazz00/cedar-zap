@@ -1,6 +1,10 @@
 import { Global, css } from "@emotion/react";
+import { useTheme } from "@mui/material";
 
 const GlobalStyles = () => {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   return (
     <Global
       styles={css`
@@ -10,25 +14,23 @@ const GlobalStyles = () => {
           height: 7px;
         }
         ::-webkit-scrollbar-track {
-          background-color: #2a2a2a;
+          background-color: ${isDark ? "#2a2a2a" : "#e0e0e0"};
           border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-          background-color: #444;
+          background-color: ${isDark ? "#444" : "#bdbdbd"};
           border-radius: 10px;
           transition: background-color 0.3s, width 0.3s;
         }
         ::-webkit-scrollbar-thumb:hover {
-          background-color: #666;
+          background-color: ${isDark ? "#666" : "#9e9e9e"};
         }
         @keyframes vibrateWithPause {
           0%,
           88% {
-            /* Pause for 88% of the time */
             transform: rotate(0deg);
           }
           90% {
-            /* Start the vibration */
             transform: rotate(-10deg);
           }
           92% {
@@ -42,7 +44,6 @@ const GlobalStyles = () => {
           }
           98%,
           100% {
-            /* Reset */
             transform: rotate(0deg);
           }
         }
