@@ -41,7 +41,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
   return (
     <Box
       sx={{
-        bgcolor: "#1b1b1b",
+        bgcolor: "grey.A100",
         px: isSmallMobile ? 0.5 : isMobile ? 1 : 2,
         py: isMobile ? 1.25 : 3,
         display: "flex",
@@ -51,7 +51,11 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
         borderRadius: 1,
         minWidth: isMobile ? "100%" : "160px",
         height: isMobile ? "auto" : "fit-content",
-        border: "1px solid rgba(255, 255, 255, 0.15)",
+        border: "1px solid",
+        borderColor: (theme) =>
+          theme.palette.mode === "dark"
+            ? "rgba(255, 255, 255, 0.15)"
+            : "rgba(0, 0, 0, 0.1)",
         gap: isSmallMobile ? 0.5 : isMobile ? 1.5 : 0,
       }}
     >
@@ -108,7 +112,7 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({ point }) => {
           alignItems: "center",
           justifyContent: "center",
           mt: isMobile ? 0 : 0.25,
-          color: "rgb(255,255,255,0.7)",
+          color: "text.secondary",
           gap: 0.5,
           flexGrow: 1,
         }}

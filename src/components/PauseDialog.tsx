@@ -38,7 +38,8 @@ const PauseDialog = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "#fff",
+            color: (theme) =>
+              theme.palette.mode === "dark" ? "#fff" : "#ffffff",
             fontWeight: 700,
             marginBottom: 3,
             textShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -69,7 +70,8 @@ const PauseDialog = () => {
           <PlayArrowIcon
             sx={{
               fontSize: "3.5rem",
-              color: "#fff",
+              color: (theme) =>
+                theme.palette.mode === "dark" ? "#fff" : "#ffffff",
             }}
           />
         </Box>

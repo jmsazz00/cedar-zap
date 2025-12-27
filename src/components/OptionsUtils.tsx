@@ -2,6 +2,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DoneOutlineSharpIcon from "@mui/icons-material/DoneOutlineSharp";
 import Radio from "@mui/material/Radio";
 import Checkbox from "@mui/material/Checkbox";
+import { Theme } from "@mui/material/styles";
 
 export const getResponsiveFontSize = () => {
   return {
@@ -29,36 +30,43 @@ export const getOptionStyles = (
     "&.Mui-disabled": {
       opacity: 0.85,
     },
-    "&:hover": {
-      bgcolor: "#222", // Prevent default hover effect
-    },
+    "&:hover": (theme: Theme) => ({
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? "#222"
+          : "rgba(0, 0, 0, 0.05)",
+    }),
   };
 
   if (showAnswers) {
     const answerStyles = {
-      bgcolor: isSelected
-        ? isCorrect
-          ? "success.dark"
-          : "error.dark"
-        : isUnselectedCorrect
-        ? "primary.dark"
-        : "#222",
+      bgcolor: (theme: Theme) =>
+        isSelected
+          ? isCorrect
+            ? "success.dark"
+            : "error.dark"
+          : isUnselectedCorrect
+          ? "primary.dark"
+          : theme.palette.mode === "dark"
+          ? "#222"
+          : "#f0f0f0",
     };
     return { ...baseStyles, ...answerStyles };
   }
 
   const hoverStyles = isHovered
     ? {
-        border: "1.5px solid rgba(211, 211, 211, 0.2)", // Soft light blue border
-        boxShadow: "0 0 4px 2px rgba(211, 211, 211, 0.1)", // Subtle glow
+        border: "1.5px solid rgba(211, 211, 211, 0.2)",
+        boxShadow: "0 0 4px 2px rgba(211, 211, 211, 0.1)",
       }
     : {
-        border: "1.5px solid transparent", // No border for idle state
+        border: "1.5px solid transparent",
       };
 
   return {
     ...baseStyles,
-    bgcolor: "#222",
+    bgcolor: (theme: Theme) =>
+      theme.palette.mode === "dark" ? "#222" : "#f0f0f0",
     ...hoverStyles,
   };
 };

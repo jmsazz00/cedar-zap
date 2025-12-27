@@ -10,7 +10,8 @@ const Pause = ({ onPause }: Props) => {
     <Box
       sx={{
         backgroundColor: "secondary.main",
-        color: "#fff",
+        color: (theme) =>
+          theme.palette.mode === "dark" ? "#fff" : "#ffffff",
         p: { xs: "1.5px 3px", lg: "4px 8px" },
         borderRadius: 0.5,
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",

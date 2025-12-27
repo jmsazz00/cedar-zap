@@ -28,8 +28,10 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
   const shadowOverlay = !atEnd && (
     <Box
       sx={{
-        background:
-          "linear-gradient(to left, rgba(29, 29, 29, 0.8), transparent)",
+        background: (theme) =>
+          theme.palette.mode === "dark"
+            ? "linear-gradient(to left, rgba(29, 29, 29, 0.8), transparent)"
+            : "linear-gradient(to left, rgba(250, 250, 250, 0.8), transparent)",
         height: "100%",
         pointerEvents: "none",
         position: "absolute",
@@ -45,7 +47,9 @@ const Sidebar: React.FC<{ questionCount: number }> = ({ questionCount }) => {
     <Box
       sx={{
         bgcolor: "background.paper",
-        borderRight: isMobile ? "none" : "1px solid #444",
+        borderRight: isMobile ? "none" : "1px solid",
+        borderColor: (theme) =>
+          theme.palette.mode === "dark" ? "#444" : "#e0e0e0",
         height: isMobile ? "auto" : "calc(100vh - 68px)",
         minWidth: isMobile ? "auto" : "fit-content",
         overflowY: "auto",
