@@ -44,8 +44,7 @@ const ScoreDialog = () => {
           fontWeight: "bold",
           fontSize: isMobile ? "1.6rem" : "1.8rem",
           bgcolor: "primary.main",
-          color: (theme) =>
-            theme.palette.mode === "dark" ? "#fff" : "#ffffff",
+          color: "#ffffff",
         }}
       >
         Quiz Results

@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <AppBar
       sx={{
-        bgcolor: mode === "dark" ? "#252525" : "#ffffff",
+        bgcolor: mode === "dark" ? "#252525" : "#f9f9f9",
         boxShadow:
           mode === "dark"
             ? "0px 2px 8px rgba(0, 0, 0, 0.5)"
@@ -53,13 +53,13 @@ const Navbar = () => {
         {/* Right Section: Theme Toggle & Home Icon */}
         <Box sx={{ display: "flex", gap: 1 }}>
           <IconButton
-            color="inherit"
+            color="default"
             onClick={toggleTheme}
             aria-label="toggle theme"
           >
             {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
-          <IconButton color="inherit" aria-label="menu">
+          <IconButton color="default" aria-label="menu">
             <HomeIcon />
           </IconButton>
         </Box>

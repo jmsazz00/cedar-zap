@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 interface Props {
   name: string;
@@ -6,6 +6,22 @@ interface Props {
 }
 
 const QuizHeader = ({ name, year }: Props) => {
+  const theme = useTheme(); // Get the current theme (light or dark)
+
+  // Define background and text gradients for light and dark modes
+  const backgroundGradient =
+    theme.palette.mode === "dark"
+      ? "linear-gradient(90deg, rgba(92, 107, 192, 0.35), rgba(46, 59, 92, 0.5), rgba(18, 18, 18, 0.6))"
+      : "linear-gradient(90deg, rgba(92, 107, 192, 0.4), rgba(46, 59, 92, 0.25), rgba(230, 240, 255, 0.5))";
+
+  const textGradient =
+    theme.palette.mode === "dark"
+      ? "linear-gradient(to right, rgba(92, 107, 192, 0.8), rgba(112, 123, 202, 0.6))"
+      : "linear-gradient(to right, rgba(92, 107, 192, 0.7), rgba(112, 123, 202, 0.4))";
+
+  const yearBackgroundColor =
+    theme.palette.mode === "dark" ? "primary.dark" : "primary.light";
+
   return (
     <Box
       sx={{
@@ -15,8 +31,7 @@ const QuizHeader = ({ name, year }: Props) => {
         borderRadius: 1,
         display: "flex",
         alignItems: "center",
-        background:
-          "linear-gradient(90deg, rgba(92, 107, 192, 0.35), rgba(46, 59, 92, 0.5), rgba(18, 18, 18, 0.6))", // Lightened gradient
+        background: backgroundGradient,
         width: "fit-content",
         boxShadow: "0 1px 5px rgba(0, 0, 0, 0.15)",
       }}
@@ -24,8 +39,7 @@ const QuizHeader = ({ name, year }: Props) => {
       <Typography
         variant="h5"
         sx={{
-          background:
-            "linear-gradient(to right, rgba(92, 107, 192, 0.8), rgba(112, 123, 202, 0.6))", // Softer text gradient
+          background: textGradient,
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           fontWeight: "bold",
@@ -45,7 +59,7 @@ const QuizHeader = ({ name, year }: Props) => {
           color: "rgba(255,255,255,0.8)",
           fontSize: { xs: "0.66rem", md: "0.75rem" },
           fontWeight: "500",
-          backgroundColor: "primary.dark",
+          backgroundColor: yearBackgroundColor,
           borderRadius: 1,
           px: 0.75,
           mx: { xs: 1.25, sm: 2, md: 2.5 },

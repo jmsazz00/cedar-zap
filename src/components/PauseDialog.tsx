@@ -26,7 +26,6 @@ const PauseDialog = () => {
       <DialogContent
         sx={{
           bgcolor: "primary.dark",
-          borderRadius: 2,
           padding: 4,
           boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.3)",
           textAlign: "center",
@@ -38,8 +37,7 @@ const PauseDialog = () => {
         <Typography
           variant="h4"
           sx={{
-            color: (theme) =>
-              theme.palette.mode === "dark" ? "#fff" : "#ffffff",
+            color: "#ffffff",
             fontWeight: 700,
             marginBottom: 3,
             textShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -70,8 +68,7 @@ const PauseDialog = () => {
           <PlayArrowIcon
             sx={{
               fontSize: "3.5rem",
-              color: (theme) =>
-                theme.palette.mode === "dark" ? "#fff" : "#ffffff",
+              color: "#ffffff",
             }}
           />
         </Box>
@@ -80,6 +77,7 @@ const PauseDialog = () => {
           sx={{
             marginTop: 2,
             opacity: 0.9,
+            color: "#ffffff",
           }}
         >
           Tap to resume quiz
