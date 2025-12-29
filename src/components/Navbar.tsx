@@ -2,6 +2,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import main_logo from "../assets/main-logo.png";
 import cedar_logo from "../assets/cedar-logo.png";
 import { useCheckMobileScreen } from "../hooks/useCheckMobileScreen";
@@ -11,6 +12,7 @@ const Navbar = () => {
   const { isMobile } = useCheckMobileScreen();
   const mode = useThemeStore((state) => state.mode);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
+  const navigate = useNavigate();
 
   return (
     <AppBar
@@ -59,7 +61,11 @@ const Navbar = () => {
           >
             {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
-          <IconButton color="default" aria-label="menu">
+          <IconButton
+            color="default"
+            aria-label="home"
+            onClick={() => navigate("/")}
+          >
             <HomeIcon />
           </IconButton>
         </Box>
