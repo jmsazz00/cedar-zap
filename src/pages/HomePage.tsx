@@ -60,7 +60,9 @@ const HomePage = () => {
 
   const handleQuizClick = (quiz: Quiz) => {
     navigate(
-      `/quiz?name=${encodeURIComponent(quiz.name)}&duration=${quiz.duration}&year=${quiz.year}`
+      `/quiz?name=${encodeURIComponent(quiz.name)}&duration=${
+        quiz.duration
+      }&year=${quiz.year}`
     );
   };
 
@@ -72,12 +74,11 @@ const HomePage = () => {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
         background:
           theme.palette.mode === "dark"
             ? "linear-gradient(135deg, #121212 0%, #1a1a1a 100%)"
             : "linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%)",
-        pt: { xs: 8, md: 10 },
+        pt: { xs: 6, md: 8 },
         pb: 6,
         px: { xs: 2, sm: 3, md: 4 },
       }}
@@ -109,7 +110,7 @@ const HomePage = () => {
                   ? "text.secondary"
                   : "rgba(0, 0, 0, 0.7)",
               fontWeight: 400,
-              fontSize: { xs: "1rem", md: "1.25rem" },
+              fontSize: { xs: "1rem", md: "1.2rem" },
               maxWidth: "600px",
               mx: "auto",
               lineHeight: 1.6,
@@ -128,7 +129,7 @@ const HomePage = () => {
               sm: "repeat(2, 1fr)",
               md: "repeat(3, 1fr)",
             },
-            gap: 3,
+            gap: 3.5,
             perspective: "1000px",
           }}
         >
@@ -166,7 +167,7 @@ const HomePage = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                minHeight: "220px",
+                minHeight: "200px",
               }}
             >
               <Box>

@@ -22,7 +22,7 @@ const QuizLayout: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
   }, []);
 
   return (
-    <Box sx={{ display: { md: "flex" }, pt: { xs: "60px", sm: "68px" } }}>
+    <Box sx={{ display: { md: "flex" } }}>
       <QuizUtils duration={duration} />
       <Sidebar questionCount={questions.length} />
       <Container sx={{ mx: 0, px: 1.5 }}>

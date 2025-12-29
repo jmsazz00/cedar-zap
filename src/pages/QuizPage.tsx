@@ -7,8 +7,8 @@ const QuizPage = () => {
   const navigate = useNavigate();
 
   const duration = parseInt(searchParams.get("duration") || "4800");
-  const name = searchParams.get("name") || "Quiz";
-  const year = searchParams.get("year") || new Date().getFullYear().toString();
+  const name = searchParams.get("name") || "";
+  const year = searchParams.get("year") || "N/A";
 
   useEffect(() => {
     if (!searchParams.get("duration") && !searchParams.get("name")) {
@@ -21,7 +21,7 @@ const QuizPage = () => {
       quiz={{
         duration,
         name,
-        year: year.toString(),
+        year: year,
       }}
     />
   );

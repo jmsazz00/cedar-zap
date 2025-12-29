@@ -17,25 +17,14 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <GlobalStyles />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
-        }}
-      >
-        <Navbar />
-        <Box
-          sx={{
-            flex: 1,
-            pt: { xs: "50px", md: "68px" },
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/quiz" element={<QuizPage />} />
-          </Routes>
-        </Box>
+
+      <Navbar />
+
+      <Box sx={{ pt: { xs: "60px", sm: "68px" } }}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/quiz" element={<QuizPage />} />
+        </Routes>
       </Box>
     </ThemeProvider>
   );
