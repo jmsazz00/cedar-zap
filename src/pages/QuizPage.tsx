@@ -1,30 +1,27 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import QuizLayout from "../components/QuizLayout";
 
 const QuizPage = () => {
-  const [searchParams] = useSearchParams();
+  const { quizId } = useParams();
   const navigate = useNavigate();
 
-  const duration = parseInt(searchParams.get("duration") || "4800");
-  const name = searchParams.get("name") || "";
-  const year = searchParams.get("year") || "N/A";
+  // Temporary quiz instance before backend integration
+  const quiz = {
+    name: "Physio",
+    year: "2023-2024",
+    duration: 4800,
+  };
 
   useEffect(() => {
-    if (!searchParams.get("duration") && !searchParams.get("name")) {
+    if (!quiz) {
       navigate("/");
     }
-  }, [searchParams, navigate]);
+  }, [quiz, navigate]);
 
-  return (
-    <QuizLayout
-      quiz={{
-        duration,
-        name,
-        year: year,
-      }}
-    />
-  );
+  if (!quiz) return null;
+
+  return <QuizLayout quiz={quiz} />;
 };
 
 export default QuizPage;

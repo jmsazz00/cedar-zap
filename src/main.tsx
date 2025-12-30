@@ -23,7 +23,7 @@ const App = () => {
       <Box sx={{ pt: { xs: "60px", sm: "68px" } }}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/quiz" element={<QuizPage />} />
+          <Route path="/quiz/:quizId" element={<QuizPage />} />
         </Routes>
       </Box>
     </ThemeProvider>

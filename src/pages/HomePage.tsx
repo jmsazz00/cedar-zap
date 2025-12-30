@@ -59,11 +59,7 @@ const HomePage = () => {
   ];
 
   const handleQuizClick = (quiz: Quiz) => {
-    navigate(
-      `/quiz?name=${encodeURIComponent(quiz.name)}&duration=${
-        quiz.duration
-      }&year=${quiz.year}`
-    );
+    navigate(`/quiz/${quiz.id}`);
   };
 
   const formatDuration = (seconds: number) => {
