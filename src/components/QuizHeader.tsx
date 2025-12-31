@@ -51,7 +51,7 @@ const QuizHeader = ({ name, year }: Props) => {
           },
         }}
       >
-        &lt; {name} Quiz
+        &lt; {name}
       </Typography>
       <Typography
         variant="subtitle2"
