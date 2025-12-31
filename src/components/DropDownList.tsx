@@ -104,7 +104,7 @@ const DropDownList: React.FC<DropDownListProps> = ({
                   displayEmpty
                   sx={{ ...responsiveFontSize }}
                 >
-                  <MenuItem disabled value="" sx={{ ...responsiveFontSize }}>
+                  <MenuItem value="" sx={{ ...responsiveFontSize }}>
                     <em style={{ opacity: 0.7 }}>Sélectionner...</em>
                   </MenuItem>
                   {dropdownItems.map((item, itemIndex) => (
