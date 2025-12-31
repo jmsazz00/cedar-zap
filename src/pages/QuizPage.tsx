@@ -14,12 +14,12 @@ const QuizPage = () => {
   };
 
   useEffect(() => {
-    if (!quiz) {
+    if (!quizId) {
       navigate("/");
     }
-  }, [quiz, navigate]);
+  }, [quizId, navigate]);
 
-  if (!quiz) return null;
+  if (!quizId) return null;
 
   return <QuizLayout quiz={quiz} />;
 };
