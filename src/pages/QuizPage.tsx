@@ -1,16 +1,21 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import QuizLayout from "../components/QuizLayout";
+import Quiz from "../entities/Quiz";
 
 const QuizPage = () => {
   const { quizId } = useParams();
   const navigate = useNavigate();
 
   // Temporary quiz instance before backend integration
-  const quiz = {
+  const quiz: Quiz = {
+    id: quizId || "physio-1",
+    code: "PX01",
     name: "Physio",
-    year: "2023-2024",
+    specialty: "Medical",
+    year: 2024,
     duration: 4800,
+    questions: 80,
   };
 
   useEffect(() => {
@@ -21,7 +26,7 @@ const QuizPage = () => {
 
   if (!quizId) return null;
 
-  return <QuizLayout quiz={quiz} />;
+  return <QuizLayout quiz={quiz} quizId={quizId} />;
 };
 
 export default QuizPage;

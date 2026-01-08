@@ -1,5 +1,9 @@
 export default interface Quiz {
-    name: string;
-    year: string;
-    duration: number;
+  id: string;
+  code: string;
+  name: string;
+  specialty: string;
+  year: number;
+  duration: number;
+  questions: number;
 }
