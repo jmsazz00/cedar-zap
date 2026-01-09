@@ -3,7 +3,8 @@ export default interface Quiz {
   code: string;
   name: string;
   specialty: string;
-  year: number;
+  specialtyYear: number;
+  year: string;
   duration: number;
   questions: number;
 }

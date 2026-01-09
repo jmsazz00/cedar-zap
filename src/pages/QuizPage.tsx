@@ -12,8 +12,9 @@ const QuizPage = () => {
     id: quizId || "physio-1",
     code: "PX01",
     name: "Physio",
-    specialty: "Medical",
-    year: 2024,
+    specialty: "Med",
+    specialtyYear: 2,
+    year: "23-24",
     duration: 4800,
     questions: 80,
   };
@@ -26,7 +27,7 @@ const QuizPage = () => {
 
   if (!quizId) return null;
 
-  return <QuizLayout quiz={quiz} quizId={quizId} />;
+  return <QuizLayout quiz={quiz} />;
 };
 
 export default QuizPage;

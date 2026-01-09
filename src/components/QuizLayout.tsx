@@ -12,7 +12,6 @@ import Sidebar from "./Sidebar";
 
 interface QuizLayoutProps {
   quiz: Quiz;
-  quizId?: string;
 }
 
 const QuizLayout: React.FC<QuizLayoutProps> = ({ quiz }) => {
@@ -24,16 +23,14 @@ const QuizLayout: React.FC<QuizLayoutProps> = ({ quiz }) => {
 
   useEffect(() => {
     setQuestions(allQuestions);
-  }, [setQuestions]);
-
-  const yearString = typeof year === "string" ? year : year.toString();
+  }, []);
 
   return (
     <Box sx={{ display: { md: "flex" } }}>
       <QuizUtils duration={duration} />
       <Sidebar questionCount={questions.length} />
       <Container sx={{ mx: 0, px: 1.5 }}>
-        <QuizHeader name={name} year={yearString} />
+        <QuizHeader name={name} year={year} />
         <QuestionCard questions={allQuestions} />
       </Container>
       <DialogsList />

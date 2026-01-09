@@ -2,11 +2,11 @@ import { Box, Typography } from "@mui/material";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
 import { useTheme } from "@mui/material/styles";
 
-interface QuizEmptyStateProps {
+interface QuizSearchErrorProps {
   query: string;
 }
 
-const QuizEmptyState = ({ query }: QuizEmptyStateProps) => {
+const QuizSearchError = ({ query }: QuizSearchErrorProps) => {
   const theme = useTheme();
 
   return (
@@ -33,9 +33,7 @@ const QuizEmptyState = ({ query }: QuizEmptyStateProps) => {
           fontWeight: 600,
           mb: 1,
           color:
-            theme.palette.mode === "dark"
-              ? "text.primary"
-              : "text.primary",
+            theme.palette.mode === "dark" ? "text.primary" : "text.primary",
         }}
       >
         No quizzes found
@@ -44,9 +42,7 @@ const QuizEmptyState = ({ query }: QuizEmptyStateProps) => {
         variant="body1"
         sx={{
           color:
-            theme.palette.mode === "dark"
-              ? "text.secondary"
-              : "text.secondary",
+            theme.palette.mode === "dark" ? "text.secondary" : "text.secondary",
           maxWidth: "400px",
           mx: "auto",
           lineHeight: 1.6,
@@ -59,4 +55,4 @@ const QuizEmptyState = ({ query }: QuizEmptyStateProps) => {
   );
 };
 
-export default QuizEmptyState;
+export default QuizSearchError;

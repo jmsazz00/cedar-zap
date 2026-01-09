@@ -1,71 +1,15 @@
 import { Box, Typography, useTheme, Card, Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, useMemo } from "react";
+import quizzes from "../data/quizzes";
 import Quiz from "../entities/Quiz";
 import QuizFilter from "../components/QuizFilter";
-import QuizEmptyState from "../components/QuizEmptyState";
+import QuizEmptyState from "../components/QuizSearchError";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const [filterQuery, setFilterQuery] = useState("");
-
-  const quizzes: Quiz[] = [
-    {
-      id: "1",
-      code: "GK01",
-      name: "General Knowledge",
-      specialty: "General",
-      year: 2024,
-      duration: 600,
-      questions: 50,
-    },
-    {
-      id: "2",
-      code: "SCI02",
-      name: "Physiology",
-      specialty: "Medical",
-      year: 2024,
-      duration: 900,
-      questions: 75,
-    },
-    {
-      id: "3",
-      code: "HIST03",
-      name: "Anatomy Basics",
-      specialty: "Medical",
-      year: 2023,
-      duration: 480,
-      questions: 40,
-    },
-    {
-      id: "4",
-      code: "PHARM04",
-      name: "Pharmacology",
-      specialty: "Medical",
-      year: 2024,
-      duration: 1200,
-      questions: 100,
-    },
-    {
-      id: "5",
-      code: "PATH05",
-      name: "Pathology",
-      specialty: "Medical",
-      year: 2024,
-      duration: 720,
-      questions: 60,
-    },
-    {
-      id: "6",
-      code: "NEURO06",
-      name: "Neurology",
-      specialty: "Specialization",
-      year: 2023,
-      duration: 540,
-      questions: 45,
-    },
-  ];
 
   const filteredQuizzes = useMemo(() => {
     if (!filterQuery.trim()) return quizzes;
@@ -204,9 +148,11 @@ const HomePage = () => {
                 }}
               >
                 <Box>
-                  <Box sx={{ display: "flex", gap: 1, mb: 2, flexWrap: "wrap" }}>
+                  <Box
+                    sx={{ display: "flex", gap: 1, mb: 2, flexWrap: "wrap" }}
+                  >
                     <Chip
-                      label={quiz.specialty}
+                      label={quiz.year}
                       size="small"
                       variant="outlined"
                       sx={{
@@ -223,7 +169,7 @@ const HomePage = () => {
                       }}
                     />
                     <Chip
-                      label={getYearLabel(quiz.year)}
+                      label={quiz.specialty}
                       size="small"
                       variant="outlined"
                       sx={{
@@ -234,9 +180,24 @@ const HomePage = () => {
                             ? "rgba(203, 161, 53, 0.4)"
                             : "rgba(203, 161, 53, 0.3)",
                         color:
+                          theme.palette.mode === "dark" ? "#CBA135" : "#a67b2a",
+                      }}
+                    />
+                    <Chip
+                      label={getYearLabel(quiz.specialtyYear)}
+                      size="small"
+                      variant="outlined"
+                      sx={{
+                        fontSize: "0.75rem",
+                        fontWeight: 600,
+                        borderColor:
                           theme.palette.mode === "dark"
-                            ? "#CBA135"
-                            : "#a67b2a",
+                            ? "rgba(92, 107, 192, 0.5)"
+                            : "rgba(92, 107, 192, 0.3)",
+                        color:
+                          theme.palette.mode === "dark"
+                            ? "primary.light"
+                            : "primary.main",
                       }}
                     />
                   </Box>
