@@ -1,22 +1,45 @@
 import { Box, Typography, useTheme, Card, Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState, useMemo } from "react";
-import quizzes from "../data/quizzes";
+import { useState, useMemo, useEffect } from "react";
 import Quiz from "../entities/Quiz";
 import QuizFilter from "../components/QuizFilter";
 import QuizEmptyState from "../components/QuizSearchError";
+import QuizCardSkeleton from "../components/QuizCardSkeleton";
+import QuizDataError from "../components/QuizDataError";
+import { quizService } from "../services/quizService";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const [filterQuery, setFilterQuery] = useState("");
+  const [allQuizzes, setAllQuizzes] = useState<Quiz[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchQuizzes();
+  }, []);
+
+  const fetchQuizzes = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const data = await quizService.getAllQuizzes();
+      setAllQuizzes(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load quizzes");
+      setAllQuizzes([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const filteredQuizzes = useMemo(() => {
-    if (!filterQuery.trim()) return quizzes;
+    if (!filterQuery.trim()) return allQuizzes;
 
     const query = filterQuery.toLowerCase().trim();
 
-    return quizzes.filter((quiz) => {
+    return allQuizzes.filter((quiz) => {
       const matchName = quiz.name.toLowerCase().includes(query);
       const matchCode = quiz.code.toLowerCase().includes(query);
       const matchSpecialty = quiz.specialty.toLowerCase().includes(query);
@@ -24,7 +47,7 @@ const HomePage = () => {
 
       return matchName || matchCode || matchSpecialty || matchYear;
     });
-  }, [filterQuery, quizzes]);
+  }, [filterQuery, allQuizzes]);
 
   const handleQuizClick = (quiz: Quiz) => {
     navigate(`/quiz/${quiz.id}`);
@@ -93,11 +116,35 @@ const HomePage = () => {
           </Typography>
         </Box>
 
-        <QuizFilter value={filterQuery} onChange={setFilterQuery} />
+        {!isLoading && !error && (
+          <QuizFilter value={filterQuery} onChange={setFilterQuery} />
+        )}
 
-        {filteredQuizzes.length === 0 ? (
+        {isLoading && (
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+              },
+              gap: 3.5,
+            }}
+          >
+            {Array.from({ length: 6 }).map((_, index) => (
+              <QuizCardSkeleton key={index} />
+            ))}
+          </Box>
+        )}
+
+        {error && <QuizDataError onRetry={fetchQuizzes} />}
+
+        {!isLoading && !error && filteredQuizzes.length === 0 && (
           <QuizEmptyState query={filterQuery} />
-        ) : (
+        )}
+
+        {!isLoading && !error && filteredQuizzes.length > 0 && (
           <Box
             sx={{
               display: "grid",
