@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabase";
 import Quiz from "../entities/Quiz";
+import Question from "../entities/Question";
 
 interface QuizRow {
   id: string;
@@ -12,6 +13,18 @@ interface QuizRow {
   questions_count: number;
 }
 
+interface QuestionRow {
+  id: string;
+  quiz_id: string;
+  index: number;
+  question: string;
+  options: string[];
+  correct_answers: number[];
+  point: number;
+  type: string;
+  dropdown_items?: string[] | null;
+}
+
 const mapQuizRowToQuiz = (row: QuizRow): Quiz => ({
   id: row.id,
   code: row.code,
@@ -21,6 +34,16 @@ const mapQuizRowToQuiz = (row: QuizRow): Quiz => ({
   year: row.academic_year,
   duration: row.duration,
   questions: row.questions_count,
+});
+
+const mapQuestionRowToQuestion = (row: QuestionRow): Question => ({
+  index: row.index,
+  question: row.question,
+  options: row.options,
+  point: row.point,
+  correctAnswers: row.correct_answers,
+  type: row.type as any,
+  dropdownItems: row.dropdown_items || undefined,
 });
 
 export const quizService = {
@@ -77,5 +100,37 @@ export const quizService = {
     }
 
     return (data as QuizRow[]).map(mapQuizRowToQuiz);
+  },
+
+  async getQuestionsByQuizId(quizId: string): Promise<Question[]> {
+    const { data, error } = await supabase
+      .from("questions")
+      .select("*")
+      .eq("quiz_id", quizId)
+      .order("index", { ascending: true });
+
+    if (error) {
+      throw new Error(
+        `Failed to fetch questions for quiz: ${error.message}`
+      );
+    }
+
+    if (!data) {
+      return [];
+    }
+
+    return (data as QuestionRow[]).map(mapQuestionRowToQuestion);
+  },
+
+  async getQuizWithQuestions(
+    quizId: string
+  ): Promise<{ quiz: Quiz; questions: Question[] } | null> {
+    const quiz = await this.getQuizById(quizId);
+    if (!quiz) {
+      return null;
+    }
+
+    const questions = await this.getQuestionsByQuizId(quizId);
+    return { quiz, questions };
   },
 };
