@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import Question from "../entities/Question";
+import SimplifiedQuestion from "../entities/SimplifiedQuestion";
 import { useCalculateScore } from "../hooks/useCalculateScore";
 import { useQuizInputStore } from "./QuizInputStore";
 
@@ -10,14 +10,14 @@ interface QuizState {
   correctQuestions: number[];
   tempCorrectQuestions: number[];
   questionsAnswered: number;
-  questions: Question[];
+  questions: SimplifiedQuestion[];
   scoreDialogOpen: boolean;
   warningDialogOpen: boolean;
   pauseDialogOpen: boolean;
   elapsedTime: number;
   showAnswers: boolean;
 
-  setQuestions: (questions: Question[]) => void;
+  setQuestions: (questions: SimplifiedQuestion[]) => void;
   handleSubmit: (directSubmit?: boolean) => void;
   handlePause: () => void;
   closeScoreDialog: () => void;
