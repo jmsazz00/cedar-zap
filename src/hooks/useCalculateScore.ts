@@ -1,7 +1,7 @@
-import Question from "../entities/Question";
+import SimplifiedQuestion from "../entities/SimplifiedQuestion";
 
 export const useCalculateScore = (
-  questions: Question[],
+  questions: SimplifiedQuestion[],
   answers: Record<number, number[]>
 ) => {
   let totalScore = 0;
