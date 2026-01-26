@@ -58,8 +58,10 @@ const QuizPage = () => {
           justifyContent: "center",
           alignItems: "center",
           minHeight: "100vh",
-          background:
-            "linear-gradient(135deg, #121212 0%, #1a1a1a 100%)",
+          background: (theme) =>
+            theme.palette.mode === "dark"
+              ? "linear-gradient(135deg, #121212 0%, #1a1a1a 100%)"
+              : "#fafafa",
         }}
       >
         <CircularProgress />
